@@ -1,55 +1,71 @@
 const { Router } = require("express");
-const axios = require("axios");
-const { Product } = require("../db");
 const router = Router();
+const data = require('../data')
+const { getAllProducts, createNewProduct, getProductDetail, modifyProd, deleteProd } = require('../Controllers/productsController')
 
-router.get("/", async (req, res, next) => {
+
+router.get("/", async (req, res) => {
+  const { id } = req.query
   try {
-    let result = await Product.findAll();
-    return res.status(200).json(result);
-  } catch (error) {
-    return res.status(404).send("Products not found");
-  }
-});
+    let listProducts
+    let productListres = await getAllProducts()
+    if (id) {
+      listProducts = productListres.filter(el => el.product_id.includes(id))
+      res.status(200).send(listProducts)
+    }
 
-router.get("/:id", async (req, res, next) => {
+    else {
+      res.status(200).send(productListres)
+    }
+  } catch (error) {
+    console.error({ error: error.message })
+    res.status(500).send('Products not found')
+  }
+})
+
+router.post('/', async (req, res) => {
+  const { name, price, descriptions, images, stock, color } = req.body
+  try {
+    let newProduct = await createNewProduct({ name, price, descriptions, images, stock, color })
+    res.status(201).send(newProduct)
+  } catch (error) {
+    console.error({ error: error.message })
+  }
+})
+
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    let result = await Product.findByPk(id);
-    return res.status(200).json(result);
+    let productDetail = await getProductDetail(id)
+    res.status(200).send(productDetail)
   } catch (error) {
     console.error({ error: error });
     return res.status(404).send("Product not found");
   }
 });
 
-router.post("/", async (req, res, next) => {
-  const { name, price, descriptions, images, stock, date_added } = req.body;
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const {name, price, descriptions, images, stock} = req.body
   try {
-    let newProduct = await Product.create({
-      name: name.toString(),
-      price: Number(price),
-      descriptions: descriptions.toString(),
-      images: images.toString(),
-      stock: Number(stock),
-      date_added: date_added,
-    });
-    res.status(201).json(newProduct);
+    await modifyProd({id, name, price, descriptions, images, stock})
+    res.status(200).send('Product modified successfully')
   } catch (error) {
-    console.error({ error: error.message });
-    res.status(500).send("Internal server error");
+    console.error({ error: error });
+    return res.status(404).send("Product not found");
   }
 });
 
-// router.put("/:id", async (req, res, next) => {
-//   const { id } = req.params;
-//   try {
-//     let result = await Product.findByPk(Number(id));
-//     return res.status(200).json(result);
-//   } catch (error) {
-//     console.error({ error: error });
-//     return res.status(404).send("Product not found");
-//   }
-// });
+router.delete('/:id', async(req, res) =>  {
+  const {id} = req.params
+  try {
+    let response = await deleteProd(id)
+    res.status(200).send(response)
+  } catch (error) {
+    console.error({ error: error });
+    return res.status(404).send(error.message);
+  }
+})
+
 
 module.exports = router;
