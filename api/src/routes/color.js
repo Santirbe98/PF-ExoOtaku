@@ -2,10 +2,9 @@ const { Router } = require("express");
 const axios = require("axios");
 const { Color } = require("../db");
 const { Op } = require("sequelize");
-
 const router = Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res) => {
   try {
     let result = await Color.findAll();
     return res.status(200).json(result);
@@ -14,16 +13,10 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:color", async (req, res, next) => {
-  const { color } = req.params;
+router.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    let result = await Product.findAll({
-      where: {
-        color: {
-          [Op.iLike]: `${color}`,
-        },
-      },
-    });
+    let result = await Color.findByPk(id);
     return res.status(200).json(result);
   } catch (error) {
     console.error({ error: error });
@@ -31,7 +24,7 @@ router.get("/:color", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", async (req, res) => {
   const { color } = req.body;
   try {
     if (typeof color === "string") {
@@ -45,3 +38,5 @@ router.post("/", async (req, res, next) => {
     res.status(500).send("Internal server error");
   }
 });
+
+module.exports = router;
