@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
+
   sequelize.define("product", 
   {
     product_id:{
@@ -48,5 +49,5 @@ module.exports = (sequelize) => {
   {
     timestamps: false,
   }
-);
-};
+)}
+
