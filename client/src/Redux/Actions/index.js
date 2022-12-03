@@ -1,5 +1,5 @@
 import axios from "axios";
-export const GET_PRODUCTS = "GET_PRODUCTS";
+import { GET_PRODUCTS } from "./actionsTypes";
 
 // cambiar el puerto del localhost al que usen localmente
 export function getProducts() {
