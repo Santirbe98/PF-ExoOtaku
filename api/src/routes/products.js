@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const router = Router();
-const data = require('../data')
-const { getAllProducts, createNewProduct, getProductDetail, modifyProd, deleteProd } = require('../Controllers/productsController')
+
+// const data = require('../data')
+const { getAllProducts, createNewProduct, getProductDetail, modifyProd, deleteProd } = require('./Controllers/productsController')
 
 
 router.get("/", async (req, res) => {
