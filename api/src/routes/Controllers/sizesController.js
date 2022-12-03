@@ -13,7 +13,6 @@ const getAllSizes = async () => {
   }
 };
 
-
 const createNewSize = async (size) => {
   try {
     const newSize = await Size.findOrCreate({
@@ -28,16 +27,27 @@ const createNewSize = async (size) => {
 };
 
 const deleteSize = async (id) => {
-    try {
-      let deletesize = await Size.destroy({
-        where: { id },
-      });
-
-    } catch (error) {
-      console.log(error)
+  try {
+    let size = await Size.findByPk(id);
+    if (size.deleted === true) {
+      return "This Product doesnt exist";
+    } else {
+      await Size.update(
+        {
+          deleted: true,
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+      return "Size deleted succesfully";
     }
-}
-
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   getAllSizes,

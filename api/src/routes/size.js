@@ -25,15 +25,15 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    let sizeid = deleteSize(id);
-    sizeid
-      ? res.status(200).json("Size deleted successfully")
-      : res.status(400).send("not found");
-  } catch(error) {
-    res.status(404).json(error)
+    let response = await deleteSize(id);
+    res.status(200).send(response);
+  } catch (error) {
+    console.error({ error: error });
+    return res.status(404).send(error.message);
   }
 });
+
 module.exports = router;
