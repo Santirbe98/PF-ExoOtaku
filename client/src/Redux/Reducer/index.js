@@ -1,7 +1,5 @@
-import {
-  //importar las Actions
-  GET_PRODUCTS,
-} from "../Actions";
+//importar las Actions
+import { GET_PRODUCTS } from "../Actions/actionsTypes.js";
 
 const initialState = {
   // agregar o modificar los estados que vayan necesitando
