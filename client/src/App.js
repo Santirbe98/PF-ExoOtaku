@@ -1,11 +1,15 @@
+import React from "react";
+import { Switch, Route } from 'react-router-dom'
 import './App.css';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <h1>Henry Dogs</h1>
-    </div>
+    <Switch>
+      {/* <Route exact path=""component={LandingPage} />
+      <Route exact path="" component={} />
+      <Route exact path="" component={} />
+      <Route exact path="" component={} />
+      <Route  path="*" component={NotFound} /> */}
+    </Switch>
   );
 }
-
-export default App;
