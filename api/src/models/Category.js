@@ -13,7 +13,6 @@ module.exports = (sequelize) => {
         allowNull: false, 
         defaultValue: false
       }
-      
     },
     {
       timestamps: false,
