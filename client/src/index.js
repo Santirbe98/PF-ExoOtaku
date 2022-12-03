@@ -4,14 +4,14 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./Store/index.js";
+import { store } from "./store/index.js";
 // import axios from "axios";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
+  <BrowserRouter>
+    <Provider store={store}>
       <App />
-    </BrowserRouter>
-  </Provider>,
+    </Provider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
