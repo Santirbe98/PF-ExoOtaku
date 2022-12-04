@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { name, price, descriptions, images, stock, color, size, type } =
+  const { name, price, descriptions, images, stock, color, size, type, category } =
     req.body;
   if (
     !name ||
@@ -44,7 +44,8 @@ router.post("/", async (req, res) => {
     !stock ||
     !color ||
     !size ||
-    !type
+    !type ||
+    !category
   ) {
     res.status(400).send("Complete all required fields");
   }
