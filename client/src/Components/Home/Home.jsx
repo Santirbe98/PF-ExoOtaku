@@ -9,7 +9,7 @@ export const Home = () => {
   return (
     <div>
       <h1>Exo Otaku</h1>
-      <SearchBar />
+      {/* <SearchBar /> se incluye en la navBar borrar coment */}
       <NavBar />
       <Cards />
       <Link to="/form"> Formulario </Link>
