@@ -42,7 +42,7 @@ const getAllProducts = async function () {
           through: {
             attributes: [],
           },
-        }
+        },
       ],
     });
     if (products.length) {
@@ -56,7 +56,7 @@ const getAllProducts = async function () {
           id: field.id,
           name: field.name,
           price: field.price,
-          description: field.description,
+          description: field.descriptions,
           images: field.images,
           stock: field.stock,
           date_added: field.date_added,
@@ -64,7 +64,7 @@ const getAllProducts = async function () {
           color: colorArray,
           type: typeArray,
           size: sizeArray,
-          category: field.categories[0].category,
+          category: field.category,
         };
         return dataProduct;
       });
@@ -133,8 +133,8 @@ const createNewProduct = async ({
 
 const getProductDetail = async (id) => {
   try {
-    let allProducts =await getAllProducts()
-    let productRes = await allProducts.find(s=> s.id==id);
+    let allProducts = await getAllProducts();
+    let productRes = await allProducts.find((s) => s.id == id);
     // let productRes = await Product.findByPk(id, {
     //   where: {
     //     deleted: false,
