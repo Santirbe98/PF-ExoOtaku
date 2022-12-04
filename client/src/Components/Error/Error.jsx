@@ -5,7 +5,7 @@ export const Error = () => {
   return (
     <div>
       <h1>Error 404</h1>
-      <Link to="/home">Return to home</Link>
+      <Link to="/home">Volver a la pagina principal</Link>
     </div>
   );
 };
