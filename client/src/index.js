@@ -8,10 +8,10 @@ import { store } from "./Store/index.js";
 // import axios from "axios";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
+  <BrowserRouter>
+    <Provider store={store}>
       <App />
-    </BrowserRouter>
-  </Provider>,
+    </Provider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
