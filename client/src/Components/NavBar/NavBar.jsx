@@ -1,6 +1,7 @@
 import React from "react";
 import { SearchBar } from "../SearchBar/SearchBar.jsx";
 import { Link } from "react-router-dom"
+import { Filter } from "../Filter/Filter";
 import "./NavBar.css"
 
 
@@ -36,6 +37,8 @@ export const NavBar = () => {
       <section>
         <button>Your Cart</button>
       </section>
+            <Filter />
     </div>
+
   );
 };

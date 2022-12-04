@@ -15,7 +15,7 @@ export function getProducts() {
     });
   };
 }
-export function FilterAll(payload) {
+export function filterAll(payload) {
   return {
     type: FILTER_ALL,
     payload: payload,

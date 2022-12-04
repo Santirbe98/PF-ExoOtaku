@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function Cards() {
   let dispatch = useDispatch();
-  let products = useSelector((state) => state.products);
+  let products = useSelector((state) => state.filterProducts);
 
   useEffect(() => {
     dispatch(getProducts());

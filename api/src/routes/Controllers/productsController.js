@@ -52,6 +52,7 @@ const getAllProducts = async function () {
         const sizeArray = d.sizes.map((t) => t.size);
         // const categoryArray = d.categorys.map((t) => t.category);
         field = d.dataValues;
+        console.log(field.categories[0].category, "esto es field")
         dataProduct = {
           id: field.id,
           name: field.name,
@@ -64,7 +65,7 @@ const getAllProducts = async function () {
           color: colorArray,
           type: typeArray,
           size: sizeArray,
-          category: field.category,
+          category: field.categories[0].category,
         };
         return dataProduct;
       });
@@ -135,41 +136,7 @@ const getProductDetail = async (id) => {
   try {
     let allProducts = await getAllProducts();
     let productRes = await allProducts.find((s) => s.id == id);
-    // let productRes = await Product.findByPk(id, {
-    //   where: {
-    //     deleted: false,
-    //   },
-    //   include: [
-    //     {
-    //       model: Color,
-    //       attributes: ["color"],
-    //       through: {
-    //         attributes: [],
-    //       },
-    //     },
-    //     {
-    //       model: Type,
-    //       attributes: ["type"],
-    //       through: {
-    //         attributes: [],
-    //       },
-    //     },
-    //     {
-    //       model: Size,
-    //       attributes: ["size"],
-    //       through: {
-    //         attributes: [],
-    //       },
-    //     },
-    //     {
-    //       model: Category,
-    //       attributes: ["category"],
-    //       through: {
-    //         attributes: [],
-    //       },
-    //     }
-    //   ],
-    // });
+    
     if (!productRes) {
       return "This product doesn't exist";
     } else {
