@@ -2,39 +2,48 @@ const { Product, Category, Size, Color, Type } = require("../../db");
 // const { Op } = require("sequelize");
 
 function compare_lname(a, b) {
-    if (a.name < b.name) {
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return 0;
+  if (a.name < b.name) {
+    return -1;
   }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+}
 
 const getAllProducts = async function () {
   try {
     let products = await Product.findAll({
-        include: [{
-            model: Color,
-            attributes: ['color'],
-            through: {
-                attributes: []
-            }
+      include: [
+        {
+          model: Color,
+          attributes: ["color"],
+          through: {
+            attributes: [],
+          },
         },
         {
-            model: Type,
-            attributes: ['type'],
-            through: {
-                attributes: []
-            }
+          model: Type,
+          attributes: ["type"],
+          through: {
+            attributes: [],
+          },
         },
-    {
-            model: Size,
-            attributes: ['size'],
-            through: {
-                attributes: []
-            }
-        }]
+        {
+          model: Size,
+          attributes: ["size"],
+          through: {
+            attributes: [],
+          },
+        },
+        {
+          model: Category,
+          attributes: ["category"],
+          through: {
+            attributes: [],
+          },
+        }
+      ],
     });
     return products.sort(compare_lname);
   } catch (error) {
@@ -51,6 +60,7 @@ const createNewProduct = async ({
   color,
   size,
   type,
+  category,
 }) => {
   try {
     name = (name.charAt(0).toUpperCase() + name.slice(1)).trim();
@@ -61,19 +71,36 @@ const createNewProduct = async ({
       images,
       stock,
     });
-          const colorName = await Color.findOrCreate({
-            where: { color},
-          });
-           newProduct.addColors(colorName[0]);
-          const sizeName = await Size.findOrCreate({
-            where: { size},
-          });
-           newProduct.addSizes(sizeName[0]);
-          const typeName = await Type.findOrCreate({
-            where: { type},
-          });
-           newProduct.addTypes(typeName[0]);
-         
+    // const colorName = await Color.findOrCreate({
+    //   where: { color},
+    // });
+    //  newProduct.addColors(colorName[0]);
+    color?.map(async (d) => {
+      const colorName = await Color.findOrCreate({
+        where: { color: d },
+      });
+      newProduct.addColors(colorName[0]);
+    });
+    // const sizeName = await Size.findOrCreate({
+    //   where: { size},
+    // });
+    //  newProduct.addSizes(sizeName[0]);
+    const typeName = await Type.findOrCreate({
+      where: { type },
+    });
+    newProduct.addTypes(typeName[0]);
+    size.map(async (t) => {
+      let sizeName = await Size.findOrCreate({
+        // attributes: ["id"],
+        where: { size: t },
+      });
+      console.log(sizeName[0].dataValues.size);
+      newProduct.addSizes(sizeName[0]);
+    });
+    const categoryName = await Category.findOrCreate({
+      where: { category },
+    });
+    newProduct.addCategory(categoryName[0]);
     return newProduct;
   } catch (error) {
     console.log(error);
@@ -86,27 +113,36 @@ const getProductDetail = async (id) => {
       where: {
         deleted: false,
       },
-      include: [{
-            model: Color,
-            attributes: ['color'],
-            through: {
-                attributes: []
-            }
+      include: [
+        {
+          model: Color,
+          attributes: ["color"],
+          through: {
+            attributes: [],
+          },
         },
         {
-            model: Type,
-            attributes: ['type'],
-            through: {
-                attributes: []
-            }
+          model: Type,
+          attributes: ["type"],
+          through: {
+            attributes: [],
+          },
         },
-    {
-            model: Size,
-            attributes: ['size'],
-            through: {
-                attributes: []
-            }
-        }],
+        {
+          model: Size,
+          attributes: ["size"],
+          through: {
+            attributes: [],
+          },
+        },
+        {
+          model: Category,
+          attributes: ["category"],
+          through: {
+            attributes: [],
+          },
+        }
+      ],
     });
     if (!productRes) {
       return "This product doesn't exist";
