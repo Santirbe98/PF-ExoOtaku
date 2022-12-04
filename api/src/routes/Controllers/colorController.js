@@ -40,8 +40,32 @@ const createNewColors = async (color) => {
   }
 };
 
+const deleteColor = async (id) => {
+  try {
+    let color = await Color.findByPk(id);
+    if (color.deleted === true) {
+      return "This Product doesnt exist";
+    } else {
+      await Color.update(
+        {
+          deleted: true,
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+      return "Color deleted succesfully";
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createNewColors,
   getAllColors,
   getOneColor,
+  deleteColor,
 };
