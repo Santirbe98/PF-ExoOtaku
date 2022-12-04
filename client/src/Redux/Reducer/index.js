@@ -26,28 +26,49 @@ function rootReducer(state = initialState, action) {
     case FILTER_ALL:
       const allProducts = state.products;
       const {color, type, category} = action.payload;
-      // const filterProducts = allProducts.map(prod=>{
-      //   if(prod.color === color || prod.type === type || prod.category === category){
-      //     return {
-      //      prod
-      //     };
-      //   }
-      // })
+       // let color = "All";
+      // let type = "All";
+      // let category = "All";
+      // if (
+      //   action.payload === "Black" ||
+      //   action.payload === "White" ||
+      //   action.payload === "Blue" ||
+      //   action.payload === "Pink"
+      // ) {
+      //   color = action.payload;
+      // }
+      // if (action.payload === "Tshirt" || action.payload === "Sweter") {
+      //   type = action.payload;
+      // }
+
+      // if (action.payload !== "All") {
+      //   category = action.payload;
+      // }
+      // category = action.payload;
       const filterProducts =
-        color === "all"
+        // color === "All"
+        //   ? allProducts
+        //   : allProducts.filter((p) => p.color === color);
+          category === "All"
           ? allProducts
-          : allProducts.filter((p) => p.color === color);
+          : allProducts.filter((p) => p.category === category);
+          console.log(filterProducts, 'primer filtro category')
       const filterProducts2 =
-        type === "all"
+        type === "All"
           ? filterProducts
-          : filterProducts.filter((p) => p.type === type);
+          : filterProducts.filter((p) => p.type[0] === type);
+          console.log(filterProducts2, 'segundo filtro type')
       const filterProducts3 =
-        category === "all"
+        // category === "All"
+        //   ? filterProducts2
+        //   : filterProducts2.filter((p) => p.category === category);
+          color === "All"
           ? filterProducts2
-          : filterProducts2.filter((p) => p.category === category);
+          : filterProducts2.filter((p) => p.color[0] === color);
+          console.log(filterProducts3, 'primer filtro color')
       return {
         ...state,
-        products: filterProducts3,
+        filterProducts: filterProducts3,
       };
 
     case GET_PRODUCT_DETAIL:
