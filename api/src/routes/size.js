@@ -4,6 +4,7 @@ const {
   getAllSizes,
   createNewSize,
   deleteSize,
+  filtradoSize
 } = require("./Controllers/sizesController");
 
 router.get("/", async (req, res) => {
@@ -14,6 +15,7 @@ router.get("/", async (req, res) => {
     res.send(error);
   }
 });
+
 
 router.post("/", async (req, res) => {
   try {

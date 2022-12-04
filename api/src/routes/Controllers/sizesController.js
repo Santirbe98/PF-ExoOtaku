@@ -49,8 +49,16 @@ const deleteSize = async (id) => {
   }
 };
 
+// const filtradoSize = async (sizeToSearch, sizes) => {
+//   if(sizeToSearch ==='all'){
+//     return sizes
+//   }else 
+//   return sizes.filter((prod) => prod.size.includes(sizeToSearch));
+// };
+
 module.exports = {
   getAllSizes,
   createNewSize,
   deleteSize,
+  // filtradoSize
 };
