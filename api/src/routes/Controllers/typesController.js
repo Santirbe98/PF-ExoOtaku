@@ -26,7 +26,31 @@ const createNewType = async (type) => {
   }
 };
 
+const deleteType = async (id) => {
+  try {
+    const deleteType = await Type.findByPk(id);
+    if (Type.deleted === true) {
+      return `This type doesn't exist`;
+    } else {
+      await Type.update(
+        {
+          deleted: true,
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+      return "Type deleted succesfully";
+    }
+  } catch (error) {
+    console.log({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllTypes,
   createNewType,
+  deleteType,
 };
