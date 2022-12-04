@@ -1,18 +1,13 @@
 import React from "react";
-import { SearchBar } from "../SearchBar/SearchBar.jsx";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { Filter } from "../Filter/Filter";
-import "./NavBar.css"
-
+import "./NavBar.css";
 
 export const NavBar = () => {
   return (
     <div className="divSection">
       <section>
         <img alt="no found" />
-      </section>
-      <section>
-        <SearchBar />
       </section>
       <section>
         <Link to="/home">
@@ -37,8 +32,7 @@ export const NavBar = () => {
       <section>
         <button>Your Cart</button>
       </section>
-            <Filter />
+      <Filter />
     </div>
-
   );
 };
