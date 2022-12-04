@@ -8,21 +8,23 @@ export function Cards() {
   let products = useSelector((state) => state.products);
 
   useEffect(() => {
-    if (!products.length) dispatch(getProducts());
+    dispatch(getProducts());
   }, [dispatch]);
 
   return (
     <div>
-      {products?.map((p) => (
-        <Card
-          key={p.id}
-          id={p.id}
-          image={p.images[0]}
-          name={p.name}
-          category={p.category}
-          price={p.price}
-        />
-      ))}
+      {!products.length
+        ? "no products"
+        : products?.map((p) => (
+            <Card
+              key={p.id}
+              id={p.id}
+              image={p.images[0]}
+              name={p.name}
+              category={p.category}
+              price={p.price}
+            />
+          ))}
     </div>
   );
 }
