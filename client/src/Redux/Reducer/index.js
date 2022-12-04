@@ -1,11 +1,15 @@
 //importar las Actions
-import { GET_PRODUCTS, FILTER_BY_CATEGORY } from "../Actions/actionsTypes.js";
+import {
+  GET_PRODUCTS,
+  FILTER_BY_CATEGORY,
+  GET_PRODUCT_DETAIL,
+} from "../Actions/actionsTypes.js";
 
 const initialState = {
   // agregar o modificar los estados que vayan necesitando
   products: [],
   filterProducts: [],
-  // details: {},
+  details: {},
   // loading: true,
 };
 
@@ -29,6 +33,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         products: filterProducts,
       };
+
+    case GET_PRODUCT_DETAIL:
+      return {
+        ...state,
+        details: action.payload,
+      };
+
     default:
       return {
         ...state,

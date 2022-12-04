@@ -6,6 +6,7 @@ import { Home } from "./Components/Home/Home";
 import { Error } from "./Components/Error/Error";
 import { Help } from "./Components/Help/Help";
 import { About } from "./Components/About/About";
+import { CardDetail } from "./Components/CardDetail/CardDetail";
 
 export default function App() {
   return (
@@ -15,6 +16,11 @@ export default function App() {
         <Route exact path="/form" component={Form} />
         <Route exact path="/help" component={Help} />
         <Route exact path="/about" component={About} />
+        <Route
+          exact
+          path="/detail/:id"
+          component={({ match }) => <CardDetail match={match} />}
+        />
         <Route exact path="*" component={Error} />
       </Switch>
     </div>
