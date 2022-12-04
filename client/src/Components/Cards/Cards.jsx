@@ -1,6 +1,6 @@
 import { React, useEffect } from "react";
 import { getProducts } from "../../Redux/Actions";
-// import { Card } from './prueba.jsx'
+import { Card } from "../Card/Card"
 import { useDispatch, useSelector } from "react-redux";
 
 export function Cards() {
@@ -13,13 +13,13 @@ export function Cards() {
 
   return (
     <div>
-      {/* {products?.map(p => <Card
+      {products?.map(p => <Card
                 key={p.id}
-                image={p.images}
+                image={p.images[0]}
                 name={p.name}
-                category={p.categories[0].category}
+                category={p.category}
                 price={p.price} />
-            )} */}
+            )}
     </div>
   );
 }
