@@ -1,7 +1,7 @@
 //importar las Actions
 import {
   GET_PRODUCTS,
-  FILTER_BY_CATEGORY,
+  FILTER_ALL,
   GET_PRODUCT_DETAIL,
 } from "../Actions/actionsTypes.js";
 
@@ -23,15 +23,31 @@ function rootReducer(state = initialState, action) {
         filterProducts: action.payload,
         // loading: false,
       };
-    case FILTER_BY_CATEGORY:
+    case FILTER_ALL:
       const allProducts = state.products;
+      const {color, type, category} = action.payload;
+      // const filterProducts = allProducts.map(prod=>{
+      //   if(prod.color === color || prod.type === type || prod.category === category){
+      //     return {
+      //      prod
+      //     };
+      //   }
+      // })
       const filterProducts =
-        action.payload === "all"
+        color === "all"
           ? allProducts
-          : allProducts.filter((p) => p.category === action.payload);
+          : allProducts.filter((p) => p.color === color);
+      const filterProducts2 =
+        type === "all"
+          ? filterProducts
+          : filterProducts.filter((p) => p.type === type);
+      const filterProducts3 =
+        category === "all"
+          ? filterProducts2
+          : filterProducts2.filter((p) => p.category === category);
       return {
         ...state,
-        products: filterProducts,
+        products: filterProducts3,
       };
 
     case GET_PRODUCT_DETAIL:

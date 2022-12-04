@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
   GET_PRODUCTS,
-  FILTER_BY_CATEGORY,
+  FILTER_ALL,
   GET_PRODUCT_DETAIL,
 } from "./actionsTypes";
 
@@ -15,9 +15,9 @@ export function getProducts() {
     });
   };
 }
-export function FilterByCategory(payload) {
+export function FilterAll(payload) {
   return {
-    type: FILTER_BY_CATEGORY,
+    type: FILTER_ALL,
     payload: payload,
   };
 }
