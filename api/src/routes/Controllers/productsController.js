@@ -45,7 +45,31 @@ const getAllProducts = async function () {
         }
       ],
     });
-    return products.sort(compare_lname);
+    if (products.length) {
+      const dbData = await products.map((d) => {
+        const colorArray = d.colors.map((t) => t.color);
+        const typeArray = d.types.map((t) => t.type);
+        const sizeArray = d.sizes.map((t) => t.size);
+        // const categoryArray = d.categorys.map((t) => t.category);
+        field = d.dataValues;
+        dataProduct = {
+          id: field.id,
+          name: field.name,
+          price: field.price,
+          description: field.description,
+          images: field.images,
+          stock: field.stock,
+          date_added: field.date_added,
+          deleted: field.deleted,
+          color: colorArray,
+          type: typeArray,
+          size: sizeArray,
+          category: field.categories[0].category,
+        };
+        return dataProduct;
+      });
+      return dbData.sort(compare_lname);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -109,41 +133,43 @@ const createNewProduct = async ({
 
 const getProductDetail = async (id) => {
   try {
-    let productRes = await Product.findByPk(id, {
-      where: {
-        deleted: false,
-      },
-      include: [
-        {
-          model: Color,
-          attributes: ["color"],
-          through: {
-            attributes: [],
-          },
-        },
-        {
-          model: Type,
-          attributes: ["type"],
-          through: {
-            attributes: [],
-          },
-        },
-        {
-          model: Size,
-          attributes: ["size"],
-          through: {
-            attributes: [],
-          },
-        },
-        {
-          model: Category,
-          attributes: ["category"],
-          through: {
-            attributes: [],
-          },
-        }
-      ],
-    });
+    let allProducts =await getAllProducts()
+    let productRes = await allProducts.find(s=> s.id==id);
+    // let productRes = await Product.findByPk(id, {
+    //   where: {
+    //     deleted: false,
+    //   },
+    //   include: [
+    //     {
+    //       model: Color,
+    //       attributes: ["color"],
+    //       through: {
+    //         attributes: [],
+    //       },
+    //     },
+    //     {
+    //       model: Type,
+    //       attributes: ["type"],
+    //       through: {
+    //         attributes: [],
+    //       },
+    //     },
+    //     {
+    //       model: Size,
+    //       attributes: ["size"],
+    //       through: {
+    //         attributes: [],
+    //       },
+    //     },
+    //     {
+    //       model: Category,
+    //       attributes: ["category"],
+    //       through: {
+    //         attributes: [],
+    //       },
+    //     }
+    //   ],
+    // });
     if (!productRes) {
       return "This product doesn't exist";
     } else {
