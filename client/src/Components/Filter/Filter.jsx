@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 export function Filter() {
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  console.log(products)
+
   const [input, setInput] = useState({
     type: "All",
     color: "All",
     category: "All",
   });
-  console.log(input);
+
   function handleFilterCat(e) {
     e.preventDefault();
     setInput({
