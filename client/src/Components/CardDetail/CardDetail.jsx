@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetail } from "../../Redux/Actions";
+import s from "./CardDetail.module.css";
 
 export function CardDetail({ match }) {
   let { id } = match.params;
@@ -27,7 +28,7 @@ export function CardDetail({ match }) {
         <h4>SELECT TYPE</h4>
         <h4>SELECT COLOR</h4>
         <h4>{description}</h4>
-        <button>Add To Cart</button>
+        <button className={s.detailButton}>Add To Cart</button>
       </div>
 
       <h4></h4>

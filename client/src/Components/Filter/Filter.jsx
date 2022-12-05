@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { filterAll } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
+import s from "./Filter.module.css";
 
 export function Filter() {
   const products = useSelector((state) => state.products);
@@ -70,7 +71,7 @@ export function Filter() {
     <>
       <div>
         <h3>Filtros Colores</h3>
-        <select onChange={(e) => handleFilterCol(e)}>
+        <select onChange={(e) => handleFilterCol(e)} className={s.filterSelect}>
           <option disabled select>
             Select Color...
           </option>
@@ -83,7 +84,10 @@ export function Filter() {
       </div>
       <div>
         <h3>Filtros typo</h3>
-        <select onChange={(e) => handleFilterType(e)}>
+        <select
+          onChange={(e) => handleFilterType(e)}
+          className={s.filterSelect}
+        >
           <option disabled select>
             Select Tipo...
           </option>
@@ -93,7 +97,7 @@ export function Filter() {
         </select>
       </div>
       <div>
-        <select onChange={(e) => handleFilterCat(e)}>
+        <select onChange={(e) => handleFilterCat(e)} className={s.filterSelect}>
           <option disabled select>
             Select Tipo...
           </option>
