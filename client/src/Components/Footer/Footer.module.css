@@ -10,7 +10,7 @@
 .links {
   text-decoration: none;
   margin: 10px;
-  color: black;
+  color: rgb(255, 255, 255);
   width: 20%;
   display: flex;
   justify-content: center;

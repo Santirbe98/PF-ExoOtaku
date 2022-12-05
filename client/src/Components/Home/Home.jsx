@@ -7,7 +7,7 @@ import { NavBar } from "../NavBar/NavBar.jsx";
 export const Home = () => {
   return (
     <div>
-      <h1>Exo Otaku</h1>
+      <h1>EXO OTAKU</h1>
       <NavBar />
       <Cards />
       <Link to="/form"> Formulario </Link>
