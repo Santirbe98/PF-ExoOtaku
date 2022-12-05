@@ -91,10 +91,10 @@ const createNewProduct = async ({
     name = (name.charAt(0).toUpperCase() + name.slice(1)).trim();
     let newProduct = await Product.create({
       name,
-      price,
+      price: parseInt(price),
       descriptions,
       images,
-      stock,
+      stock: parseInt(stock),
     });
     // const colorName = await Color.findOrCreate({
     //   where: { color},
