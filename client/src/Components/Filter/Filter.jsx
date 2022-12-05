@@ -52,16 +52,10 @@ export function Filter() {
       })
     );
   }
-  // function handleFilter(e) {
-  //   e.preventDefault();
-  //   dispatch(filterAll(e.target.value));
-  // }
 
   const categArr = [];
   if (products) {
-    products.map((c) => {
-      categArr.push(c.category);
-    });
+    products.map((c) => categArr.push(c.category));
   }
   let hash = {};
   const categoriesWithoutRepeat = categArr.filter((c) =>
@@ -70,40 +64,49 @@ export function Filter() {
   return (
     <>
       <div>
-        <h3>Filtros Colores</h3>
         <select onChange={(e) => handleFilterCol(e)} className={s.filterSelect}>
-          <option disabled select>
-            Select Color...
+          <option value="All" key="All">
+            Todos
           </option>
-          <option value="All">Todos</option>
-          <option value="Black">Negro</option>
-          <option value="White">Blanco</option>
-          <option value="Pink">Rosado</option>
-          <option value="Blue">Azul</option>
+          <option value="Black" key="Black">
+            Negro
+          </option>
+          <option value="White" key="White">
+            Blanco
+          </option>
+          <option value="Pink" key="Pink">
+            Rosado
+          </option>
+          <option value="Blue" key="Blue">
+            Azul
+          </option>
         </select>
       </div>
       <div>
-        <h3>Filtros typo</h3>
         <select
           onChange={(e) => handleFilterType(e)}
           className={s.filterSelect}
         >
-          <option disabled select>
-            Select Tipo...
+          <option value="All" key="All2">
+            Todos
           </option>
-          <option value="All">Todos</option>
-          <option value="Tshirt">Remera</option>
-          <option value="Sweter">Buzo</option>
+          <option value="Tshirt" key="tshirt">
+            Remera
+          </option>
+          <option value="Sweter" key="sweter">
+            Buzo
+          </option>
         </select>
       </div>
       <div>
         <select onChange={(e) => handleFilterCat(e)} className={s.filterSelect}>
-          <option disabled select>
-            Select Tipo...
-          </option>
           <option value="All">Todos los animes</option>
           {categoriesWithoutRepeat.map((c) => {
-            return <option value={c}> {c} </option>;
+            return (
+              <option value={c} key={c}>
+                {c}
+              </option>
+            );
           })}
         </select>
       </div>

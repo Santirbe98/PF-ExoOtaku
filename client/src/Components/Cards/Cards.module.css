@@ -1,0 +1,26 @@
+.wrapper {
+  margin: 20px;
+  padding: 20px;
+}
+.wrapper2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.wrapperContainer {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 30% 70% repeat(2, 1fr);
+}
+
+.searchInput input {
+  background-color: #eee;
+  border: none;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  width: 15em;
+  border-radius: 1rem;
+  color: rgb(90, 79, 239);
+  box-shadow: 0 0.4rem #dfd9d9;
+  cursor: pointer;
+}
