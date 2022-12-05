@@ -29,17 +29,17 @@ function rootReducer(state = initialState, action) {
         category === "All"
           ? allProducts
           : allProducts.filter((p) => p.category === category);
-      console.log(filterProducts, "primer filtro category");
+
       const filterProducts2 =
         type === "All"
           ? filterProducts
           : filterProducts.filter((p) => p.type.find((t) => t === type));
-      console.log(filterProducts2, "segundo filtro type");
+
       const filterProducts3 =
         color === "All"
           ? filterProducts2
           : filterProducts2.filter((p) => p.color.find((c) => c === color));
-      console.log(filterProducts3, "primer filtro color");
+
       return {
         ...state,
         filterProducts: filterProducts3,

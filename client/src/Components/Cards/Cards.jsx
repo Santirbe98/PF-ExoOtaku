@@ -78,6 +78,7 @@ export function Cards() {
               <div key={componentId++}>
                 <Card
                   key={c.id}
+                  id={c.id}
                   image={c.images[0]}
                   name={c.name}
                   category={c.category}
@@ -91,6 +92,7 @@ export function Cards() {
             <div key={componentId++}>
               <Card
                 key={p.id}
+                id={p.id}
                 image={p.images[0]}
                 name={p.name}
                 category={p.category}

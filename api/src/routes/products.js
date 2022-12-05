@@ -1,4 +1,3 @@
-
 const { Router } = require("express");
 const router = Router();
 
@@ -12,11 +11,11 @@ const {
 } = require("./Controllers/productsController");
 
 router.get("/", async (req, res) => {
-  const name  = req.query.name;
+  const name = req.query.name;
   try {
     let listProducts;
     let productListres = await getAllProducts();
-    console.log(listProducts);
+
     if (name) {
       listProducts = productListres.filter((el) =>
         el.name.toLowerCase().includes(name.toLowerCase())
@@ -34,8 +33,17 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { name, price, descriptions, images, stock, color, size, type, category } =
-    req.body;
+  const {
+    name,
+    price,
+    descriptions,
+    images,
+    stock,
+    color,
+    size,
+    type,
+    category,
+  } = req.body;
   if (
     !name ||
     !price ||
@@ -92,5 +100,3 @@ router.delete("/:id", async (req, res) => {
 });
 
 module.exports = router;
-
-
