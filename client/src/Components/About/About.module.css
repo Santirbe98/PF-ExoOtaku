@@ -28,3 +28,11 @@
 .slide.active {
   opacity: 1;
 }
+
+.specContainer {
+  margin-bottom: 30px;
+}
+
+.vacio {
+  color: white;
+}

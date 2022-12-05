@@ -17,35 +17,21 @@ export function About() {
   };
 
   return (
-    <div className={s.aboutContainer}>
-      <div>
+    <div className={s.aboutContainer} key="div1">
+      <div key="div2">
         <h1>Sobre Nosotros</h1>
       </div>
-      <div>
+      <div key="div3">
         <img
           src="http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0"
           width="200px"
         />
       </div>
-      <div>
+      <div key="div4">
         <h3>Como hacemos nuestras prendas?</h3>
         <p>Nuestra ropa se realiza mediante impresoras DTG</p>
       </div>
-      <div>
-        <h3>Aseguramos un excelente producto 😎</h3>
-      </div>
-      <div>
-        <h4>Especificaciones:</h4>
-        <ul className={s.ulEsp}>
-          <li>Utiliza tinta duopoint (USA).</li>
-          <li>Es resistente a lavados y el sol</li>
-          <li>Recien partir del lavado n°30 comienza a perder el brillo</li>
-          <li>Su calidad es superior en compararcion con la serigrafia!</li>
-          <li>Es una tinta Ecologica ya que esta compuesta con agua!</li>
-          <li>Nuestros productos son 100% Algodon!</li>
-        </ul>
-      </div>
-      <div className={s.carrouselContainer}>
+      <div className={s.carrouselContainer} key="div5">
         <button onClick={prevImg} disabled={actImg === 0 ? true : false}>
           ←
         </button>
@@ -56,6 +42,7 @@ export function About() {
                 className={
                   actImg === index ? `${s.slide} ${s.active}` : s.slide
                 }
+                key={index}
               >
                 {actImg === index && (
                   <img
@@ -74,6 +61,26 @@ export function About() {
         >
           →
         </button>
+      </div>
+      <div key="div8">
+        <h3>Aseguramos un excelente producto 😎</h3>
+      </div>
+      <div className={s.specContainer} key="div9">
+        <h4>Especificaciones:</h4>
+        <ul className={s.ulEsp}>
+          <li key={1}>Utiliza tinta duopoint (USA).</li>
+          <li key={2}>Es resistente a lavados y el sol</li>
+          <li key={3}>
+            Recien partir del lavado n°30 comienza a perder el brillo
+          </li>
+          <li key={4}>
+            Su calidad es superior en compararcion con la serigrafia!
+          </li>
+          <li key={5}>
+            Es una tinta Ecologica ya que esta compuesta con agua!
+          </li>
+          <li key={6}>Nuestros productos son 100% Algodon!</li>
+        </ul>
       </div>
     </div>
   );
