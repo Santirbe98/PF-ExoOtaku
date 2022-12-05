@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Paged from "../Paged/Paged";
 import { Filter } from "../Filter/Filter.jsx";
 import s from "./Cards.module.css";
+import PagedSearch from "../PagedSearch/PagedSearch";
 
 export function Cards() {
   let dispatch = useDispatch();
@@ -113,7 +114,7 @@ export function Cards() {
         {search.length > 3 ? (
           <div>
             <div>
-              <Paged
+              <PagedSearch
                 productPage={productsPage}
                 producList={producList2.length}
                 paged={paged}
@@ -127,7 +128,7 @@ export function Cards() {
             <div>
               <Paged
                 productPage={productsPage}
-                producList={products.length}
+                productList={products.length}
                 paged={paged}
                 pagePrev={pagePrev}
                 pageNext={pageNext}

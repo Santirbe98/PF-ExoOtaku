@@ -1,5 +1,5 @@
 import React from "react";
-import s from "./Paged.module.css";
+import s from "./PagedSearch.module.css";
 
 export default function Paged({
   productPage,
