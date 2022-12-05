@@ -1,9 +1,8 @@
 * {
-  background-color: rgb(163, 180, 177);  
+  color: white;
 }
 
 .divSection {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
+  display: flex;
+  justify-content: center;
 }

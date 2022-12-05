@@ -70,33 +70,35 @@ export function Cards() {
         />
       </div>
       <div>
-        {!producList.length
-          ? "No Products to Show"
-          : search.length > 3
-          ? producList2.map((c) => {
-              return (
-                <div key={componentId++}>
-                  <Card
-                    key={c.id}
-                    image={c.images[0]}
-                    name={c.name}
-                    category={c.category}
-                    price={c.price}
-                  />
-                </div>
-              );
-            })
-          : producList.map((p) => (
+        {!producList.length ? (
+          <h2>"No Products to Show"</h2>
+        ) : search.length > 3 ? (
+          producList2.map((c) => {
+            return (
               <div key={componentId++}>
                 <Card
-                  key={p.id}
-                  image={p.images[0]}
-                  name={p.name}
-                  category={p.category}
-                  price={p.price}
+                  key={c.id}
+                  image={c.images[0]}
+                  name={c.name}
+                  category={c.category}
+                  price={c.price}
                 />
               </div>
-            ))}
+            );
+          })
+        ) : (
+          producList.map((p) => (
+            <div key={componentId++}>
+              <Card
+                key={p.id}
+                image={p.images[0]}
+                name={p.name}
+                category={p.category}
+                price={p.price}
+              />
+            </div>
+          ))
+        )}
       </div>
 
       <div>
