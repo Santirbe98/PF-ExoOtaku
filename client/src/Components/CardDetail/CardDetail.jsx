@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetail } from "../../Redux/Actions";
 import s from "./CardDetail.module.css";
+import { NavBar } from "../NavBar/NavBar.jsx";
+import { Footer } from "../Footer/Footer.jsx";
 
 export function CardDetail({ match }) {
   let { id } = match.params;
@@ -16,6 +18,7 @@ export function CardDetail({ match }) {
 
   return (
     <div>
+      <NavBar />
       <div>
         {images?.map((i) => (
           <img key={i} src={i}></img>
@@ -34,6 +37,7 @@ export function CardDetail({ match }) {
       <h4></h4>
       <h4></h4>
       <h4></h4>
+      <Footer />
     </div>
   );
 }
