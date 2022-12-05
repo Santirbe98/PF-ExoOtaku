@@ -1,62 +1,126 @@
-import { React, useEffect,useState  } from "react";
+import { React, useEffect, useState } from "react";
 import { getProducts } from "../../Redux/Actions";
-import { Card } from "../Card/Card"
+import { Card } from "../Card/Card";
 import { useDispatch, useSelector } from "react-redux";
-import  Paged  from "../Paged/Paged";
+import Paged from "../Paged/Paged";
 
 export function Cards() {
   let dispatch = useDispatch();
   let products = useSelector((state) => state.filterProducts);
 
   //PAGED LOGIC =============================================
-  let componentId = 1
+  let componentId = 1;
   const [page, setPage] = useState(1);
   const [pagePrev, setPageprev] = useState(1);
   const [pageNext, setPagenext] = useState(2);
   const [productsPage] = useState(9);
   const totalPage = page * productsPage;
   const firstPage = totalPage - productsPage;
-  const ProductList = products.slice(firstPage, totalPage);
+  const producList = products.slice(firstPage, totalPage);
 
-  const paged = function(pageNumber,totPages){
-    setPage(pageNumber)
-    let currentPage=parseInt(pageNumber)
+  const paged = function (pageNumber, totPages) {
+    setPage(pageNumber);
+    let currentPage = parseInt(pageNumber);
     //Previus and Next Options
-    if (currentPage>1 && currentPage<totPages) {
-        setPageprev(currentPage-1);
-        setPagenext(currentPage+1);
+    if (currentPage > 1 && currentPage < totPages) {
+      setPageprev(currentPage - 1);
+      setPagenext(currentPage + 1);
     }
-    if (currentPage===1 && currentPage<totPages) {
-        setPageprev(currentPage);
-        setPagenext(currentPage+1);
-    }   
-    if (currentPage>1 && currentPage===totPages) {
-        setPageprev(currentPage-1);
-        setPagenext(currentPage);
-    }              
+    if (currentPage === 1 && currentPage < totPages) {
+      setPageprev(currentPage);
+      setPagenext(currentPage + 1);
+    }
+    if (currentPage > 1 && currentPage === totPages) {
+      setPageprev(currentPage - 1);
+      setPagenext(currentPage);
+    }
   };
- //===========================================================
+  //===========================================================
+
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
+  //===========================================================
+
+  const [search, setSearch] = useState("");
+
+  const searcher = (e) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
+  const productSearch = !search
+    ? producList
+    : producList.filter((p) =>
+        p.category.toLowerCase().includes(search.toLowerCase())
+      );
+
+  const producList2 = productSearch.slice(firstPage, totalPage);
+  //===========================================================
   return (
     <div>
       <div>
-        {!ProductList.length
-          ? "No Products to Show"
-          :ProductList.map(p=><div key={componentId ++}>
-            <Card
-              key={p.id}
-              image={p.images[0]}
-              name={p.name}
-              category={p.category}
-              price={p.price} />
-          </div>)
-        }
+        <input
+          name="text"
+          placeholder="Buscar producto por Anime"
+          type="text"
+          value={search}
+          onChange={searcher}
+        />
       </div>
       <div>
-        <Paged productPage={productsPage} productList={products.length} paged={paged} pagePrev={pagePrev} pageNext={pageNext}/>
+        {!producList.length
+          ? "No Products to Show"
+          : search.length > 3
+          ? producList2.map((c) => {
+              return (
+                <div key={componentId++}>
+                  <Card
+                    key={c.id}
+                    image={c.images[0]}
+                    name={c.name}
+                    category={c.category}
+                    price={c.price}
+                  />
+                </div>
+              );
+            })
+          : producList.map((p) => (
+              <div key={componentId++}>
+                <Card
+                  key={p.id}
+                  image={p.images[0]}
+                  name={p.name}
+                  category={p.category}
+                  price={p.price}
+                />
+              </div>
+            ))}
+      </div>
+
+      <div>
+        {search.length > 3 ? (
+          <div>
+            <div>
+              <Paged
+                productPage={productsPage}
+                producList={producList2.length}
+                paged={paged}
+                pagePrev={pagePrev}
+                pageNext={pageNext}
+              />
+            </div>
+          </div>
+        ) : (
+          <Paged
+            productPage={productsPage}
+            producList={products.length}
+            paged={paged}
+            pagePrev={pagePrev}
+            pageNext={pageNext}
+          />
+        )}
       </div>
     </div>
   );
