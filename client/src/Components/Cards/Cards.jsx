@@ -3,6 +3,8 @@ import { getProducts } from "../../Redux/Actions";
 import { Card } from "../Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import Paged from "../Paged/Paged";
+import { Filter } from "../Filter/Filter.jsx";
+import s from "./Cards.module.css";
 
 export function Cards() {
   let dispatch = useDispatch();
@@ -60,49 +62,53 @@ export function Cards() {
   //===========================================================
   return (
     <div>
-      <div>
+      <div className={s.searchInput}>
         <input
           name="text"
-          placeholder="Buscar producto por Anime"
+          placeholder="     Buscar producto por Anime"
           type="text"
           value={search}
           onChange={searcher}
         />
       </div>
-      <div>
-        {!producList.length ? (
-          <h2>"No Products to Show"</h2>
-        ) : search.length > 3 ? (
-          producList2.map((c) => {
-            return (
+      <div className={s.wrapperContainer}>
+        <div className={s.wrapper}>
+          <Filter />
+        </div>
+        <div className={s.wrapper2}>
+          {!producList.length ? (
+            <h2>"No Products to Show"</h2>
+          ) : search.length > 3 ? (
+            producList2.map((c) => {
+              return (
+                <div key={componentId++}>
+                  <Card
+                    key={c.id}
+                    id={c.id}
+                    image={c.images[0]}
+                    name={c.name}
+                    category={c.category}
+                    price={c.price}
+                  />
+                </div>
+              );
+            })
+          ) : (
+            producList.map((p) => (
               <div key={componentId++}>
                 <Card
-                  key={c.id}
-                  id={c.id}
-                  image={c.images[0]}
-                  name={c.name}
-                  category={c.category}
-                  price={c.price}
+                  key={p.id}
+                  id={p.id}
+                  image={p.images[0]}
+                  name={p.name}
+                  category={p.category}
+                  price={p.price}
                 />
               </div>
-            );
-          })
-        ) : (
-          producList.map((p) => (
-            <div key={componentId++}>
-              <Card
-                key={p.id}
-                id={p.id}
-                image={p.images[0]}
-                name={p.name}
-                category={p.category}
-                price={p.price}
-              />
-            </div>
-          ))
-        )}
+            ))
+          )}
+        </div>
       </div>
-
       <div>
         {search.length > 3 ? (
           <div>
@@ -117,13 +123,17 @@ export function Cards() {
             </div>
           </div>
         ) : (
-          <Paged
-            productPage={productsPage}
-            producList={products.length}
-            paged={paged}
-            pagePrev={pagePrev}
-            pageNext={pageNext}
-          />
+          <div>
+            <div>
+              <Paged
+                productPage={productsPage}
+                producList={products.length}
+                paged={paged}
+                pagePrev={pagePrev}
+                pageNext={pageNext}
+              />
+            </div>
+          </div>
         )}
       </div>
     </div>

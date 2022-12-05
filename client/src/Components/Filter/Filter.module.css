@@ -12,6 +12,7 @@
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
+  margin-top: 10px;
 }
 
 .filterSelecthover {
