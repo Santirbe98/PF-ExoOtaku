@@ -31,3 +31,14 @@ export function getProductDetail(id) {
     });
   };
 }
+
+export function postProduct(body){
+  return async function(){
+    try {
+      var json = await axios.post("http://localhost:3001/products/", body)
+      return json
+    } catch (error) {
+      console.error({error: error.message})
+    }
+  }
+}
