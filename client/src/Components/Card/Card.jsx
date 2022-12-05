@@ -6,7 +6,7 @@ export function Card({ name, price, image, category, id }) {
     <div>
       <div>
         <Link to={`/detail/${id}`}>
-          <img src={image} alt="Not Found" />
+          <img src={image} alt="Not Found" width="200px" />
         </Link>
         <h4>{name}</h4>
         <h4>{category}</h4>
