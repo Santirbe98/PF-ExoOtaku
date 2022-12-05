@@ -32,7 +32,11 @@ export function About() {
         <p>Nuestra ropa se realiza mediante impresoras DTG</p>
       </div>
       <div className={s.carrouselContainer} key="div5">
-        <button onClick={prevImg} disabled={actImg === 0 ? true : false}>
+        <button
+          onClick={prevImg}
+          disabled={actImg === 0 ? true : false}
+          className={s.aboutButton}
+        >
           ←
         </button>
         {mock.length > 0 &&
@@ -58,6 +62,7 @@ export function About() {
         <button
           onClick={nextImg}
           disabled={actImg === quantity - 1 ? true : false}
+          className={s.aboutButton}
         >
           →
         </button>
