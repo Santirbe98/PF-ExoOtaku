@@ -320,7 +320,7 @@ export const Form = () => {
               onChange={(e) => handleImages(e)}
             />
             <div>
-              <img id="output" alt="image" width={200} />
+              <img id="output" alt="imageProduct" width={200} />
             </div>
 
             {errors.images && (

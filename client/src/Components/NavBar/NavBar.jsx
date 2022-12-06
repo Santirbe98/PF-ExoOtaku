@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Filter } from "../Filter/Filter";
 import s from "./NavBar.module.css";
 
 export const NavBar = () => {
@@ -11,6 +10,7 @@ export const NavBar = () => {
           <img
             src="http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0"
             width="200px"
+            alt="exootakulogo"
           />
         </div>
         <section>
