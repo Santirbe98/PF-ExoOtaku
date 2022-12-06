@@ -18,12 +18,12 @@
   letter-spacing: 2.5px;
   font-weight: 500;
   justify-content: center;
-  background-color: rgb(37, 155, 87);
+  background-color: rgb(235, 203, 100);
   color: #181111;
   cursor: pointer;
   transition: background-color 0.4s;
 }
 
 .buttonSubmit:hover {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(242, 157, 18);
 }
