@@ -1,0 +1,17 @@
+.footerContainer {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  margin: 10px;
+  bottom: 0%;
+  width: 100%;
+}
+
+.links {
+  text-decoration: none;
+  margin: 10px;
+  color: rgb(255, 255, 255);
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttonSubmit {
+  display: flex;
+  border: 1px solid rgba(82, 142, 110);
+  border-radius: 20px;
+  width: 200px;
+  height: 70px;
+  flex-flow: column wrap;
+  align-items: center;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  justify-content: center;
+  background-color: rgb(235, 203, 100);
+  color: #181111;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+
+.buttonSubmit:hover {
+  background-color: rgb(242, 157, 18);
+}

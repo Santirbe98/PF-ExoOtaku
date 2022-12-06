@@ -1,0 +1,42 @@
+.wrapper {
+  margin: 20px;
+  padding: 20px;
+}
+.wrapper2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.wrapperContainer {
+  margin-top: 20px;
+  margin-right: 20px;
+  display: grid;
+  grid-template-columns: 30% 70% repeat(2, 1fr);
+}
+
+.searchInput input {
+  background-color: #eee;
+  border: 1px solid transparent;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.3rem;
+  width: 20em;
+  border-radius: 10px;
+  color: rgb(242, 157, 18);
+  cursor: pointer;
+}
+
+.searchInput {
+  text-align: center;
+  margin-left: 250px;
+}
+
+.searchInput input:hover {
+  border: 1px solid transparent;
+}
+
+.textLoading {
+  position: absolute;
+  align-self: center;
+  padding-left: 20%;
+}
