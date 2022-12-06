@@ -8,6 +8,11 @@ body {
   color: white;
   background-color: rgb(0, 0, 0);
   overflow-x: hidden;
+  background-image: url("./Resources/backgroundImg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 code {

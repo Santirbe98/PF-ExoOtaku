@@ -78,7 +78,9 @@ export function Cards() {
         </div>
         <div className={s.wrapper2}>
           {!productsList.length ? (
-            <h2>"No Products to Show"</h2>
+            <div className={s.textLoading}>
+              <h2>"No Products to Show"</h2>
+            </div>
           ) : search.length > 3 ? (
             productsList2.map((c) => {
               return (
