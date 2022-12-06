@@ -3,7 +3,7 @@ import { filterAll } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./Filter.module.css";
 
-export function Filter() {
+export function Filter(props) {
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
@@ -25,6 +25,7 @@ export function Filter() {
         category: e.target.value,
       })
     );
+    props.setPage(1);
   }
   function handleFilterCol(e) {
     e.preventDefault();
@@ -38,6 +39,7 @@ export function Filter() {
         color: e.target.value,
       })
     );
+    props.setPage(1);
   }
   function handleFilterType(e) {
     e.preventDefault();
@@ -51,6 +53,7 @@ export function Filter() {
         type: e.target.value,
       })
     );
+    props.setPage(1);
   }
 
   const categArr = [];
