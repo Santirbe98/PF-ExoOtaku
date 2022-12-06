@@ -56,6 +56,30 @@ export function Filter(props) {
     props.setPage(1);
   }
 
+  function handleFilterClean(e) {
+    dispatch(
+      filterAll({
+        type: "All",
+        color: "All",
+        category: "All",
+      })
+    );
+    setInput({
+      type: "All",
+      color: "All",
+      category: "All",
+    });
+    document
+      .getElementById("colorSelect")
+      .getElementsByTagName("option")[0].selected = "selected";
+    document
+      .getElementById("typeSelect")
+      .getElementsByTagName("option")[0].selected = "selected";
+    document
+      .getElementById("categorySelect")
+      .getElementsByTagName("option")[0].selected = "selected";
+  }
+
   const categArr = [];
   if (products) {
     products.map((c) => categArr.push(c.category));
@@ -67,7 +91,11 @@ export function Filter(props) {
   return (
     <>
       <div>
-        <select onChange={(e) => handleFilterCol(e)} className={s.filterSelect}>
+        <select
+          onChange={(e) => handleFilterCol(e)}
+          className={s.filterSelect}
+          id="colorSelect"
+        >
           <option value="All" key="All">
             Todos
           </option>
@@ -89,6 +117,7 @@ export function Filter(props) {
         <select
           onChange={(e) => handleFilterType(e)}
           className={s.filterSelect}
+          id="typeSelect"
         >
           <option value="All" key="All2">
             Todos
@@ -102,7 +131,11 @@ export function Filter(props) {
         </select>
       </div>
       <div>
-        <select onChange={(e) => handleFilterCat(e)} className={s.filterSelect}>
+        <select
+          onChange={(e) => handleFilterCat(e)}
+          className={s.filterSelect}
+          id="categorySelect"
+        >
           <option value="All">Todos los animes</option>
           {categoriesWithoutRepeat.map((c) => {
             return (
@@ -112,6 +145,14 @@ export function Filter(props) {
             );
           })}
         </select>
+      </div>
+      <div>
+        <button
+          className={s.filterButton}
+          onClick={(e) => handleFilterClean(e)}
+        >
+          Limpiar
+        </button>
       </div>
     </>
   );
