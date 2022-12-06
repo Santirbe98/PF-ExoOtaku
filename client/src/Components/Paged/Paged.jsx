@@ -7,6 +7,7 @@ export default function Paged({
   paged,
   pagePrev,
   pageNext,
+  currentPage,
 }) {
   const pages = [];
   for (let i = 1; i <= Math.ceil(productList / productPage); i++) {
@@ -42,6 +43,7 @@ export default function Paged({
               onClick={() => paged(pageNext, pages.length)}
               style={{ width: "50px" }}
               className={s.buttonPaged}
+              disabled={currentPage === pages.length ? true : false}
             >
               →
             </button>

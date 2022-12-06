@@ -64,6 +64,7 @@ export function Filter(props) {
         category: "All",
       })
     );
+    props.setPage(1);
     setInput({
       type: "All",
       color: "All",
