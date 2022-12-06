@@ -19,7 +19,7 @@ export function Cards() {
   const [productsPage] = useState(9);
   const totalPage = page * productsPage;
   const firstPage = totalPage - productsPage;
-  const producList = products.slice(firstPage, totalPage);
+  const productsList = products.slice(firstPage, totalPage);
 
   const paged = function (pageNumber, totPages) {
     setPage(pageNumber);
@@ -54,12 +54,12 @@ export function Cards() {
   };
 
   const productSearch = !search
-    ? producList
-    : producList.filter((p) =>
+    ? productsList
+    : products.filter((p) =>
         p.category.toLowerCase().includes(search.toLowerCase())
       );
 
-  const producList2 = productSearch.slice(firstPage, totalPage);
+  const productsList2 = productSearch.slice(firstPage, totalPage);
   //===========================================================
   return (
     <div>
@@ -77,10 +77,10 @@ export function Cards() {
           <Filter />
         </div>
         <div className={s.wrapper2}>
-          {!producList.length ? (
+          {!productsList.length ? (
             <h2>"No Products to Show"</h2>
           ) : search.length > 3 ? (
-            producList2.map((c) => {
+            productsList2.map((c) => {
               return (
                 <div key={componentId++}>
                   <Card
@@ -95,7 +95,7 @@ export function Cards() {
               );
             })
           ) : (
-            producList.map((p) => (
+            productsList.map((p) => (
               <div key={componentId++}>
                 <Card
                   key={p.id}
@@ -111,12 +111,12 @@ export function Cards() {
         </div>
       </div>
       <div>
-        {search.length > 3 ? (
+        {search.length >= 3 ? (
           <div>
             <div>
               <PagedSearch
                 productPage={productsPage}
-                producList={producList2.length}
+                productList={productSearch.length}
                 paged={paged}
                 pagePrev={pagePrev}
                 pageNext={pageNext}
@@ -127,8 +127,8 @@ export function Cards() {
           <div>
             <div>
               <Paged
-                productPage={productsPage}
-                productList={products.length}
+                productPage={productsPage} // 9
+                productList={products.length} //
                 paged={paged}
                 pagePrev={pagePrev}
                 pageNext={pageNext}

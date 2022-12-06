@@ -14,10 +14,9 @@ export default function Paged({
   }
   console.log(pages);
   console.log(productList);
-  console.log(productPage);
   return (
     <div>
-      {!pages ? (
+      {pages.length <= 1 ? (
         <></>
       ) : (
         <ul className={s.liPaged}>
