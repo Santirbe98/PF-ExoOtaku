@@ -74,7 +74,7 @@ export function Cards() {
       </div>
       <div className={s.wrapperContainer}>
         <div className={s.wrapper}>
-          <Filter />
+          <Filter setPage={setPage} />
         </div>
         <div className={s.wrapper2}>
           {!productsList.length ? (
