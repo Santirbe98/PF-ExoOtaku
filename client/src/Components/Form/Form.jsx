@@ -121,10 +121,9 @@ export const Form = () => {
             <input
               value={input.name}
               type="text"
-              id="component-error"
-              label="Name"
+
               name="name"
-              aria-describedby="component-error-text"
+
               onChange={(e) => handleChange(e)}
               className={!errors.name ? style.input : T.input}
             />
@@ -136,15 +135,11 @@ export const Form = () => {
           </div>
           <div>
             <label> descriptions </label>
-            <input
+            <textarea
               value={input.descriptions}
-              type="text"
-              id="outlined-multiline-static"
-              multiline
-              label="descriptions"
-              name="descriptions"
               onChange={(e) => handleChange(e)}
-              rows={4}
+              rows="5" cols="30"
+              name='descriptions'
               className={!errors.descriptions ? style.input : T.input}
             />
             {errors.descriptions && (
@@ -176,7 +171,7 @@ export const Form = () => {
             <label> Stock </label>
             <input
               value={input.stock}
-              id="standard-number"
+
               type="number"
               onChange={(e) => handleChange(e)}
               name="stock"
@@ -207,8 +202,8 @@ export const Form = () => {
           <div>
             <label> Size </label>
             <select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
+
+              multiple={false}
               value={input.size}
               label="Size"
               onChange={(e) => {
@@ -246,8 +241,8 @@ export const Form = () => {
               <label> Color </label>
               <select
                 className={style.filterSelect}
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
+
+
                 value={input.size}
                 label="Size"
                 onChange={(e) => {
@@ -259,7 +254,7 @@ export const Form = () => {
                 <option value={"White"}> White </option>
                 <option value={"Pink"}> Pink </option>
               </select>
-              {/*  <Button variant="secondary" size="medium" sx={{width: 100, bgcolor: '#5b5b5b', border: 'black'}}> Add </Button> */}
+             
             </div>
           </div>
           <div className={style.DivContainer}>
@@ -333,7 +328,7 @@ export const Form = () => {
         </form>
 
         <Link to="/home">
-          <button className={style.button} type="submit">
+          <button className={style.button}>
             {" "}
             Back to Home
           </button>
