@@ -17,15 +17,13 @@ export function validate(input){
 
     else if(input.price.length === 0){
         errors.price = 'An entry is required'
-    }
-
-    if(input.stock.length === 0){
-        errors.stock = 'An entry is required'
-    }
-
-    if(!/[0-9]/.test(input.stock) || /[a-zA-Z ]/.test(input.stock || input.stock < 0)){
+    } 
+    
+    if(!/[0-9]/.test(input.stock) || /[a-zA-Z ]/.test(input.stock) || input.stock < 0){
         errors.stock = 'A non-negative number is required'
     }
+
+   
 
     if(input.size.length === 0){
         errors.size = 'Please choose at least one option'
@@ -34,7 +32,13 @@ export function validate(input){
     if(!input.category || input.category.length === 0){
         errors.category = 'Category is required'
     }
+    
+    if(input.images.length === 0 ){
+        errors.images = 'Image is required'
+    }
 
+
+    
 
 
     return errors 

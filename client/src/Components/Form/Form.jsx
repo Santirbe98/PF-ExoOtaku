@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { postProduct } from "../../Redux/Actions";
 
 import style from "./Form.module.css";
+import Reader from "./read";
+import * as T from './Errors.module.css'
 
 export const Form = () => {
   const dispatch = useDispatch();
@@ -34,9 +36,10 @@ export const Form = () => {
     category: "",
   };
 
+
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(postProduct(input));
+/*     dispatch(postProduct(input)); */
     console.log(input);
     alert("done");
     setInput(initialState);
@@ -60,6 +63,13 @@ export const Form = () => {
       ...input,
       images: [...input.images, String(e.target.value)],
     });
+    setErrors(
+        validate({
+          ...input,
+          images: e.target.value,
+        })
+      )
+
   }
 
   function handleTypes(e) {
@@ -120,9 +130,9 @@ export const Form = () => {
               name="name"
               aria-describedby="component-error-text"
               onChange={(e) => handleChange(e)}
-              className={style.input}
+              className={!errors.name ? style.input : T.input}
             />
-            {errors.name && <p id="component-error-text">{errors.name}</p>}
+            {errors.name && <p className={T.pError} id="component-error-text">{errors.name}</p>}
           </div>
           <div>
             <label> descriptions </label>
@@ -135,10 +145,10 @@ export const Form = () => {
               name="descriptions"
               onChange={(e) => handleChange(e)}
               rows={4}
-              className={style.description}
+              className={!errors.descriptions ? style.input : T.input}
             />
             {errors.descriptions && (
-              <p id="component-error-text">{errors.descriptions}</p>
+              <p className={T.pError} id="component-error-text">{errors.descriptions}</p>
             )}
           </div>
 
@@ -150,10 +160,10 @@ export const Form = () => {
               type="number"
               onChange={(e) => handleChange(e)}
               name="price"
-              className={style.input}
+              className={!errors.price ? style.input : T.input}
             />
 
-            {errors.price && <p id="component-error-text">{errors.price}</p>}
+            {errors.price && <p className={T.pError} id="component-error-text">{errors.price}</p>}
           </div>
 
           <div>
@@ -164,8 +174,9 @@ export const Form = () => {
               type="number"
               onChange={(e) => handleChange(e)}
               name="stock"
-              className={style.input}
+              className={!errors.stock ? style.input : T.input}
             />
+             {errors.stock && <p className={T.pError} id="component-error-text">{errors.stock}</p>}
           </div>
           <div>
             <label> Type </label>
@@ -260,19 +271,36 @@ export const Form = () => {
           <div>
             <label> Category </label>
             <input
-              className={style.input}
-              value={input.category}
-              type="text"
-              id="component-error"
-              label="Category"
-              name="category"
-              aria-describedby="component-error-text"
-              onChange={(e) => handleChange(e)}
+            className={!errors.category ? style.input : T.input}
+            value={input.category}
+            type="text"
+            id="component-error"
+            label="Category"
+            name="category"
+            aria-describedby="component-error-text"
+            onChange={(e) => handleChange(e)}
             />
             {errors.category && (
-              <p id="component-error-text">{errors.category}</p>
+              <p className={T.pError} id="component-error-text">{errors.category}</p>
             )}
           </div>
+
+          <label> Images </label>
+
+           <div>
+            <input accept="image/*" multiple type="file" onChange={e => handleImages(e)}/>
+            <div>
+                <img id="output" alt='image' width={200} />
+            </div>
+            
+            {errors.images && (
+              <p className={errors.images ? T.pError: null} id="component-error-text">{errors.images}</p>
+            )}
+            </div>
+            <div>{input.images && input.images.map((e) => <p> {e} </p>)}
+            </div>
+            
+
 
           <button
             type="submit"
@@ -284,25 +312,13 @@ export const Form = () => {
           </button>
         </form>
 
-        <Link to="/home">
-          <button className={style.button} type="submit">
-            {" "}
-            Back to Home
-          </button>
-        </Link>
-        <div>
-          <label> Images </label>
-          <button
-            variant="contained"
-            component="label"
-            onChange={(e) => handleImages(e)}
-            className={style.button}
-          >
-            Upload
-            <input hidden accept="image/*" multiple type="file" />
-          </button>
-          <div>{input.images && input.images.map((e) => <p> {e} </p>)}</div>
-        </div>
+        
+          <Link to="/home">
+            <button className={style.button} type="submit">
+              {" "}
+              Back to Home
+            </button>
+          </Link>
       </div>
     </div>
   );
