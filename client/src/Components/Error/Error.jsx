@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
+import errorImg from "../../Resources/404.png";
+import s from "./Error.module.css";
 
 export const Error = () => {
   return (
-    <div>
-      <h1>Error 404</h1>
+    <div className={s.container}>
+      <img src={errorImg} alt="404" width="800px" className={s.imgError} />
       <Link to="/home">
-        <Button variant="outlined">Back...</Button>
+        <button className={s.detailButton}>Back...</button>
       </Link>
     </div>
   );

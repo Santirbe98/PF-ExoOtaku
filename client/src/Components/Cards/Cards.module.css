@@ -15,12 +15,27 @@
 
 .searchInput input {
   background-color: #eee;
-  border: none;
-  padding: 0.5rem;
-  font-size: 0.8rem;
-  width: 15em;
-  border-radius: 1rem;
-  color: rgb(90, 79, 239);
-  box-shadow: 0 0.4rem #dfd9d9;
+  border: 1px solid transparent;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.3rem;
+  width: 20em;
+  border-radius: 10px;
+  color: rgb(242, 157, 18);
   cursor: pointer;
+}
+
+.searchInput {
+  text-align: center;
+  margin-left: 250px;
+}
+
+.searchInput input:hover {
+  border: 1px solid transparent;
+}
+
+.textLoading {
+  position: absolute;
+  align-self: center;
+  padding-left: 20%;
 }
