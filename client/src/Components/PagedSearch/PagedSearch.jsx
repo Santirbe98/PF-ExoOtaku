@@ -12,8 +12,7 @@ export default function Paged({
   for (let i = 1; i <= Math.ceil(productList / productPage); i++) {
     pages.push(i);
   }
-  console.log(pages);
-  console.log(productList);
+
   return (
     <div>
       {pages.length <= 1 ? (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { validate } from "./Validate";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postProduct } from "../../Redux/Actions";
 
@@ -282,15 +282,14 @@ export const Form = () => {
             {" "}
             Create Product
           </button>
-
         </form>
-        
-          <Link to="/home">
-            <button className={style.button} type="submit">
-              {" "}
-              Back to Home
-            </button>
-          </Link>
+
+        <Link to="/home">
+          <button className={style.button} type="submit">
+            {" "}
+            Back to Home
+          </button>
+        </Link>
         <div>
           <label> Images </label>
           <button
@@ -298,7 +297,6 @@ export const Form = () => {
             component="label"
             onChange={(e) => handleImages(e)}
             className={style.button}
-            
           >
             Upload
             <input hidden accept="image/*" multiple type="file" />
