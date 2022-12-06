@@ -9,7 +9,6 @@ export const Home = () => {
     <div>
       <NavBar />
       <Cards />
-      <Link to="/form"> Formulario </Link>
       <Footer />
     </div>
   );
