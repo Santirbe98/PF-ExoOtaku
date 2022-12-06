@@ -4,6 +4,7 @@ import { validate } from "./Validate";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postProduct } from "../../Redux/Actions";
+import { NavBar } from "../NavBar/NavBar.jsx";
 
 import style from "./Form.module.css";
 import * as T from "./Errors.module.css";
@@ -112,6 +113,9 @@ export const Form = () => {
 
   return (
     <div>
+      <div>
+        <NavBar />
+      </div>
       <h1>Create New Product</h1>
 
       <div>
@@ -121,14 +125,16 @@ export const Form = () => {
             <input
               value={input.name}
               type="text"
-
               name="name"
-
               onChange={(e) => handleChange(e)}
               className={!errors.name ? style.input : T.input}
             />
             {errors.name && (
-              <p key={errors.name} className={T.pError} id="component-error-text">
+              <p
+                key={errors.name}
+                className={T.pError}
+                id="component-error-text"
+              >
                 {errors.name}
               </p>
             )}
@@ -138,12 +144,17 @@ export const Form = () => {
             <textarea
               value={input.descriptions}
               onChange={(e) => handleChange(e)}
-              rows="5" cols="30"
-              name='descriptions'
+              rows="5"
+              cols="30"
+              name="descriptions"
               className={!errors.descriptions ? style.input : T.input}
             />
             {errors.descriptions && (
-              <p key={errors.descriptions} className={T.pError} id="component-error-text">
+              <p
+                key={errors.descriptions}
+                className={T.pError}
+                id="component-error-text"
+              >
                 {errors.descriptions}
               </p>
             )}
@@ -161,7 +172,11 @@ export const Form = () => {
             />
 
             {errors.price && (
-              <p key={errors.price} className={T.pError} id="component-error-text">
+              <p
+                key={errors.price}
+                className={T.pError}
+                id="component-error-text"
+              >
                 {errors.price}
               </p>
             )}
@@ -171,14 +186,17 @@ export const Form = () => {
             <label> Stock </label>
             <input
               value={input.stock}
-
               type="number"
               onChange={(e) => handleChange(e)}
               name="stock"
               className={!errors.stock ? style.input : T.input}
             />
             {errors.stock && (
-              <p key={errors.stock} className={T.pError} id="component-error-text">
+              <p
+                key={errors.stock}
+                className={T.pError}
+                id="component-error-text"
+              >
                 {errors.stock}
               </p>
             )}
@@ -202,7 +220,6 @@ export const Form = () => {
           <div>
             <label> Size </label>
             <select
-
               multiple={false}
               value={input.size}
               label="Size"
@@ -241,8 +258,6 @@ export const Form = () => {
               <label> Color </label>
               <select
                 className={style.filterSelect}
-
-
                 value={input.size}
                 label="Size"
                 onChange={(e) => {
@@ -254,7 +269,6 @@ export const Form = () => {
                 <option value={"White"}> White </option>
                 <option value={"Pink"}> Pink </option>
               </select>
-             
             </div>
           </div>
           <div className={style.DivContainer}>
@@ -286,7 +300,11 @@ export const Form = () => {
               onChange={(e) => handleChange(e)}
             />
             {errors.category && (
-              <p key={errors.category} className={T.pError} id="component-error-text">
+              <p
+                key={errors.category}
+                className={T.pError}
+                id="component-error-text"
+              >
                 {errors.category}
               </p>
             )}
@@ -315,7 +333,9 @@ export const Form = () => {
               </p>
             )}
           </div>
-          <div>{input.images && input.images.map((e) => <p key={e}> {e} </p>)}</div>
+          <div>
+            {input.images && input.images.map((e) => <p key={e}> {e} </p>)}
+          </div>
 
           <button
             type="submit"
@@ -328,10 +348,7 @@ export const Form = () => {
         </form>
 
         <Link to="/home">
-          <button className={style.button}>
-            {" "}
-            Back to Home
-          </button>
+          <button className={style.button}> Back to Home</button>
         </Link>
       </div>
     </div>
