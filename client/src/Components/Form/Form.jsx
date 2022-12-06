@@ -129,7 +129,7 @@ export const Form = () => {
               className={!errors.name ? style.input : T.input}
             />
             {errors.name && (
-              <p className={T.pError} id="component-error-text">
+              <p key={errors.name} className={T.pError} id="component-error-text">
                 {errors.name}
               </p>
             )}
@@ -148,7 +148,7 @@ export const Form = () => {
               className={!errors.descriptions ? style.input : T.input}
             />
             {errors.descriptions && (
-              <p className={T.pError} id="component-error-text">
+              <p key={errors.descriptions} className={T.pError} id="component-error-text">
                 {errors.descriptions}
               </p>
             )}
@@ -166,7 +166,7 @@ export const Form = () => {
             />
 
             {errors.price && (
-              <p className={T.pError} id="component-error-text">
+              <p key={errors.price} className={T.pError} id="component-error-text">
                 {errors.price}
               </p>
             )}
@@ -183,7 +183,7 @@ export const Form = () => {
               className={!errors.stock ? style.input : T.input}
             />
             {errors.stock && (
-              <p className={T.pError} id="component-error-text">
+              <p key={errors.stock} className={T.pError} id="component-error-text">
                 {errors.stock}
               </p>
             )}
@@ -230,7 +230,7 @@ export const Form = () => {
               {input.size.length > 0 &&
                 input.size.map((c) => {
                   return (
-                    <div>
+                    <div key={c}>
                       <button value={c} onClick={(e) => handleCloseSize(e)}>
                         {" "}
                         -{" "}
@@ -267,7 +267,7 @@ export const Form = () => {
               {input.color.length > 0 &&
                 input.color.map((c) => {
                   return (
-                    <div>
+                    <div key={c}>
                       <button value={c} onClick={(e) => handleClosecolor(e)}>
                         {" "}
                         -{" "}
@@ -291,7 +291,7 @@ export const Form = () => {
               onChange={(e) => handleChange(e)}
             />
             {errors.category && (
-              <p className={T.pError} id="component-error-text">
+              <p key={errors.category} className={T.pError} id="component-error-text">
                 {errors.category}
               </p>
             )}
@@ -312,6 +312,7 @@ export const Form = () => {
 
             {errors.images && (
               <p
+                key={errors.images}
                 className={errors.images ? T.pError : null}
                 id="component-error-text"
               >
@@ -319,7 +320,7 @@ export const Form = () => {
               </p>
             )}
           </div>
-          <div>{input.images && input.images.map((e) => <p> {e} </p>)}</div>
+          <div>{input.images && input.images.map((e) => <p key={e}> {e} </p>)}</div>
 
           <button
             type="submit"
