@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { filterAll } from "../../Redux/Actions/index";
+import { filterAll, orderByPrice } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./Filter.module.css";
 
@@ -12,7 +12,6 @@ export function Filter(props) {
     color: "All",
     category: "All",
   });
-
   function handleFilterCat(e) {
     e.preventDefault();
     setInput({
@@ -55,7 +54,12 @@ export function Filter(props) {
     );
     props.setPage(1);
   }
-
+  const handleOrderByPrice = (e) => {
+    e.preventDefault();
+    dispatch(orderByPrice(e.target.value));
+    props.setOrder(e.target.value);
+    props.setPage(1);
+  };
   function handleFilterClean(e) {
     dispatch(
       filterAll({
@@ -78,6 +82,9 @@ export function Filter(props) {
       .getElementsByTagName("option")[0].selected = "selected";
     document
       .getElementById("categorySelect")
+      .getElementsByTagName("option")[0].selected = "selected";
+    document
+      .getElementById("priceSelect")
       .getElementsByTagName("option")[0].selected = "selected";
   }
 
@@ -147,6 +154,21 @@ export function Filter(props) {
           })}
         </select>
       </div>
+      <select
+        onChange={(e) => handleOrderByPrice(e)}
+        className={s.filterSelect}
+        id="priceSelect"
+      >
+        <option disabled selected>
+          Ordenar por precios
+        </option>
+        <option value="Asc" key="All2">
+        Menor precio
+        </option>
+        <option value="Desc" key="tshirt">
+          Mayor precio
+        </option>
+      </select>
       <div>
         <button
           className={s.filterButton}

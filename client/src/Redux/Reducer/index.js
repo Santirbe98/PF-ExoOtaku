@@ -3,6 +3,7 @@ import {
   GET_PRODUCTS,
   FILTER_ALL,
   GET_PRODUCT_DETAIL,
+  ORDER_BY_PRICE
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -50,7 +51,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: action.payload,
       };
-
+    case ORDER_BY_PRICE:
+      const products = state.filterProducts;
+      const orderProduct =
+        action.payload === "Asc"
+          ? products.sort((a, b) => a.price - b.price)
+          : products.sort((a, b) => b.price - a.price);
+      return {
+        ...state,
+        filterProducts: orderProduct,
+      };
     default:
       return {
         ...state,

@@ -3,6 +3,7 @@ import {
   GET_PRODUCTS,
   FILTER_ALL,
   GET_PRODUCT_DETAIL,
+  ORDER_BY_PRICE
 } from "./actionsTypes";
 
 // cambiar el puerto del localhost al que usen localmente
@@ -41,4 +42,10 @@ export function postProduct(body){
       console.error({error: error.message})
     }
   }
+}
+export function orderByPrice(payload) {
+  return {
+    type: ORDER_BY_PRICE,
+    payload: payload,
+  };
 }
