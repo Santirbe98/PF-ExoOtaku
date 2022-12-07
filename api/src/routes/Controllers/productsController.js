@@ -65,7 +65,7 @@ const getAllProducts = async function () {
           color: colorArray,
           type: typeArray,
           size: sizeArray,
-          category: field.categories[0].category,
+          category: field.categories.category,
         };
         return dataProduct;
       });
