@@ -47,7 +47,7 @@ export function Cards() {
   //===========================================================
 
   const [search, setSearch] = useState("");
-
+  const [order, setOrder] = useState("");
   const searcher = (e) => {
     setSearch(e.target.value);
     setPage(1);
@@ -74,7 +74,7 @@ export function Cards() {
       </div>
       <div className={s.wrapperContainer}>
         <div className={s.wrapper}>
-          <Filter setPage={setPage} />
+          <Filter setPage={setPage} setOrder={setOrder} />
         </div>
         <div className={s.wrapper2}>
           {!productsList.length ? (
