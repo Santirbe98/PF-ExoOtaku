@@ -1,3 +1,4 @@
+// import { Button } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./NavBar.module.css";
@@ -108,6 +109,7 @@ export const NavBar = () => {
           </button>
         </section>
       </div>
+      {/* <Button className={s.navButton}>hola</Button> */}
     </div>
   );
 };
