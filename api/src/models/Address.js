@@ -1,12 +1,12 @@
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
-    sequelize.define("address", {
-
+  sequelize.define(
+    "address",
+    {
       id_customer: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      },        
-
+      },
       country: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -34,15 +34,13 @@ module.exports = (sequelize) => {
 
       deleted: {
         type: DataTypes.BOOLEAN,
-        allowNull: false, 
-        defaultValue: false
-      }
-      
+        allowNull: false,
+        defaultValue: false,
+      },
     },
 
     {
-        timestamps: false,
+      timestamps: false,
     }
-
   );
 };
