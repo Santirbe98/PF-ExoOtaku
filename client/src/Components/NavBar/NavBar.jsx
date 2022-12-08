@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./NavBar.module.css";
+import LoginButton from "../Authenticate/LoginButton";
+import LogoutButton from "../Authenticate/LogoutButton";
+import Profile from "../Authenticate/Profile";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const NavBar = () => {
+  const { isLoading, error } = useAuth0();
   return (
     <div className={s.container}>
       <div className={s.divSection}>
@@ -107,6 +112,19 @@ export const NavBar = () => {
             </span>
           </button>
         </section>
+      </div>
+
+      <div className="column">
+        <h1>Auth0 Login</h1>
+        {error && <p>Authentication Error</p>}
+        {!error && isLoading && <p>Loading...</p>}
+        {!error && !isLoading && (
+          <>
+            <LoginButton />
+            <LogoutButton />
+            <Profile />
+          </>
+        )}
       </div>
     </div>
   );
