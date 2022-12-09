@@ -1,24 +1,58 @@
 import React from "react";
+import { Container, Grid, Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import styles from "./Footer.module.css";
 
 export const Footer = () => {
   return (
-    <>
-      <div className={styles.footerContainer}>
-        <Link to="/home" className={styles.links}>
-          Home
-        </Link>
-        <Link to="/about" className={styles.links}>
-          Sobre Nosotros
-        </Link>
-        <Link to="/help" className={styles.links}>
-          Ayuda
-        </Link>
-      </div>
-      <div>
-        <h5>© ExoOtaku</h5>
-      </div>
-    </>
+    <footer>
+      <Box bgcolor="black" py={{ xs: 5, sm: 3 }} color="white">
+        <Container maxWidth="1g">
+          <Grid container spacing={5}>
+            <Grid item xs={12} sm={4}>
+              <Box>
+                <Link
+                  to="/home"
+                  style={{
+                    textDecoration: "none",
+                    color: "white",
+                  }}
+                >
+                  Home
+                </Link>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Box>
+                <Link
+                  to="/about"
+                  style={{
+                    textDecoration: "none",
+                    color: "white",
+                  }}
+                >
+                  About
+                </Link>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Box>
+                <Link
+                  to="/help"
+                  style={{
+                    textDecoration: "none",
+                    color: "white",
+                  }}
+                >
+                  Help
+                </Link>
+              </Box>
+            </Grid>
+          </Grid>
+          <Box textAlign="center" pt={{ xs: 5, sm: 3 }} pb={{ xs: 5, sm: 0 }}>
+            © ExoOtaku
+          </Box>
+        </Container>
+      </Box>
+    </footer>
   );
 };
