@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { getProducts } from "../../Redux/Actions";
-import { Card } from "../Card/Card";
+import { MediaCard } from "../Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import Paged from "../Paged/Paged";
 import { Filter } from "../Filter/Filter.jsx";
@@ -85,7 +85,7 @@ export function Cards() {
             productsList2.map((c) => {
               return (
                 <div key={componentId++}>
-                  <Card
+                  <MediaCard
                     key={c.id}
                     id={c.id}
                     image={c.images[0]}
@@ -99,7 +99,7 @@ export function Cards() {
           ) : (
             productsList.map((p) => (
               <div key={componentId++}>
-                <Card
+                <MediaCard
                   key={p.id}
                   id={p.id}
                   image={p.images[0]}
