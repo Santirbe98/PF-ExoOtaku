@@ -38,17 +38,17 @@ export const MediaCard = ({ name, price, image, id, category }) => {
           </CardContent>
         </Link>
       </CardActionArea>
-      <Button variant="contained" color="success" sx={{ marginBottom: 4 }}>
-        <Link
-          to={`/detail/${id}`}
-          style={{
-            textDecoration: "none",
-            color: "white",
-          }}
-        >
+      <Link
+        to={`/detail/${id}`}
+        style={{
+          textDecoration: "none",
+          color: "white",
+        }}
+      >
+        <Button variant="contained" color="success" sx={{ marginBottom: 4 }}>
           <LocalGroceryStoreRoundedIcon />
-        </Link>
-      </Button>
+        </Button>
+      </Link>
     </Card>
   );
 };
