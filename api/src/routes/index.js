@@ -6,6 +6,7 @@ const categoriesRouter = require("./category.js");
 const typesRouter = require("./types.js");
 const sizesRouter = require("./size.js");
 const filtersRouter = require("./filterAll.js");
+const mockRouter = require("./mock.js");
 // Ejemplo: const authRouter = require('./auth.js');
 
 const router = Router();
@@ -17,4 +18,5 @@ router.use("/categories", categoriesRouter);
 router.use("/types", typesRouter);
 router.use("/sizes", sizesRouter);
 router.use("/filters", filtersRouter);
+router.use("/mock", mockRouter);
 module.exports = router;
