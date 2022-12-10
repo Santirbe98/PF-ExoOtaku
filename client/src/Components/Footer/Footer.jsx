@@ -1,6 +1,10 @@
 import React from "react";
-import { Container, Grid, Box } from "@mui/material";
+import { Container, Grid, Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import EmailIcon from "@mui/icons-material/Email";
 
 export const Footer = () => {
   return (
@@ -52,6 +56,17 @@ export const Footer = () => {
             © ExoOtaku
           </Box>
         </Container>
+        <Box>
+          <a href="https://www.facebook.com/search/top?q=exootaku">
+            <FacebookIcon fontSize="large" htmlColor="white" />
+          </a>
+          <a href="https://www.instagram.com/exotaku/?hl=es">
+            <InstagramIcon fontSize="large" htmlColor="white" />
+          </a>
+          <a href="https://walink.co/d3e440">
+            <WhatsAppIcon fontSize="large" htmlColor="white" />
+          </a>
+        </Box>
       </Box>
     </footer>
   );
