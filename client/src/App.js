@@ -8,10 +8,12 @@ import { Help } from "./Components/Help/Help";
 import { About } from "./Components/About/About";
 import { CardDetail } from "./Components/CardDetail/CardDetail";
 import { LandingPage } from "./Components/LandingPage/LandingPage";
+//import { CartProvider } from "./Components/Cart/CartContext";
 
 export default function App() {
   return (
     <div className="App">
+      
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/home" component={Home} />

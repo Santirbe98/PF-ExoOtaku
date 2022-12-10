@@ -45,10 +45,10 @@ export const MediaCard = ({ name, price, image, id, category }) => {
           color: "white",
         }}
       >
+      </Link>
         <Button variant="contained" color="success" sx={{ marginBottom: 4 }}>
           <LocalGroceryStoreRoundedIcon />
         </Button>
-      </Link>
     </Card>
   );
 };

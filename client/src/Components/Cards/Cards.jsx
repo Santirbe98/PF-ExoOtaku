@@ -6,6 +6,9 @@ import Paged from "../Paged/Paged";
 import { Filter } from "../Filter/Filter.jsx";
 import s from "./Cards.module.css";
 import PagedSearch from "../PagedSearch/PagedSearch";
+import addItemToCart from "../Cart/CartContext"
+
+
 
 export function Cards() {
   let dispatch = useDispatch();
