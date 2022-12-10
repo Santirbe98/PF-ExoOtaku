@@ -10,7 +10,7 @@ export const Footer = () => {
   return (
     <footer>
       <Box bgcolor="black" py={{ xs: 5, sm: 3 }} color="white">
-        <Container maxWidth="1g">
+        <Container maxWidth="lg">
           <Grid container spacing={5}>
             <Grid item xs={12} sm={4}>
               <Box>
