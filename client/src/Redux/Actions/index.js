@@ -49,3 +49,16 @@ export function orderByPrice(payload) {
     payload: payload,
   };
 }
+
+export function payment({cartItems, userId}){
+    axios.post('http://localhost:3001/payment/create-checkout-session', {
+    cartItems,
+    userId
+  })
+  .then((res) => {
+    if(res.data.url){
+      window.location.href = res.data.url
+    }
+  }).catch((err) => console.log(err))
+
+}
