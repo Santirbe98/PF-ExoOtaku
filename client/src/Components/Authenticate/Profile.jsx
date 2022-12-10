@@ -1,21 +1,29 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { Box, Avatar } from "@mui/material";
+import LogoutButton from "../Authenticate/LogoutButton";
 
 const Profile = () => {
   const { user, isAuthenticated } = useAuth0();
 
   return (
     isAuthenticated && (
-      <article className="column">
-        {user?.picture && <img src={user.picture} alt={user?.name} />}
-        <h2>{user?.name}</h2>
-        <ul>
-          {Object.keys(user).map((objKey, i) => (
-            <li key={i}>
-              {objKey}: {user[objKey]}{" "}
-            </li>
-          ))}
-        </ul>
-      </article>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "15px",
+          marginTop: "5px",
+        }}
+      >
+        {user?.picture && (
+          <Avatar
+            src={user.picture}
+            alt={user?.name}
+            sx={{ width: 50, height: 50 }}
+          />
+        )}
+        <LogoutButton />
+      </Box>
     )
   );
 };
