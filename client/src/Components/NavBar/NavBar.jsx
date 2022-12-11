@@ -11,6 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Diversity1Icon from "@mui/icons-material/Diversity1";
 
+
 export const NavBar = () => {
   const { isLoading, error } = useAuth0();
   return (
