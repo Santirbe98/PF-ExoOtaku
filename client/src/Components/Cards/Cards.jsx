@@ -6,7 +6,11 @@ import Paged from "../Paged/Paged";
 import { Filter } from "../Filter/Filter.jsx";
 import s from "./Cards.module.css";
 import PagedSearch from "../PagedSearch/PagedSearch";
-
+//--------------------------------------------------------------//
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import { yellow } from "@mui/material/colors";
+const color = yellow[500];
 export function Cards() {
   let dispatch = useDispatch();
   let products = useSelector((state) => state.filterProducts);
@@ -60,18 +64,25 @@ export function Cards() {
       );
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
+
   //===========================================================
   return (
     <div>
-      <div className={s.searchInput}>
-        <input
-          name="text"
-          placeholder="     Buscar producto por Anime"
-          type="text"
+      {/* <Box className={s.searchInput}> */}
+      <Box>
+        <TextField
+          placeholder="Busque por anime"
+          color="warning"
+          sx={{ width: "500px" }}
+          style={{
+            backgroundColor: "rgba(255, 253, 253, 0.900)",
+            borderRadius: "10px",
+          }}
+          focused
           value={search}
           onChange={searcher}
         />
-      </div>
+      </Box>
       <div className={s.wrapperContainer}>
         <div className={s.wrapper}>
           <Filter setPage={setPage} setOrder={setOrder} />
