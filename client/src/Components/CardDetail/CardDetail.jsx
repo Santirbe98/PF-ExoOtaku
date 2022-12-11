@@ -33,17 +33,20 @@ export function CardDetail({ match }) {
           >
             <Grid container spacing={2} columns={16}>
               <Grid item xs={8}>
-                <CardMedia
-                  component="img"
-                  sx={{
-                    maxWidth: 400,
-                    margin: 2,
-                    borderRadius: 3,
-                    backgroundColor: "rgb(33, 33, 33)",
-                  }}
-                  image={product.images}
-                  alt="Product"
-                />
+                {product.images?.map((i, index) => (
+                  <CardMedia
+                    key={index}
+                    component="img"
+                    sx={{
+                      maxWidth: 400,
+                      margin: 2,
+                      borderRadius: 3,
+                      backgroundColor: "rgb(33, 33, 33)",
+                    }}
+                    image={i}
+                    alt="Product"
+                  />
+                ))}
               </Grid>
 
               <Grid item xs={8}>
