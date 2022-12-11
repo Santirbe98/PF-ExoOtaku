@@ -1,4 +1,7 @@
+import { useContext, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { getProductDetail } from "../../Redux/Actions";
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -8,8 +11,15 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import LocalGroceryStoreRoundedIcon from "@mui/icons-material/LocalGroceryStoreRounded";
 import s from "./Card.module.css";
+import { CartContext } from "../Cart/CartContext";
 
 export const MediaCard = ({ name, price, image, id, category }) => {
+  const { addItemToCart } = useContext(CartContext)
+  const dispatch = useDispatch();
+  const [product, setProduct] = useState({});
+  useEffect(() => {
+    dispatch(getProductDetail(id)).then((res) => setProduct(res.payload));
+  }, [dispatch, id]);
   return (
     <Card
       className={s.container}
@@ -45,10 +55,11 @@ export const MediaCard = ({ name, price, image, id, category }) => {
           color: "white",
         }}
       >
-        <Button variant="contained" color="success" sx={{ marginBottom: 4 }}>
-          <LocalGroceryStoreRoundedIcon />
-        </Button>
+
       </Link>
+      <Button variant="contained" color="success" sx={{ marginBottom: 4 }} onClick={() => addItemToCart(product)}>
+        <LocalGroceryStoreRoundedIcon />
+      </Button>
     </Card>
   );
 };
