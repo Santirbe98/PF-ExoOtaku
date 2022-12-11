@@ -3,7 +3,8 @@ import {
   GET_PRODUCTS,
   FILTER_ALL,
   GET_PRODUCT_DETAIL,
-  ORDER_BY_PRICE
+  ORDER_BY_PRICE, 
+  ORDER_DETAIL
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -11,17 +12,25 @@ const initialState = {
   products: [],
   filterProducts: [],
   details: {},
+  orderdetail: {}
   // loading: true,
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case ORDER_DETAIL:
+      return {
+        ...state, 
+        orderdetail: action.payload
+      }
+
     case GET_PRODUCTS:
       return {
         ...state,
         products: action.payload,
         filterProducts: action.payload,
       };
+      
     case FILTER_ALL:
       const allProducts = state.products;
       const { color, type, category } = action.payload;
