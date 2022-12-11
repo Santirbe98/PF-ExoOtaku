@@ -3,7 +3,8 @@ import {
   GET_PRODUCTS,
   FILTER_ALL,
   GET_PRODUCT_DETAIL,
-  ORDER_BY_PRICE
+  ORDER_BY_PRICE,
+  ORDER_DETAIL
 } from "./actionsTypes";
 
 // cambiar el puerto del localhost al que usen localmente
@@ -51,14 +52,30 @@ export function orderByPrice(payload) {
 }
 
 export function payment({cartItems, userId}){
-    axios.post('http://localhost:3001/payment/create-checkout-session', {
-    cartItems,
-    userId
-  })
-  .then((res) => {
-    if(res.data.url){
-      window.location.href = res.data.url
-    }
-  }).catch((err) => console.log(err))
+  axios.post('http://localhost:3001/payment/create-checkout-session', {
+  cartItems,
+  userId
+})
+.then((res) => {
+  if(res.data.url){
+    window.location.href = res.data.url
+  }
+}).catch((err) => console.log(err))
 
+}
+
+    
+
+export function getCheckout(session_id){
+  return async function(dispatch){
+    try {
+      var json = await axios.get(`http://localhost:3001/payment/checkout-success?session_id=${session_id}`)
+      return dispatch({
+        type: ORDER_DETAIL, 
+        payload: json.data
+      })
+    } catch (error) {
+      console.error({error: error.message})
+    }
+  } 
 }

@@ -9,8 +9,8 @@ router.post('/create-checkout-session', async (req, res) => {
 
     const customer= await stripe.customers.create({
         metadata:{
-            userId: req.body.userId,
-            cart: req.body.cartItems.toString()
+            userId: req.body.userId.toString(),
+            cart: JSON.stringify(req.body.cartItems.toString())
         }
     })
 
@@ -21,7 +21,7 @@ router.post('/create-checkout-session', async (req, res) => {
                 product_data: {
                     name: item.name,
                     brand: item.brand,
-                    images: [item.image.toString()],
+                    images: item.images,
                     description: item.description,
                     metadata: {
                         id: item.id
@@ -29,7 +29,7 @@ router.post('/create-checkout-session', async (req, res) => {
                 },
                 unit_amount: item.price * 100
             }, 
-            quantity: item.cartQuantity
+            quantity: item.amount
         }
     })
 
@@ -59,55 +59,25 @@ router.post('/create-checkout-session', async (req, res) => {
         success_url: `${process.env.CLIENT_URL}/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.CLIENT_URL}/home`,
         });
-  
     res.send({url: session.url});
   });
 
-// This is your Stripe CLI webhook secret for testing your endpoint locally.
 
 //!-------------------
 //! Creación de orden 
 //!-------------------
 
-/* let endpointSecret  */
-/* endpointSecret = "whsec_7cd024bed26019729f51e1fd0f77690d92576caa6bbdc6332738e77a99944308"; */
 
-/* router.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
-    const sig = req.headers['stripe-signature'];
-    let data 
-    let eventType
 
-    if(endpointSecret){
-        let event;
-
-        try {
-            event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-            console.log('Webhook verified')
-
-        } catch (err) {
-            console.log(`Webhook Error: ${err.message}`)
-            res.status(400).send(`Webhook Error: ${err.message}`);
-            return;
-        }
-        data = event.data.object
-        eventType = req.body.type
-    }
-    else{
-        data = req.body.data.object
-        eventType = req.body.type
-    }
-    if(eventType === 'checkout.session.completed'){
-        stripe.customers.retrieve(data.customer)
-        .then((customer) => {
-            console.log(customer)
-            console.log("data: ", data)
-        })
-        .catch((error) => console.log(error.message))
-
-    }
-  // Return a 200 res to acknowledge receipt of the event
-  res.send().end();
-}); */
+router.get('/checkout-success', async (req, res) => {
+    const {session_id} = req.query
+    const session = await stripe.checkout.sessions.retrieve(session_id);
+    const customer = await stripe.customers.retrieve(session.customer);
+    /* console.log(session) */
+    /* console.log(customer) */
+    res.send(session)
+  });
 
 
 module.exports = router
+
