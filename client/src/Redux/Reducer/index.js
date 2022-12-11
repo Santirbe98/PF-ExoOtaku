@@ -3,7 +3,7 @@ import {
   GET_PRODUCTS,
   FILTER_ALL,
   GET_PRODUCT_DETAIL,
-  ORDER_BY_PRICE
+  ORDER_BY_PRICE,
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -11,6 +11,7 @@ const initialState = {
   products: [],
   filterProducts: [],
   details: {},
+  nuevo: [],
   // loading: true,
 };
 
@@ -52,14 +53,22 @@ function rootReducer(state = initialState, action) {
         details: action.payload,
       };
     case ORDER_BY_PRICE:
-      const products = state.filterProducts;
-      const orderProduct =
-        action.payload === "Asc"
-          ? products.sort((a, b) => a.price - b.price)
-          : products.sort((a, b) => b.price - a.price);
+      const orderPrice = function order (a,b){
+        if (a.price <b.price) {return -1;}
+        if(a.price >b.price) {return 1;}
+        return 0
+      }
+      // const product = state.products;
+      const producto = state.filterProducts;
+      const product = producto.sort(orderPrice);
+      // const orderProduct =
+      //   action.payload === "mayor"
+      //     ? producto
+      //     : producto.sort((a, b) => b.price - a.price);
       return {
         ...state,
-        filterProducts: orderProduct,
+        filterProducts: action.payload === "mayor"? product: product.reverse(),
+        nuevo: producto,
       };
     default:
       return {

@@ -9,25 +9,28 @@ import { About } from "./Components/About/About";
 import { CardDetail } from "./Components/CardDetail/CardDetail";
 import { LandingPage } from "./Components/LandingPage/LandingPage";
 import { CheckOutSuccess } from "./Components/CheckOutSuccess/CheckOutSuccess";
+import { CartProvider } from "./Components/Cart/CartContext";
 
 export default function App() {
+  // const [cart, setCart] = useLocalStorage("CartProducts", []);
   return (
     <div className="App">
-      <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/form" component={Form} />
-        <Route exact path="/help" component={Help} />
-        <Route exact path="/about" component={About} />
-        <Route extac path='/checkout-success' component={CheckOutSuccess} /> 
-        <Route
-          exact
-          path="/detail/:id"
-          component={({ match }) => <CardDetail match={match} />}
-        />
-        <Route exact path="*" component={Error} />
-        
-      </Switch>
+      <CartProvider>
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/form" component={Form} />
+          <Route exact path="/help" component={Help} />
+          <Route exact path="/about" component={About} />
+          <Route extac path="/checkout-success" component={CheckOutSuccess} />
+          <Route
+            exact
+            path="/detail/:id"
+            component={({ match }) => <CardDetail match={match} />}
+          />
+          <Route exact path="*" component={Error} />
+        </Switch>
+      </CartProvider>
     </div>
   );
 }

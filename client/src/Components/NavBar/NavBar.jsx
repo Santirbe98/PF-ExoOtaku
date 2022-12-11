@@ -10,6 +10,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Diversity1Icon from "@mui/icons-material/Diversity1";
+import Cart from "../Cart/Cart.jsx";
 
 export const NavBar = () => {
   const { isLoading, error } = useAuth0();
@@ -177,6 +178,7 @@ export const NavBar = () => {
               <span>
                 <AddShoppingCartIcon />
                 Cart
+                
               </span>
             </Button>
           </Link>
@@ -192,6 +194,7 @@ export const NavBar = () => {
             </>
           )}
         </Box>
+      
       </div>
     </div>
   );

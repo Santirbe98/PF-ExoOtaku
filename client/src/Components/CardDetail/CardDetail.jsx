@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getProductDetail } from "../../Redux/Actions";
 import s from "./CardDetail.module.css";
 import { NavBar } from "../NavBar/NavBar.jsx";
 import { Footer } from "../Footer/Footer.jsx";
+import {CartContext} from "../Cart/CartContext";
 
 export function CardDetail({ match }) {
+  const{addItemToCart} = useContext(CartContext)
   let { id } = match.params;
   const dispatch = useDispatch();
   const [product, setProduct] = useState({});
@@ -47,7 +49,7 @@ export function CardDetail({ match }) {
               </select>
             </div>
             <h4>{product.description}</h4>
-            <button className={s.detailButton}>Add To Cart</button>
+            <button className={s.detailButton} onClick={()=> addItemToCart(product)}>Add To Cart</button>
           </div>
         </div>
       ) : (
