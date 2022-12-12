@@ -13,8 +13,17 @@ export function CardDetail({ match }) {
   let { id } = match.params;
   const dispatch = useDispatch();
   const [product, setProduct] = useState({});
+  const [size, setSize] = useState("");
+
+  const handleSize = (e) => {
+    setSize(e.target.value);
+  }
+
   useEffect(() => {
-    dispatch(getProductDetail(id)).then((res) => setProduct(res.payload));
+    dispatch(getProductDetail(id)).then((res) => {
+      setProduct(res.payload)
+      setSize(res.payload.size[0])
+    });
   }, [dispatch, id]);
 
   return (
@@ -69,11 +78,12 @@ export function CardDetail({ match }) {
                 <Typography variant="h4" sx={{ lineHeight: 2 }}>
                   Select size
                 </Typography>
-                <select className={s.filterSelect}>
+                <select className={s.filterSelect} onChange={(e) => handleSize(e)}>
                   {!product.size?.length ? (
                     <option key={id}>No sizes available</option>
                   ) : (
-                    product.size.map((c) => <option key={c}>{c}</option>)
+                    product.size.map((c) => <option value={c} key={c} >{c}</option>
+                    )
                   )}
                 </select>
                 <Typography variant="h6" sx={{ lineHeight: 2 }}>
@@ -83,7 +93,7 @@ export function CardDetail({ match }) {
                   variant="contained"
                   color="success"
                   size="large"
-                  onClick={() => addItemToCart(product)}
+                  onClick={() => addItemToCart({ ...product, size: size })}
                 >
                   Add to Cart
                 </Button>

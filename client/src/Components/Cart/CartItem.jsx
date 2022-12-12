@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { CartContext } from "./CartContext";
 import styles from "./CartItem.module.css";
+import { Button, Box } from "@mui/material"
 
 export const ItemCart = ({ item }) => {
     /* Traemos del context las funciones para agregar y sacar productos del carrito */
@@ -14,15 +15,15 @@ export const ItemCart = ({ item }) => {
             <img className={styles.imgs} src={item.images} alt={item.name} />
             <div className={styles.dataContainer}>
                 <div className={styles.left}>
-                    <p>{item.name}</p>
-                    <div className={styles.buttons}>
-                        <button onClick={() => addItemToCart(item)}>
+                    <p>{item.name} "{item.size}"</p>
+                    <Box className={styles.buttons} pb={3}>
+                        <Button variant="contained" color="success" size="small" onClick={() => addItemToCart(item)}>
                             AGREGAR
-                        </button>
-                        <button onClick={() => deleteItemToCart(item)}>
+                        </Button>
+                        <Button variant="contained" color="error" size="small" onClick={() => deleteItemToCart(item)}>
                             SACAR
-                        </button>
-                    </div>
+                        </Button>
+                    </Box>
                 </div>
                 <div className={styles.right}>
                     <div>{item.amount}</div>

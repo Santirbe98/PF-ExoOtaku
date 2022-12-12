@@ -1,10 +1,13 @@
 import { useContext, useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { ItemCart } from './CartItem';
 import { CartContext } from "./CartContext";
 import styles from "./Cart.module.css";
 import { PayButton } from "../Payment/PayButton.jsx";
+import { Button, Box } from "@mui/material";
 
 const Cart = ({ userId }) => {
+    const { loginWithRedirect, isAuthenticated } = useAuth0();
     /* Creamos 2 estados, uno para ver si el carrito esta abierto o no 
     y otro para obtener la cantidad de productos que tenemos en el carrito */
     const [cartOpen, setCartOpen] = useState(false);
@@ -81,7 +84,10 @@ const Cart = ({ userId }) => {
                         </div>
                     )}
                     <h2 className={styles.total}>Total: ${total}</h2>
-                    <PayButton cartItems={cartItems} userId={userId} />
+                    <Box pb={3}>
+                        {isAuthenticated ? <PayButton cartItems={cartItems} userId={userId} /> : <Button variant="contained" color="success" onClick={() => loginWithRedirect()}>LOG IN</Button>}
+
+                    </Box>
                 </div>
             )}
         </div>
