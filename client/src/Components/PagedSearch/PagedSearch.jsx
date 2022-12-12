@@ -1,3 +1,4 @@
+import { Box, Button } from "@mui/material";
 import React from "react";
 import s from "./PagedSearch.module.css";
 
@@ -7,6 +8,7 @@ export default function Paged({
   paged,
   pagePrev,
   pageNext,
+  currentPage,
 }) {
   const pages = [];
   for (let i = 1; i <= Math.ceil(productList / productPage); i++) {
@@ -14,41 +16,46 @@ export default function Paged({
   }
 
   return (
-    <div>
+    <Box>
       {pages.length <= 1 ? (
         <></>
       ) : (
-        <ul className={s.liPaged}>
-          <li>
-            <button
+        <Box className={s.liPaged} sx={{ gap: "10px" }} pb={3} pt={2}>
+          <Box>
+            <Button
+              color="warning"
               onClick={() => paged(pagePrev, pages.length)}
               style={{ width: "50px" }}
-              className={s.buttonPaged}
+              disabled={currentPage === 1 ? true : false}
+              variant="contained"
             >
               ←
-            </button>
-          </li>
+            </Button>
+          </Box>
           {pages.map((p) => (
-            <li key={p}>
-              <button
+            <Box key={p}>
+              <Button
+                color="warning"
+                variant="contained"
                 onClick={() => paged(p, pages.length)}
-                className={s.buttonPaged}
               >
                 {p}
-              </button>
-            </li>
+              </Button>
+            </Box>
           ))}
-          <li>
-            <button
+          <Box>
+            <Button
+              color="warning"
               onClick={() => paged(pageNext, pages.length)}
               style={{ width: "50px" }}
-              className={s.buttonPaged}
+              variant="contained"
+              disabled={currentPage === pages.length ? true : false}
             >
               →
-            </button>
-          </li>
-        </ul>
+            </Button>
+          </Box>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
