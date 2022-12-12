@@ -4,20 +4,10 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_URL } = process.env;
 
-// Conexion para RAILWAY descomentar a la hora de hacer el deploy y si queren usarlo localmente usen el new sequelize de abajo
-
-// const sequelize = new Sequelize(DB_URL, {
-//   logging: false,
-//   native: false,
-// });
-
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/exOtaku`,
-  {
-    logging: false,
-    native: false,
-  }
-);
+const sequelize = new Sequelize(DB_URL, {
+  logging: false,
+  native: false,
+});
 const basename = path.basename(__filename);
 
 const modelDefiners = [];

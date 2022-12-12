@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import errorImg from "../../Resources/404.png";
 import { Box, Button } from "@mui/material";
 
+
 export const Error = () => {
   return (
     <Box pt={5}>
