@@ -1,15 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import errorImg from "../../Resources/404.png";
-import s from "./Error.module.css";
+import { Box, Button } from "@mui/material";
 
 export const Error = () => {
   return (
-    <div className={s.container}>
-      <img src={errorImg} alt="404" width="800px" className={s.imgError} />
-      <Link to="/home">
-        <button className={s.detailButton}>Back...</button>
-      </Link>
-    </div>
+    <Box pt={5}>
+      <Box>
+        <img
+          src={errorImg}
+          alt="404"
+          width="800px"
+          style={{ borderRadius: "20px" }}
+        />
+      </Box>
+      <Box pt={5}>
+        <Link
+          to="/home"
+          style={{
+            textDecoration: "none",
+          }}
+        >
+          <Button variant="contained" color="error">
+            Back...
+          </Button>
+        </Link>
+      </Box>
+    </Box>
   );
 };
