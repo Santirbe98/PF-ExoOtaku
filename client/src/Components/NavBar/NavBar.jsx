@@ -11,19 +11,18 @@ import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Diversity1Icon from "@mui/icons-material/Diversity1";
 
-
 export const NavBar = () => {
   const { isLoading, error } = useAuth0();
   return (
-    <div className={s.divSection}>
-      <div className={s.imgContainer}>
+    <Box className={s.divSection}>
+      <Box className={s.imgContainer}>
         <img
           src="http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0"
           width="200px"
           alt="exootakulogo"
         />
-      </div>
-      <div className={s.boxsContainer}>
+      </Box>
+      <Box className={s.boxsContainer}>
         <Box
           style={{
             textDecoration: "none",
@@ -193,8 +192,8 @@ export const NavBar = () => {
             </>
           )}
         </Box>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
