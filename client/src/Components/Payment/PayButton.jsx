@@ -1,6 +1,7 @@
 import React from "react";
 import { payment } from "../../Redux/Actions";
 import { useDispatch } from "react-redux";
+import { Button, Box } from "@mui/material"
 // localhost:3001
 
 export const PayButton = ({ cartItems, userId }) => {
@@ -10,13 +11,15 @@ export const PayButton = ({ cartItems, userId }) => {
   };
 
   return (
-    <>
-      <button
+    <Box>
+      <Button
+        variant="contained"
+        color="info"
         onClick={handleCheckOut}
         disabled={!cartItems.length ? true : false}
       >
         check Out
-      </button>
-    </>
+      </Button>
+    </Box>
   );
 };
