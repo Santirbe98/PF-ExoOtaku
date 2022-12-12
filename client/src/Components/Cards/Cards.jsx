@@ -1,12 +1,16 @@
 import { React, useEffect, useState } from "react";
 import { getProducts } from "../../Redux/Actions";
-import { Card } from "../Card/Card";
+import { MediaCard } from "../Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import Paged from "../Paged/Paged";
 import { Filter } from "../Filter/Filter.jsx";
 import s from "./Cards.module.css";
 import PagedSearch from "../PagedSearch/PagedSearch";
-
+//--------------------------------------------------------------//
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import { yellow } from "@mui/material/colors";
+const color = yellow[500];
 export function Cards() {
   let dispatch = useDispatch();
   let products = useSelector((state) => state.filterProducts);
@@ -47,7 +51,7 @@ export function Cards() {
   //===========================================================
 
   const [search, setSearch] = useState("");
-
+  const [order, setOrder] = useState("");
   const searcher = (e) => {
     setSearch(e.target.value);
     setPage(1);
@@ -60,21 +64,28 @@ export function Cards() {
       );
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
+
   //===========================================================
   return (
     <div>
-      <div className={s.searchInput}>
-        <input
-          name="text"
-          placeholder="     Buscar producto por Anime"
-          type="text"
+      {/* <Box className={s.searchInput}> */}
+      <Box>
+        <TextField
+          placeholder="Busque por anime"
+          color="warning"
+          sx={{ width: "500px" }}
+          style={{
+            backgroundColor: "rgba(255, 253, 253, 0.900)",
+            borderRadius: "10px",
+          }}
+          focused
           value={search}
           onChange={searcher}
         />
-      </div>
+      </Box>
       <div className={s.wrapperContainer}>
         <div className={s.wrapper}>
-          <Filter setPage={setPage} />
+          <Filter setPage={setPage} setOrder={setOrder} />
         </div>
         <div className={s.wrapper2}>
           {!productsList.length ? (
@@ -85,7 +96,7 @@ export function Cards() {
             productsList2.map((c) => {
               return (
                 <div key={componentId++}>
-                  <Card
+                  <MediaCard
                     key={c.id}
                     id={c.id}
                     image={c.images[0]}
@@ -99,7 +110,7 @@ export function Cards() {
           ) : (
             productsList.map((p) => (
               <div key={componentId++}>
-                <Card
+                <MediaCard
                   key={p.id}
                   id={p.id}
                   image={p.images[0]}
@@ -122,6 +133,7 @@ export function Cards() {
                 paged={paged}
                 pagePrev={pagePrev}
                 pageNext={pageNext}
+                currentPage={page}
               />
             </div>
           </div>

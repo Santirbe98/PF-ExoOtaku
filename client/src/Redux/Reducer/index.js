@@ -3,6 +3,8 @@ import {
   GET_PRODUCTS,
   FILTER_ALL,
   GET_PRODUCT_DETAIL,
+  ORDER_BY_PRICE, 
+  ORDER_DETAIL
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -10,17 +12,25 @@ const initialState = {
   products: [],
   filterProducts: [],
   details: {},
+  orderdetail: {}
   // loading: true,
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case ORDER_DETAIL:
+      return {
+        ...state, 
+        orderdetail: action.payload
+      }
+
     case GET_PRODUCTS:
       return {
         ...state,
         products: action.payload,
         filterProducts: action.payload,
       };
+      
     case FILTER_ALL:
       const allProducts = state.products;
       const { color, type, category } = action.payload;
@@ -50,7 +60,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: action.payload,
       };
-
+    case ORDER_BY_PRICE:
+      const products = state.filterProducts;
+      const orderProduct =
+        action.payload === "Asc"
+          ? products.sort((a, b) => a.price - b.price)
+          : products.sort((a, b) => b.price - a.price);
+      return {
+        ...state,
+        filterProducts: orderProduct,
+      };
     default:
       return {
         ...state,
