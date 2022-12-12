@@ -133,6 +133,7 @@ export function Cards() {
                 paged={paged}
                 pagePrev={pagePrev}
                 pageNext={pageNext}
+                currentPage={page}
               />
             </div>
           </div>

@@ -1,3 +1,4 @@
+import { Button, Box } from "@mui/material";
 import React from "react";
 import s from "./Paged.module.css";
 
@@ -14,42 +15,46 @@ export default function Paged({
     pages.push(i);
   }
   return (
-    <div>
+    <Box>
       {!pages ? (
         <></>
       ) : (
-        <ul className={s.liPaged}>
-          <li>
-            <button
+        <Box className={s.liPaged} sx={{ gap: "10px" }} pb={3} pt={2}>
+          <Box>
+            <Button
               onClick={() => paged(pagePrev, pages.length)}
               style={{ width: "50px" }}
-              className={s.buttonPaged}
+              disabled={currentPage === 1 ? true : false}
+              variant="contained"
+              color="warning"
             >
               ←
-            </button>
-          </li>
+            </Button>
+          </Box>
           {pages.map((p) => (
             <li key={p}>
-              <button
+              <Button
                 onClick={() => paged(p, pages.length)}
-                className={s.buttonPaged}
+                variant="contained"
+                color="warning"
               >
                 {p}
-              </button>
+              </Button>
             </li>
           ))}
-          <li>
-            <button
+          <Box>
+            <Button
               onClick={() => paged(pageNext, pages.length)}
               style={{ width: "50px" }}
-              className={s.buttonPaged}
               disabled={currentPage === pages.length ? true : false}
+              variant="contained"
+              color="warning"
             >
               →
-            </button>
-          </li>
-        </ul>
+            </Button>
+          </Box>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
