@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import { useState } from "react";
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack'
 
 export const CheckOutSuccess = () => {
   const dispatch = useDispatch();
@@ -20,7 +22,10 @@ export const CheckOutSuccess = () => {
   useEffect(() => {
     dispatch(getCheckout(session_id)).then((data) => {
       setOrder(data.payload.payment_intent);
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000)
+      
     });
   }, [dispatch]);
 
@@ -33,10 +38,32 @@ export const CheckOutSuccess = () => {
         </Typography>
       </Box>
       <Box sx={{ padding: "2%" }}>
-        <Typography variant="h5">
-          Your order id is
-          {loading === false && <Typography> {Order} </Typography>}
-        </Typography>
+        {
+          loading === true ? (
+            <>
+            <Typography variant="h5">
+              Your order is being processed
+            </Typography>
+            <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+              <CircularProgress color='success' variant='indeterminate' size="lg"/>
+            </Box>
+
+             
+            </>
+            
+          ) :
+          (
+            <>
+            <Typography variant="h5">
+              Your order id is
+              <Typography> {Order} </Typography>
+            </Typography>
+            </>
+            
+          )
+        }
+
+        
       </Box>
 
       <Box>
@@ -53,4 +80,4 @@ export const CheckOutSuccess = () => {
       </Box>
     </div>
   );
-};
+}
