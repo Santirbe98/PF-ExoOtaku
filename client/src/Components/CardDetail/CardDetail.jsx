@@ -17,12 +17,12 @@ export function CardDetail({ match }) {
 
   const handleSize = (e) => {
     setSize(e.target.value);
-  }
+  };
 
   useEffect(() => {
     dispatch(getProductDetail(id)).then((res) => {
-      setProduct(res.payload)
-      setSize(res.payload.size[0])
+      setProduct(res.payload);
+      setSize(res.payload.size[0]);
     });
   }, [dispatch, id]);
 
@@ -78,12 +78,18 @@ export function CardDetail({ match }) {
                 <Typography variant="h4" sx={{ lineHeight: 2 }}>
                   Select size
                 </Typography>
-                <select className={s.filterSelect} onChange={(e) => handleSize(e)}>
+                <select
+                  className={s.filterSelect}
+                  onChange={(e) => handleSize(e)}
+                >
                   {!product.size?.length ? (
                     <option key={id}>No sizes available</option>
                   ) : (
-                    product.size.map((c) => <option value={c} key={c} >{c}</option>
-                    )
+                    product.size.map((c) => (
+                      <option value={c} key={c}>
+                        {c}
+                      </option>
+                    ))
                   )}
                 </select>
                 <Typography variant="h6" sx={{ lineHeight: 2 }}>
@@ -101,9 +107,13 @@ export function CardDetail({ match }) {
             </Grid>
           </Box>
         ) : (
-          <div className={s.container}>
-            <h1>"loading product"</h1>
-          </div>
+          <Box
+            sx={{ height: "600px", display: "flex", justifyContent: "center" }}
+          >
+            <div className={s.container}>
+              <h1>"loading product"</h1>
+            </div>
+          </Box>
         )}
       </div>
       <Footer />
