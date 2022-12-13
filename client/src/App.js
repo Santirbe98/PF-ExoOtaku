@@ -21,6 +21,7 @@ export default function App() {
           <Route exact path="/form" component={Form} />
           <Route exact path="/help" component={Help} />
           <Route exact path="/about" component={About} />
+
           <Route path="/checkout-success" component={CheckOutSuccess} />
           <Route
             exact
