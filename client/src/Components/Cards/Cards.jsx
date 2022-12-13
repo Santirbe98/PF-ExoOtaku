@@ -69,7 +69,12 @@ export function Cards() {
   return (
     <div>
       {/* <Box className={s.searchInput}> */}
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <TextField
           placeholder="Busque por anime"
           color="warning"
