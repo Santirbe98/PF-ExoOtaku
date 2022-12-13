@@ -5,7 +5,7 @@ import { Button, Box } from "@mui/material"
 
 export const ItemCart = ({ item }) => {
     /* Traemos del context las funciones para agregar y sacar productos del carrito */
-    const { addItemToCart, deleteItemToCart,addItemInCart } = useContext(CartContext);
+    const { addItemToCart, deleteItemToCart } = useContext(CartContext);
 
     return (
         <div className={styles.cartItem}>
