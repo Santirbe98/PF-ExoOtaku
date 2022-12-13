@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Paged from "../Paged/Paged";
 import { Filter } from "../Filter/Filter.jsx";
 import s from "./Cards.module.css";
-import PagedSearch from "../PagedSearch/PagedSearch";
+// import PagedSearch from "../PagedSearch/PagedSearch";
 //--------------------------------------------------------------//
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -17,31 +17,41 @@ export function Cards() {
 
   //PAGED LOGIC =============================================
   let componentId = 1;
-  const [page, setPage] = useState(1);
-  const [pagePrev, setPageprev] = useState(1);
-  const [pageNext, setPagenext] = useState(2);
-  const [productsPage] = useState(9);
-  const totalPage = page * productsPage;
-  const firstPage = totalPage - productsPage;
-  const productsList = products.slice(firstPage, totalPage);
+  // const [page, setPage] = useState(1);
+  // const [pagePrev, setPageprev] = useState(1);
+  // const [pageNext, setPagenext] = useState(2);
+  // const [productsPage] = useState(9);
+  // const totalPage = page * productsPage;
+  // const firstPage = totalPage - productsPage;
+  // const productsList = products.slice(firstPage, totalPage);
 
-  const paged = function (pageNumber, totPages) {
-    setPage(pageNumber);
-    let currentPage = parseInt(pageNumber);
-    //Previus and Next Options
-    if (currentPage > 1 && currentPage < totPages) {
-      setPageprev(currentPage - 1);
-      setPagenext(currentPage + 1);
-    }
-    if (currentPage === 1 && currentPage < totPages) {
-      setPageprev(currentPage);
-      setPagenext(currentPage + 1);
-    }
-    if (currentPage > 1 && currentPage === totPages) {
-      setPageprev(currentPage - 1);
-      setPagenext(currentPage);
-    }
-  };
+  // const paged = function (pageNumber, totPages) {
+  //   setPage(pageNumber);
+  //   let currentPage = parseInt(pageNumber);
+  //   //Previus and Next Options
+  //   if (currentPage > 1 && currentPage < totPages) {
+  //     setPageprev(currentPage - 1);
+  //     setPagenext(currentPage + 1);
+  //   }
+  //   if (currentPage === 1 && currentPage < totPages) {
+  //     setPageprev(currentPage);
+  //     setPagenext(currentPage + 1);
+  //   }
+  //   if (currentPage > 1 && currentPage === totPages) {
+  //     setPageprev(currentPage - 1);
+  //     setPagenext(currentPage);
+  //   }
+  // };
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(9);
+  const lastProductInPaged = currentPage * pageSize;
+  const firstProductInPage = lastProductInPaged - pageSize;
+  const currentProduct =products.slice(firstProductInPage, lastProductInPaged);
+  const nPage = Math.ceil(products.length / pageSize);
+  const [ setOrder] = useState("");
+  const [maxPageLimit, setMaxPageLimit] = useState(5);
+  const [minPageLimit, setMinPageLimit] = useState(0);
   //===========================================================
 
   useEffect(() => {
@@ -51,19 +61,20 @@ export function Cards() {
   //===========================================================
 
   const [search, setSearch] = useState("");
-  const [order, setOrder] = useState("");
+  // const [order, setOrder] = useState("");
   const searcher = (e) => {
     setSearch(e.target.value);
-    setPage(1);
+    // setPage(1);
+    setCurrentPage(1);
   };
 
   const productSearch = !search
-    ? productsList
+    ? currentProduct
     : products.filter((p) =>
         p.category.toLowerCase().includes(search.toLowerCase())
       );
 
-  const productsList2 = productSearch.slice(firstPage, totalPage);
+  const productsList2 = productSearch.slice(firstProductInPage, lastProductInPaged);
 
   //===========================================================
   return (
@@ -81,18 +92,22 @@ export function Cards() {
           focused
           value={search}
           onChange={searcher}
+          //linea nueva
+          setCurrentPage={setCurrentPage} setOrder={setOrder}  
         />
       </Box>
       <div className={s.wrapperContainer}>
         <div className={s.wrapper}>
-          <Filter setPage={setPage} setOrder={setOrder} />
+          {/* <Filter setPage={setPage} setOrder={setOrder} /> */}
+          <Filter  setCurrentPage={setCurrentPage} setOrder={setOrder}   />
         </div>
         <div className={s.wrapper2}>
-          {!productsList.length ? (
+          {!currentProduct.length ? (
             <div className={s.textLoading}>
               <h2>"No Products to Show"</h2>
             </div>
-          ) : search.length > 3 ? (
+          ) :
+           search.length > 3 ? (
             productsList2.map((c) => {
               return (
                 <div key={componentId++}>
@@ -108,7 +123,7 @@ export function Cards() {
               );
             })
           ) : (
-            productsList.map((p) => (
+            currentProduct.map((p) => (
               <div key={componentId++}>
                 <MediaCard
                   key={p.id}
@@ -124,7 +139,7 @@ export function Cards() {
         </div>
       </div>
       <div>
-        {search.length >= 3 ? (
+        {/* {search.length >= 3 ? (
           <div>
             <div>
               <PagedSearch
@@ -137,20 +152,28 @@ export function Cards() {
               />
             </div>
           </div>
-        ) : (
+        ) : ( */}
           <div>
             <div>
               <Paged
-                productPage={productsPage} // 9
-                productList={products.length} //
-                paged={paged}
-                pagePrev={pagePrev}
-                pageNext={pageNext}
-                currentPage={page}
+                // productPage={productsPage} // 9
+                // productList={products.length} //
+                // paged={paged}
+                // pagePrev={pagePrev}
+                // pageNext={pageNext}
+                // currentPage={page}
+                nPage={nPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                setMinPageLimit={setMinPageLimit}
+                minPageLimit={minPageLimit}
+                setMaxPageLimit={setMaxPageLimit}
+                maxPageLimit={maxPageLimit}
+                setOrder={setOrder}
               />
             </div>
           </div>
-        )}
+        {/* )} */}
       </div>
     </div>
   );

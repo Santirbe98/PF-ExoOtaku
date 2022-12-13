@@ -24,7 +24,7 @@ export function Filter(props) {
         category: e.target.value,
       })
     );
-    props.setPage(1);
+    props.setCurrentPage(1);
   }
   function handleFilterCol(e) {
     e.preventDefault();
@@ -38,7 +38,7 @@ export function Filter(props) {
         color: e.target.value,
       })
     );
-    props.setPage(1);
+    props.setCurrentPage(1);
   }
   function handleFilterType(e) {
     e.preventDefault();
@@ -52,13 +52,13 @@ export function Filter(props) {
         type: e.target.value,
       })
     );
-    props.setPage(1);
+    props.setCurrentPage(1);
   }
   const handleOrderByPrice = (e) => {
     e.preventDefault();
     dispatch(orderByPrice(e.target.value));
     props.setOrder(e.target.value);
-    props.setPage(1);
+    props.setCurrentPage(1);
   };
   // function handleFilterClean(e) {
   //   dispatch(
