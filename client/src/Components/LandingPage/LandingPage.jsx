@@ -27,7 +27,7 @@ const Holder = styled(Box)(({roll}) => ({
   border: '1px solid white',
   borderRadius: '2%', 
   margin: '1% 30%',
-  padding: '1%',
+  padding: '2%',
   bgcolor: 'black',
   display:'flex', 
   flexDirection: 'column', 

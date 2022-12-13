@@ -44,8 +44,11 @@ export const CheckOutSuccess = () => {
             <Typography variant="h5">
               Your order is being processed
             </Typography>
+            <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+              <CircularProgress color='success' variant='indeterminate' size="lg"/>
+            </Box>
 
-              <CircularProgress color='secondary' />
+             
             </>
             
           ) :
@@ -77,5 +80,4 @@ export const CheckOutSuccess = () => {
       </Box>
     </div>
   );
-};
-
+}
