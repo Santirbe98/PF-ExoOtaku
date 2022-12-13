@@ -6,8 +6,6 @@ import {
   ORDER_BY_PRICE,
   ORDER_DETAIL,
 } from "./actionsTypes";
-const urlBack = process.env.REACT_APP_URL;
-axios.defaults.baseURL = "https://exo-otaku.up.railway.app/" || urlBack;
 
 // cambiar el puerto del localhost al que usen localmente
 export function getProducts() {
