@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { filterAll, orderByPrice } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
+import { Box, Button } from "@mui/material";
 import s from "./Filter.module.css";
 
 export function Filter(props) {
@@ -97,15 +98,15 @@ export function Filter(props) {
     hash[c] ? false : (hash[c] = true)
   );
   return (
-    <>
-      <div>
+    <Box>
+      <Box>
         <select
           onChange={(e) => handleFilterCol(e)}
           className={s.filterSelect}
           id="colorSelect"
         >
           <option value="All" key="All">
-            Todos
+            Color
           </option>
           <option value="Black" key="Black">
             Negro
@@ -120,15 +121,15 @@ export function Filter(props) {
             Azul
           </option>
         </select>
-      </div>
-      <div>
+      </Box>
+      <Box>
         <select
           onChange={(e) => handleFilterType(e)}
           className={s.filterSelect}
           id="typeSelect"
         >
           <option value="All" key="All2">
-            Todos
+            Tipo de prenda
           </option>
           <option value="Tshirt" key="tshirt">
             Remera
@@ -137,8 +138,8 @@ export function Filter(props) {
             Buzo
           </option>
         </select>
-      </div>
-      <div>
+      </Box>
+      <Box>
         <select
           onChange={(e) => handleFilterCat(e)}
           className={s.filterSelect}
@@ -153,7 +154,7 @@ export function Filter(props) {
             );
           })}
         </select>
-      </div>
+      </Box>
       <select
         onChange={(e) => handleOrderByPrice(e)}
         className={s.filterSelect}
@@ -163,21 +164,25 @@ export function Filter(props) {
           Ordenar por precios
         </option>
         <option value="Asc" key="All2">
-        Menor precio
+          Menor precio
         </option>
         <option value="Desc" key="tshirt">
           Mayor precio
         </option>
       </select>
-      <div>
-        <button
-          className={s.filterButton}
-          // onClick={(e) => handleFilterClean(e)}
-          onClick={(e) =>document.location.reload()}
-        >
-          Limpiar
-        </button>
-      </div>
-    </>
+      <Box>
+        <Box pt={1}>
+          <Button
+            size="large"
+            variant="contained"
+            color="warning"
+            // onClick={(e) => handleFilterClean(e)}
+            onClick={(e) => document.location.reload()}
+          >
+            Limpiar
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 }

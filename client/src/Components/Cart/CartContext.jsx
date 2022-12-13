@@ -17,11 +17,11 @@ export const CartProvider = ({ children }) => {
     }, [cartItems]);
 
     const addItemToCart = (product) => {
-        const inCart = cartItems.find((p) => p.id === product.id);
+        const inCart = cartItems.find((p) => p.id === product.id && p.size === product.size);
         if (inCart) {
             setCartItems(
                 cartItems.map((p) => {
-                    if (p.id === product.id) {
+                    if (p.id === product.id && p.size === product.size) {
                         return { ...inCart, amount: inCart.amount + 1 };
                     } else return p;
                 })
@@ -31,14 +31,15 @@ export const CartProvider = ({ children }) => {
         }
     };
 
+
     const deleteItemToCart = (product) => {
-        const inCart = cartItems.find((p) => p.id === product.id);
+        const inCart = cartItems.find((p) => p.id === product.id && p.size === product.size);
         if (inCart.amount === 1) {
-            setCartItems(cartItems.filter((p) => p.id !== product.id));
+            setCartItems(cartItems.filter((p) => p !== inCart));
         } else {
             setCartItems(
                 cartItems.map((p) => {
-                    if (p.id === product.id) {
+                    if (p.id === product.id  && p.size === product.size) {
                         return { ...inCart, amount: inCart.amount - 1 };
                     } else return p;
                 })
