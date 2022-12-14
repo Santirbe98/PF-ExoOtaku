@@ -1,4 +1,4 @@
-export function validate(input) {
+export const validate = (input) => {
   let errors = {};
   if (!input.name || input.name.length === 0) {
     errors.name = "Name is required";
@@ -38,4 +38,4 @@ export function validate(input) {
   }
 
   return errors;
-}
+};

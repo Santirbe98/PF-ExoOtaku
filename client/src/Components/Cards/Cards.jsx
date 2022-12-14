@@ -9,9 +9,8 @@ import PagedSearch from "../PagedSearch/PagedSearch";
 //--------------------------------------------------------------//
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { yellow } from "@mui/material/colors";
-const color = yellow[500];
-export function Cards() {
+
+export const Cards = () => {
   let dispatch = useDispatch();
   let products = useSelector((state) => state.filterProducts);
 
@@ -159,4 +158,4 @@ export function Cards() {
       </Box>
     </Box>
   );
-}
+};

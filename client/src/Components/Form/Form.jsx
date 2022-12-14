@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postProduct } from "../../Redux/Actions";
-
 import axios from "axios";
 import { NavBar } from "../NavBar/NavBar.jsx";
 import { makeStyles } from "@material-ui/core/styles";

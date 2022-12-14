@@ -2,14 +2,14 @@ import { Box, Button } from "@mui/material";
 import React from "react";
 import s from "./PagedSearch.module.css";
 
-export default function Paged({
+const Paged = ({
   productPage,
   productList,
   paged,
   pagePrev,
   pageNext,
   currentPage,
-}) {
+}) => {
   const pages = [];
   for (let i = 1; i <= Math.ceil(productList / productPage); i++) {
     pages.push(i);
@@ -58,4 +58,5 @@ export default function Paged({
       )}
     </Box>
   );
-}
+};
+export default Paged;

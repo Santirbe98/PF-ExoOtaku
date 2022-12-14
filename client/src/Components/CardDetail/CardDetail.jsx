@@ -8,7 +8,7 @@ import { CartContext } from "../Cart/CartContext";
 import Cart from "../Cart/Cart";
 import { Box, Grid, Typography, CardMedia, Button } from "@mui/material";
 
-export function CardDetail({ match }) {
+export const CardDetail = ({ match }) => {
   const { addItemToCart } = useContext(CartContext);
   let { id } = match.params;
   const dispatch = useDispatch();
@@ -119,4 +119,4 @@ export function CardDetail({ match }) {
       <Footer />
     </div>
   );
-}
+};
