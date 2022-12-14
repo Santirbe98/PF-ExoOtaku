@@ -3,7 +3,7 @@ import { Footer } from "../Footer/Footer.jsx";
 import { NavBar } from "../NavBar/NavBar.jsx";
 import { Container, Paper } from "@mui/material";
 
-export function Help() {
+export const Help = () => {
   return (
     <div>
       <NavBar />
@@ -39,4 +39,4 @@ export function Help() {
       <Footer />
     </div>
   );
-}
+};

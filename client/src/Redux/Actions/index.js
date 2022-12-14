@@ -8,7 +8,6 @@ import {
 } from "./actionsTypes";
 const urlBack = process.env.REACT_APP_URL;
 
-// cambiar el puerto del localhost al que usen localmente
 export function getProducts() {
   return async function (dispatch) {
     let json = await axios.get(`${urlBack}products/`);

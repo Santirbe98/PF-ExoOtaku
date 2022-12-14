@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Button } from "@mui/material";
 import s from "./Filter.module.css";
 
-export function Filter(props) {
+export const Filter = (props) => {
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
@@ -61,33 +61,6 @@ export function Filter(props) {
     props.setOrder(e.target.value);
     props.setPage(1);
   };
-  // function handleFilterClean(e) {
-  //   dispatch(
-  //     filterAll({
-  //       type: "All",
-  //       color: "All",
-  //       category: "All",
-  //     })
-  //   );
-  //   props.setPage(1);
-  //   setInput({
-  //     type: "All",
-  //     color: "All",
-  //     category: "All",
-  //   });
-  //   document
-  //     .getElementById("colorSelect")
-  //     .getElementsByTagName("option")[0].selected = "selected";
-  //   document
-  //     .getElementById("typeSelect")
-  //     .getElementsByTagName("option")[0].selected = "selected";
-  //   document
-  //     .getElementById("categorySelect")
-  //     .getElementsByTagName("option")[0].selected = "selected";
-  //   document
-  //     .getElementById("priceSelect")
-  //     .getElementsByTagName("option")[0].selected = "selected";
-  // }
 
   const categArr = [];
   if (products) {
@@ -185,4 +158,4 @@ export function Filter(props) {
       </Box>
     </Box>
   );
-}
+};

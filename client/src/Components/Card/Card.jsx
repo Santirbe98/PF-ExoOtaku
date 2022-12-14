@@ -1,7 +1,4 @@
-import { useContext, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProductDetail } from "../../Redux/Actions";
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -13,11 +10,6 @@ import LocalGroceryStoreRoundedIcon from "@mui/icons-material/LocalGroceryStoreR
 import s from "./Card.module.css";
 
 export const MediaCard = ({ name, price, image, id, category }) => {
-  const dispatch = useDispatch();
-  const [product, setProduct] = useState({});
-  useEffect(() => {
-    dispatch(getProductDetail(id)).then((res) => setProduct(res.payload));
-  }, [dispatch, id]);
   return (
     <Card
       className={s.container}
