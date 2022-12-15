@@ -70,7 +70,7 @@ export const NavBar = () => {
               className={s.navButton}
               style={{
                 maxWidth: "180px",
-                maxHeight: "70px",
+                maxHeight: "65px",
                 minWidth: "150px",
                 minHeight: "50px",
                 textDecoration: "none",
