@@ -7,8 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { validate } from "./Validate";
 import style from "./Form.module.css";
-// import * as T from "./Errors.module.css";
-
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -17,6 +15,8 @@ import FormLabel from "@mui/material/FormLabel";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import { FormHelperText, MenuItem, Select } from "@mui/material";
+import { Box } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,210 +114,228 @@ export const Form = () => {
 
   const classes = useStyles();
   return (
-    <div>
-      <div>
+    <Box>
+      <Box>
         <NavBar />
-      </div>
-      <h1>Create New Product</h1>
+      </Box>
+      <Grid container spacing={3}>
+        <Grid xs={12} md={12} lg={12} xl={12}>
+          <h1>Create New Product</h1>
+        </Grid>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: "white",
-            padding: 10,
-            width: "500px",
-            borderRadius: "20px",
-          }}
-        >
-          <FormControl margin="dense" sx={{ width: 400 }}>
-            <InputLabel>Category</InputLabel>
-            <Input
-              id="category"
-              onChange={handleChange}
-              name="category"
-              value={input.category}
-            />
-            {errors.category ? (
-              <FormHelperText id="category">{errors.category}</FormHelperText>
-            ) : (
-              false
-            )}
-          </FormControl>
-
-          <FormControl margin="dense" sx={{ width: 400 }}>
-            <InputLabel>Name</InputLabel>
-            <Input
-              id="name"
-              onChange={handleChange}
-              name="name"
-              value={input.name}
-            />
-            {errors.name ? (
-              <FormHelperText id="name">{errors.name}</FormHelperText>
-            ) : (
-              false
-            )}
-          </FormControl>
-
-          <FormControl margin="dense" sx={{ width: 400 }}>
-            <InputLabel>Descriptions</InputLabel>
-            <Input
-              id="descriptions"
-              onChange={handleChange}
-              name="descriptions"
-              value={input.descriptions}
-            />
-            {errors.descriptions ? (
-              <FormHelperText id="descriptions">
-                {errors.descriptions}
-              </FormHelperText>
-            ) : (
-              false
-            )}
-          </FormControl>
-
-          <FormControl margin="dense" sx={{ width: 400 }}>
-            <InputLabel>Price</InputLabel>
-            <Input
-              type="number"
-              id="price"
-              onChange={handleChange}
-              name="price"
-              value={input.price}
-            />
-            {errors.price ? (
-              <FormHelperText id="price">{errors.price}</FormHelperText>
-            ) : (
-              false
-            )}
-          </FormControl>
-
-          <FormControl margin="dense" sx={{ width: 400 }}>
-            <InputLabel>Stock</InputLabel>
-            <Input
-              type="number"
-              id="stock"
-              onChange={handleChange}
-              name="stock"
-              value={input.stock}
-            />
-            {errors.stock ? (
-              <FormHelperText id="stock">{errors.stock}</FormHelperText>
-            ) : (
-              false
-            )}
-          </FormControl>
-
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
-            <InputLabel id="Type">Type</InputLabel>
-            {errors.type ? (
-              <FormHelperText id="type">{errors.type}</FormHelperText>
-            ) : (
-              false
-            )}
-            <Select
-              labelId="Type"
-              id="Type"
-              value={input.type}
-              label="Type"
-              onChange={handleTypes}
+        <Grid xs={12} md={12} lg={12} xl={12}>
+          <Box
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+                backgroundColor: "white",
+                padding: 10,
+                width: "500px",
+                borderRadius: "20px",
+              }}
             >
-              <MenuItem value={"Shirt"}>Shirt</MenuItem>
-              <MenuItem value={"Sweather"}>Sweather</MenuItem>
-              <MenuItem value={"Other"}>Other</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-      </div>
-      <div>
-        <label> Images </label>
-        <>
-          <div className={classes.root}>
-            <input
-              accept="image/*"
-              className={classes.input}
-              id="contained-button-file"
-              multiple
-              type="file"
-              onChange={uploadImage}
-            />
-            <label htmlFor="contained-button-file">
-              <Button variant="contained" color="primary" component="span">
-                Upload
-              </Button>
-            </label>
-          </div>
-          <div>
-            {input.images.length ? (
-              <div className={style.imageDiv}>
-                <img src={input.images} alt="algo" height="200px" />
-                <FormControl
-                  onChange={addcolor}
-                  sx={{
-                    backgroundColor: "white",
-                    borderRadius: 3,
-                    margin: 3,
-                    padding: 3,
-                  }}
+              <FormControl
+                margin="dense"
+                sx={{
+                  width: 400,
+                }}
+              >
+                <InputLabel>Category</InputLabel>
+                <Input
+                  id="category"
+                  onChange={handleChange}
+                  name="category"
+                  value={input.category}
+                />
+                {errors.category ? (
+                  <FormHelperText id="category">
+                    {errors.category}
+                  </FormHelperText>
+                ) : (
+                  false
+                )}
+              </FormControl>
+
+              <FormControl margin="dense" sx={{ width: 400 }}>
+                <InputLabel>Name</InputLabel>
+                <Input
+                  id="name"
+                  onChange={handleChange}
+                  name="name"
+                  value={input.name}
+                />
+                {errors.name ? (
+                  <FormHelperText id="name">{errors.name}</FormHelperText>
+                ) : (
+                  false
+                )}
+              </FormControl>
+
+              <FormControl margin="dense" sx={{ width: 400 }}>
+                <InputLabel>Descriptions</InputLabel>
+                <Input
+                  id="descriptions"
+                  onChange={handleChange}
+                  name="descriptions"
+                  value={input.descriptions}
+                />
+                {errors.descriptions ? (
+                  <FormHelperText id="descriptions">
+                    {errors.descriptions}
+                  </FormHelperText>
+                ) : (
+                  false
+                )}
+              </FormControl>
+
+              <FormControl margin="dense" sx={{ width: 400 }}>
+                <InputLabel>Price</InputLabel>
+                <Input
+                  type="number"
+                  id="price"
+                  onChange={handleChange}
+                  name="price"
+                  value={input.price}
+                />
+                {errors.price ? (
+                  <FormHelperText id="price">{errors.price}</FormHelperText>
+                ) : (
+                  false
+                )}
+              </FormControl>
+
+              <FormControl margin="dense" sx={{ width: 400 }}>
+                <InputLabel>Stock</InputLabel>
+                <Input
+                  type="number"
+                  id="stock"
+                  onChange={handleChange}
+                  name="stock"
+                  value={input.stock}
+                />
+                {errors.stock ? (
+                  <FormHelperText id="stock">{errors.stock}</FormHelperText>
+                ) : (
+                  false
+                )}
+              </FormControl>
+
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
+                <InputLabel id="Type">Type</InputLabel>
+                {errors.type ? (
+                  <FormHelperText id="type">{errors.type}</FormHelperText>
+                ) : (
+                  false
+                )}
+                <Select
+                  labelId="Type"
+                  id="Type"
+                  value={input.type}
+                  label="Type"
+                  onChange={handleTypes}
                 >
-                  <FormLabel id="demo-radio-buttons-group-label">
-                    Color
-                  </FormLabel>
-                  {errors.color ? (
-                    <FormHelperText id="color">{errors.color}</FormHelperText>
-                  ) : (
-                    false
-                  )}
-                  <RadioGroup
-                    sx={{ color: "black" }}
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value="Black"
-                      control={<Radio />}
-                      label="Negro"
-                    />
-                    <FormControlLabel
-                      value="White"
-                      control={<Radio />}
-                      label="Blanco"
-                    />
-                    <FormControlLabel
-                      value="Blue"
-                      control={<Radio />}
-                      label="Azul"
-                    />
-                    <FormControlLabel
-                      value="Pink"
-                      control={<Radio />}
-                      label="Rosado"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </div>
-            ) : (
-              false
-            )}
-          </div>
-        </>
-      </div>
-      <button
-        onClick={handleSubmit}
-        disabled={Object.keys(errors).length > 0 ? true : false}
-        className={style.button}
-      >
-        Create Product
-      </button>
-    </div>
+                  <MenuItem value={"Shirt"}>Shirt</MenuItem>
+                  <MenuItem value={"Sweather"}>Sweather</MenuItem>
+                  <MenuItem value={"Other"}>Other</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid xs={12} md={12} lg={12} xl={12}>
+          <Box>
+            <label> Images </label>
+            <>
+              <Box className={classes.root}>
+                <input
+                  accept="image/*"
+                  className={classes.input}
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                  onChange={uploadImage}
+                />
+                <label htmlFor="contained-button-file">
+                  <Button variant="contained" color="primary" component="span">
+                    Upload
+                  </Button>
+                </label>
+              </Box>
+              <Box>
+                {input.images.length ? (
+                  <Box className={style.image}>
+                    <img src={input.images} alt="algo" height="200px" />
+                    <FormControl
+                      onChange={addcolor}
+                      sx={{
+                        backgroundColor: "white",
+                        borderRadius: 3,
+                        margin: 3,
+                        padding: 3,
+                      }}
+                    >
+                      <FormLabel id="demo-radio-buttons-group-label">
+                        Color
+                      </FormLabel>
+                      {errors.color ? (
+                        <FormHelperText id="color">
+                          {errors.color}
+                        </FormHelperText>
+                      ) : (
+                        false
+                      )}
+                      <RadioGroup
+                        sx={{ color: "black" }}
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        name="radio-buttons-group"
+                      >
+                        <FormControlLabel
+                          value="Black"
+                          control={<Radio />}
+                          label="Negro"
+                        />
+                        <FormControlLabel
+                          value="White"
+                          control={<Radio />}
+                          label="Blanco"
+                        />
+                        <FormControlLabel
+                          value="Blue"
+                          control={<Radio />}
+                          label="Azul"
+                        />
+                        <FormControlLabel
+                          value="Pink"
+                          control={<Radio />}
+                          label="Rosado"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Box>
+                ) : (
+                  false
+                )}
+              </Box>
+            </>
+          </Box>
+          <button
+            onClick={handleSubmit}
+            disabled={Object.keys(errors).length > 0 ? true : false}
+            className={style.button}
+          >
+            Create Product
+          </button>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
