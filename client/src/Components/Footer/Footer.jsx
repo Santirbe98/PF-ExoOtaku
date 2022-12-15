@@ -11,7 +11,7 @@ export const Footer = () => {
       <Box bgcolor="black" py={{ xs: 5, sm: 3 }} color="white">
         <Container maxWidth="lg">
           <Grid container spacing={5}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={4} sm={4}>
               <Box>
                 <Link
                   to="/home"
@@ -24,7 +24,7 @@ export const Footer = () => {
                 </Link>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={4} sm={4}>
               <Box>
                 <Link
                   to="/about"
@@ -37,7 +37,7 @@ export const Footer = () => {
                 </Link>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={4} sm={4}>
               <Box>
                 <Link
                   to="/help"
