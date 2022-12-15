@@ -31,7 +31,7 @@ export const CheckOutSuccess = () => {
       <NavBar />
       <Box>
         <Typography sx={{ padding: "2%" }} variant="h2">
-          Thank you for your shopping!
+          Gracias por tu compra!
         </Typography>
       </Box>
       <Box sx={{ padding: "2%" }}>
@@ -49,7 +49,7 @@ export const CheckOutSuccess = () => {
         ) : (
           <>
             <Typography variant="h5">
-              Your order id is
+              El ID de tu compra es
               <Typography> {Order} </Typography>
             </Typography>
           </>

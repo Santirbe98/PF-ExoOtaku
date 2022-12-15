@@ -85,7 +85,7 @@ const Cart = ({ userId }) => {
                     )}
                     <h2 className={styles.total}>Total: ${total}</h2>
                     <Box pb={3}>
-                        {isAuthenticated ? <PayButton cartItems={cartItems} userId={userId} /> : <Button variant="contained" color="success" onClick={() => loginWithRedirect()}>LOG IN</Button>}
+                        {isAuthenticated ? <PayButton cartItems={cartItems} userId={userId} /> : <Button variant="contained" color="success" onClick={() => loginWithRedirect()}>Iniciar sesion</Button>}
 
                     </Box>
                 </div>

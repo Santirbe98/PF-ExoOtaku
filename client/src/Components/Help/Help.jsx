@@ -9,7 +9,7 @@ export const Help = () => {
       <NavBar />
       <Container maxWidth="sm" sx={{ m: 6, mx: "auto", width: 800 }}>
         <Paper variant="outlined" sx={{ fontSize: 20 }}>
-          FAQ - Frequently Asked Questions
+          FAQ - Preguntas & Respuestas Frecuentes
         </Paper>
         <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting

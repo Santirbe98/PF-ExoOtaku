@@ -37,7 +37,7 @@ export const NavBar = () => {
             <Button
               className={s.navButton}
               style={{
-                maxWidth: "120px",
+                maxWidth: "180px",
                 maxHeight: "70px",
                 minWidth: "150px",
                 minHeight: "50px",
@@ -48,7 +48,7 @@ export const NavBar = () => {
             >
               <span>
                 <HomeIcon />
-                Home
+                Inicio
               </span>
             </Button>
           </Link>
@@ -69,7 +69,7 @@ export const NavBar = () => {
             <Button
               className={s.navButton}
               style={{
-                maxWidth: "120px",
+                maxWidth: "180px",
                 maxHeight: "70px",
                 minWidth: "150px",
                 minHeight: "50px",
@@ -80,7 +80,7 @@ export const NavBar = () => {
             >
               <span>
                 <Diversity1Icon />
-                About
+                Sobre nosotros
               </span>
             </Button>
           </Link>
@@ -100,9 +100,9 @@ export const NavBar = () => {
             <Button
               className={s.navButton}
               style={{
-                maxWidth: "120px",
+                maxWidth: "180px",
                 maxHeight: "70px",
-                minWidth: "150px",
+                minWidth: "100px",
                 minHeight: "50px",
                 textDecoration: "none",
                 color: "white",
@@ -111,7 +111,7 @@ export const NavBar = () => {
             >
               <span>
                 <AddIcon />
-                Form
+                Formulario
               </span>
             </Button>
           </Link>
@@ -132,7 +132,7 @@ export const NavBar = () => {
             <Button
               className={s.navButton}
               style={{
-                maxWidth: "120px",
+                maxWidth: "180px",
                 maxHeight: "70px",
                 minWidth: "150px",
                 minHeight: "50px",
@@ -143,14 +143,14 @@ export const NavBar = () => {
             >
               <span>
                 <InfoIcon />
-                Help
+                Ayuda
               </span>
             </Button>
           </Link>
         </Box>
         <Box>
-          {error && <p>Authentication Error</p>}
-          {!error && isLoading && <p>Loading...</p>}
+          {error && <p>Error de autenticacion</p>}
+          {!error && isLoading && <p>Cargando...</p>}
           {!error && !isLoading && (
             <>
               <Profile />
@@ -160,6 +160,6 @@ export const NavBar = () => {
           )}
         </Box>
       </Box>
-    </Box>
+    </Box >
   );
 };

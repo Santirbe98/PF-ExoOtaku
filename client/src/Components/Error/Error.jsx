@@ -22,7 +22,7 @@ export const Error = () => {
           }}
         >
           <Button variant="contained" color="error">
-            Back...
+            Volver...
           </Button>
         </Link>
       </Box>

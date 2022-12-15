@@ -20,7 +20,7 @@ export const Footer = () => {
                     color: "white",
                   }}
                 >
-                  Home
+                  Inicio
                 </Link>
               </Box>
             </Grid>
@@ -33,7 +33,7 @@ export const Footer = () => {
                     color: "white",
                   }}
                 >
-                  About
+                  Sobre nosotros
                 </Link>
               </Box>
             </Grid>
@@ -46,7 +46,7 @@ export const Footer = () => {
                     color: "white",
                   }}
                 >
-                  Help
+                  Ayuda
                 </Link>
               </Box>
             </Grid>

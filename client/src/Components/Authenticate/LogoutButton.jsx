@@ -12,7 +12,7 @@ const LogoutButton = () => {
         variant="outlined"
         onClick={() => logout()}
       >
-        Sing Out
+        Cerrar Sesion
       </Button>
     )
   );
