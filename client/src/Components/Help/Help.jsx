@@ -7,7 +7,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 export const Help = () => {
   return (
     <div>
-      {/* <NavBar /> */}
+      <NavBar />
       <Grid container spacing={2}>
         <Container maxWidth="sm" sx={{ m: 6, mx: "auto", width: 800 }}>
           <Grid xs={12} md={12} lg={12} xl={12}>

@@ -15,7 +15,7 @@ export const NavBar = () => {
   const { isLoading, error } = useAuth0();
   return (
     <Grid container spacing={2} pt={5} mr={5} ml={5}>
-      <Grid xs={12} sm={12} md={12} lg={12} xl={2}>
+      <Grid xs={12} sm={12} md={12} lg={2} xl={2}>
         {/* <Box className={s.imgContainer}> */}
         <img
           src="http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0"
@@ -28,7 +28,7 @@ export const NavBar = () => {
         xs={12}
         sm={12}
         md={6}
-        lg={6}
+        lg={2}
         xl={2}
         style={{
           display: "flex",
@@ -72,7 +72,7 @@ export const NavBar = () => {
         xs={12}
         sm={12}
         md={6}
-        lg={6}
+        lg={2}
         xl={2}
         style={{
           display: "flex",
@@ -117,7 +117,7 @@ export const NavBar = () => {
         xs={12}
         sm={12}
         md={6}
-        lg={6}
+        lg={2}
         xl={2}
         style={{
           display: "flex",
@@ -161,7 +161,7 @@ export const NavBar = () => {
         xs={12}
         sm={12}
         md={6}
-        lg={6}
+        lg={2}
         xl={2}
         style={{
           display: "flex",
@@ -206,7 +206,7 @@ export const NavBar = () => {
         xs={12}
         sm={12}
         md={12}
-        lg={12}
+        lg={2}
         xl={2}
         style={{
           display: "flex",
