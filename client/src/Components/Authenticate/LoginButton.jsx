@@ -21,7 +21,7 @@ const LoginButton = () => {
           variant="contained"
           onClick={() => loginWithRedirect()}
         >
-          Sign In
+          Iniciar Sesion
         </Button>
       </Box>
     )

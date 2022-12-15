@@ -59,8 +59,8 @@ export const Cards = () => {
   const productSearch = !search
     ? productsList
     : products.filter((p) =>
-        p.category.toLowerCase().includes(search.toLowerCase())
-      );
+      p.category.toLowerCase().includes(search.toLowerCase())
+    );
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
 
@@ -94,7 +94,7 @@ export const Cards = () => {
         <Box className={s.wrapper2}>
           {!productsList.length ? (
             <Box className={s.textLoading}>
-              <h2>"No Products to Show"</h2>
+              <h2>"No hay productos para mostrar"</h2>
             </Box>
           ) : search.length > 3 ? (
             productsList2.map((c) => {

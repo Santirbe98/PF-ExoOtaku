@@ -66,7 +66,7 @@ export const CardDetail = ({ match }) => {
                   {product.name}
                 </Typography>
                 <Typography variant="h4" sx={{ lineHeight: 2 }}>
-                  Select Color
+                  Seleccionar color
                 </Typography>
                 <select className={s.filterSelect}>
                   {!product.color?.length ? (
@@ -76,14 +76,14 @@ export const CardDetail = ({ match }) => {
                   )}
                 </select>
                 <Typography variant="h4" sx={{ lineHeight: 2 }}>
-                  Select size
+                  Seleccionar talle
                 </Typography>
                 <select
                   className={s.filterSelect}
                   onChange={(e) => handleSize(e)}
                 >
                   {!product.size?.length ? (
-                    <option key={id}>No sizes available</option>
+                    <option key={id}>No hay tallas disponibles</option>
                   ) : (
                     product.size.map((c) => (
                       <option value={c} key={c}>
@@ -101,7 +101,7 @@ export const CardDetail = ({ match }) => {
                   size="large"
                   onClick={() => addItemToCart({ ...product, size: size })}
                 >
-                  Add to Cart
+                  Agregar al carrito
                 </Button>
               </Grid>
             </Grid>
@@ -111,7 +111,7 @@ export const CardDetail = ({ match }) => {
             sx={{ height: "600px", display: "flex", justifyContent: "center" }}
           >
             <div className={s.container}>
-              <h1>"loading product"</h1>
+              <h1>"Cargando Producto"</h1>
             </div>
           </Box>
         )}
