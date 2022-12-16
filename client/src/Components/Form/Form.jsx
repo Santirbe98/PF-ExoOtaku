@@ -97,7 +97,7 @@ export const Form = () => {
       try {
         axios
           .post(
-            "http://localhost:3001/cloudinary",
+            "/cloudinary",
             { data: reader.result },
             {
               headers: {
