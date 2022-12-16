@@ -6,11 +6,13 @@ import {
   ORDER_BY_PRICE,
   ORDER_DETAIL,
 } from "./actionsTypes";
-const urlBack = process.env.REACT_APP_URL;
+
+axios.defaults.baseURL = "http://localhost:3001";
+// axios.defaults.baseURL = 'https://exo-otaku.up.railway.app/'
 
 export function getProducts() {
   return async function (dispatch) {
-    let json = await axios.get(`${urlBack}products/`);
+    let json = await axios.get(`/products`);
     return dispatch({
       type: GET_PRODUCTS,
       payload: json.data,
@@ -26,7 +28,7 @@ export function filterAll(payload) {
 
 export function getProductDetail(id) {
   return async function (dispatch) {
-    let json = await axios.get(`${urlBack}products/${id}`);
+    let json = await axios.get(`/products/${id}`);
     return dispatch({
       type: GET_PRODUCT_DETAIL,
       payload: json.data,
@@ -37,7 +39,7 @@ export function getProductDetail(id) {
 export function postProduct(body) {
   return async function () {
     try {
-      var json = await axios.post(`${urlBack}products/`, body);
+      var json = await axios.post(`/products`, body);
       return json;
     } catch (error) {
       console.error({ error: error.message });
@@ -53,7 +55,7 @@ export function orderByPrice(payload) {
 
 export function payment({ cartItems, userId }) {
   axios
-    .post(`${urlBack}payment/create-checkout-session`, {
+    .post(`/payment/create-checkout-session`, {
       cartItems,
       userId,
     })
@@ -69,7 +71,7 @@ export function getCheckout(session_id) {
   return async function (dispatch) {
     try {
       var json = await axios.get(
-        `${urlBack}payment/checkout-success?session_id=${session_id}`
+        `/payment/checkout-success?session_id=${session_id}`
       );
       return dispatch({
         type: ORDER_DETAIL,
