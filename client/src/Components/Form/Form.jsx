@@ -36,14 +36,17 @@ export const Form = () => {
     descriptions: "",
     images: [],
     stock: 0,
-    color: [],
+    color: [""],
     type: "",
-    size: ["XSmall", "Small", "Medium", "Large", "XLarge", "XXLarge"],
+    size: ["XS", "S", "M", "L", "XL", "XXL"],
     category: "",
   };
 
   const dispatch = useDispatch();
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    category: "Los campos con * son obligatorios.",
+    color: "Debe ingresar un color.",
+  });
   const [input, setInput] = useState(initialState);
 
   function handleSubmit(e) {
@@ -120,7 +123,7 @@ export const Form = () => {
       </Box>
       <Grid container spacing={3}>
         <Grid xs={12} md={12} lg={12} xl={12}>
-          <h1>Create New Product</h1>
+          <h1>Nuevo Producto</h1>
         </Grid>
 
         <Grid xs={12} md={12} lg={12} xl={12}>
@@ -149,7 +152,7 @@ export const Form = () => {
                   width: 400,
                 }}
               >
-                <InputLabel>Category</InputLabel>
+                <InputLabel>Categoria*</InputLabel>
                 <Input
                   id="category"
                   onChange={handleChange}
@@ -166,7 +169,7 @@ export const Form = () => {
               </FormControl>
 
               <FormControl margin="dense" sx={{ width: 400 }}>
-                <InputLabel>Name</InputLabel>
+                <InputLabel>Nombre*</InputLabel>
                 <Input
                   id="name"
                   onChange={handleChange}
@@ -181,7 +184,7 @@ export const Form = () => {
               </FormControl>
 
               <FormControl margin="dense" sx={{ width: 400 }}>
-                <InputLabel>Descriptions</InputLabel>
+                <InputLabel>Descripcion*</InputLabel>
                 <Input
                   id="descriptions"
                   onChange={handleChange}
@@ -198,7 +201,7 @@ export const Form = () => {
               </FormControl>
 
               <FormControl margin="dense" sx={{ width: 400 }}>
-                <InputLabel>Price</InputLabel>
+                <InputLabel>Precio*</InputLabel>
                 <Input
                   type="number"
                   id="price"
@@ -214,7 +217,7 @@ export const Form = () => {
               </FormControl>
 
               <FormControl margin="dense" sx={{ width: 400 }}>
-                <InputLabel>Stock</InputLabel>
+                <InputLabel>Stock*</InputLabel>
                 <Input
                   type="number"
                   id="stock"
@@ -230,7 +233,7 @@ export const Form = () => {
               </FormControl>
 
               <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
-                <InputLabel id="Type">Type</InputLabel>
+                <InputLabel id="Type">Tipo*</InputLabel>
                 {errors.type ? (
                   <FormHelperText id="type">{errors.type}</FormHelperText>
                 ) : (
@@ -243,9 +246,15 @@ export const Form = () => {
                   label="Type"
                   onChange={handleTypes}
                 >
-                  <MenuItem value={"Shirt"}>Shirt</MenuItem>
-                  <MenuItem value={"Sweather"}>Sweather</MenuItem>
-                  <MenuItem value={"Other"}>Other</MenuItem>
+                  <MenuItem sx={{ width: "100%" }} value={"Tshirt"}>
+                    Remera
+                  </MenuItem>
+                  <MenuItem sx={{ width: "100%" }} value={"Sweter"}>
+                    Buzo
+                  </MenuItem>
+                  <MenuItem sx={{ width: "100%" }} value={"Other"}>
+                    Otros
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -253,7 +262,7 @@ export const Form = () => {
         </Grid>
         <Grid xs={12} md={12} lg={12} xl={12}>
           <Box>
-            <label> Images </label>
+            <label> Imagenes* </label>
             <>
               <Box className={classes.root}>
                 <input
@@ -266,13 +275,13 @@ export const Form = () => {
                 />
                 <label htmlFor="contained-button-file">
                   <Button variant="contained" color="primary" component="span">
-                    Upload
+                    Agregar
                   </Button>
                 </label>
               </Box>
               <Box>
                 {input.images.length ? (
-                  <Box className={style.image}>
+                  <Box>
                     <img src={input.images} alt="algo" height="200px" />
                     <FormControl
                       onChange={addcolor}
@@ -281,13 +290,21 @@ export const Form = () => {
                         borderRadius: 3,
                         margin: 3,
                         padding: 3,
+                        minWidth: 150,
                       }}
                     >
                       <FormLabel id="demo-radio-buttons-group-label">
-                        Color
+                        Color*
                       </FormLabel>
                       {errors.color ? (
-                        <FormHelperText id="color">
+                        <FormHelperText
+                          sx={{
+                            fontSize: "0.6rem",
+                            maxWidth: "fit-content",
+                            padding: 0,
+                          }}
+                          id="color"
+                        >
                           {errors.color}
                         </FormHelperText>
                       ) : (
@@ -332,7 +349,7 @@ export const Form = () => {
             disabled={Object.keys(errors).length > 0 ? true : false}
             className={style.button}
           >
-            Create Product
+            Crear
           </button>
         </Grid>
       </Grid>
