@@ -30,7 +30,9 @@ export const CardDetail = ({ match }) => {
     <div>
       <NavBar />
       <Cart />
-      <div className={s.container}>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", paddingBottom: 30 }}
+      >
         {Object.entries(product).length ? (
           <Box
             sx={{
@@ -40,82 +42,90 @@ export const CardDetail = ({ match }) => {
               alignItems: "center",
             }}
           >
-            <Grid container spacing={2} columns={16}>
-              <Grid item xs={8}>
-                {product.images?.map((i, index) => (
-                  <CardMedia
-                    key={index}
-                    component="img"
-                    sx={{
-                      maxWidth: 400,
-                      margin: 2,
-                      borderRadius: 3,
-                      backgroundColor: "rgb(33, 33, 33)",
-                    }}
-                    image={i}
-                    alt="Product"
-                  />
-                ))}
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {product.images?.map((i, index) => (
+                    <CardMedia
+                      key={index}
+                      component="img"
+                      sx={{
+                        maxWidth: 400,
+                        margin: 2,
+                        borderRadius: 3,
+                        backgroundColor: "rgb(33, 33, 33)",
+                      }}
+                      image={i}
+                      alt="Product"
+                    />
+                  ))}
+                </Box>
               </Grid>
 
-              <Grid item xs={8}>
-                <Typography
-                  variant="h3"
-                  sx={{ lineHeight: 2, letterSpacing: 6 }}
-                >
-                  {product.name}
-                </Typography>
-                <Typography variant="h4" sx={{ lineHeight: 2 }}>
-                  Seleccionar color
-                </Typography>
-                <select className={s.filterSelect}>
-                  {!product.color?.length ? (
-                    <option>No colors available</option>
-                  ) : (
-                    product.color.map((c) => <option key={c}>{c}</option>)
-                  )}
-                </select>
-                <Typography variant="h4" sx={{ lineHeight: 2 }}>
-                  Seleccionar talle
-                </Typography>
-                <select
-                  className={s.filterSelect}
-                  onChange={(e) => handleSize(e)}
-                >
-                  {!product.size?.length ? (
-                    <option key={id}>No hay tallas disponibles</option>
-                  ) : (
-                    product.size.map((c) => (
-                      <option value={c} key={c}>
-                        {c}
-                      </option>
-                    ))
-                  )}
-                </select>
-                <Typography variant="h6" sx={{ lineHeight: 2 }}>
-                  {product.description}
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="success"
-                  size="large"
-                  onClick={() => addItemToCart({ ...product, size: size })}
-                >
-                  Agregar al carrito
-                </Button>
+              <Grid item xs={12} sm={12} md={6}>
+                <Box>
+                  <Typography
+                    variant="h3"
+                    sx={{ lineHeight: 2, letterSpacing: 6 }}
+                  >
+                    {product.name}
+                  </Typography>
+                  <Typography variant="h4" sx={{ lineHeight: 2 }}>
+                    Seleccionar color
+                  </Typography>
+                  <select className={s.filterSelect}>
+                    {!product.color?.length ? (
+                      <option>No colors available</option>
+                    ) : (
+                      product.color.map((c) => <option key={c}>{c}</option>)
+                    )}
+                  </select>
+                  <Typography variant="h4" sx={{ lineHeight: 2 }}>
+                    Seleccionar talle
+                  </Typography>
+                  <select
+                    className={s.filterSelect}
+                    onChange={(e) => handleSize(e)}
+                  >
+                    {!product.size?.length ? (
+                      <option key={id}>No hay tallas disponibles</option>
+                    ) : (
+                      product.size.map((c) => (
+                        <option value={c} key={c}>
+                          {c}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  <Typography variant="h6" sx={{ lineHeight: 2 }}>
+                    {product.description}
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    size="large"
+                    onClick={() => addItemToCart({ ...product, size: size })}
+                  >
+                    Agregar al carrito
+                  </Button>
+                </Box>
               </Grid>
             </Grid>
           </Box>
         ) : (
-          <Box
-            sx={{ height: "600px", display: "flex", justifyContent: "center" }}
-          >
-            <div className={s.container}>
-              <h1>"Cargando Producto"</h1>
-            </div>
-          </Box>
+          <Grid container>
+            <Grid xs={12} sm={12} md={12}>
+              <Typography variant="h3">"Cargando Producto"</Typography>
+            </Grid>
+          </Grid>
         )}
-      </div>
+      </Box>
       <Footer />
     </div>
   );
