@@ -29,6 +29,7 @@ export const CartProvider = ({ children }) => {
         } else {
             setCartItems([...cartItems, { ...product, amount: 1 }]);
         }
+        alert("Producto agregado a su carrito")
     };
 
 
@@ -45,6 +46,7 @@ export const CartProvider = ({ children }) => {
                 })
             );
         }
+        alert("Producto quitado de su carrito");
     };
     return (
         <CartContext.Provider
