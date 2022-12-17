@@ -10,7 +10,7 @@ import { CardDetail } from "./Components/CardDetail/CardDetail";
 import { LandingPage } from "./Components/LandingPage/LandingPage";
 import { CheckOutSuccess } from "./Components/CheckOutSuccess/CheckOutSuccess";
 import { CartProvider } from "./Components/Cart/CartContext";
-import CartBanner from "./Components/Cart/CartBanner";
+import CartBanner from "./Components/Cart/CartDetail";
 
 export default function App() {
   return (
