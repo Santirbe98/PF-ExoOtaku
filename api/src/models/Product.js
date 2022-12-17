@@ -1,10 +1,9 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-
-  sequelize.define("product",
+  sequelize.define(
+    "product",
     {
-
       name: {
         type: DataTypes.STRING,
         /* allowNull: false, */
@@ -26,7 +25,7 @@ module.exports = (sequelize) => {
         /* allowNull: false, */
       },
 
-      images: {
+      imagesForm: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         /* allowNull: false, */
       },
@@ -44,12 +43,11 @@ module.exports = (sequelize) => {
       deleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: false
-      }
+        defaultValue: false,
+      },
     },
     {
       timestamps: false,
     }
-  )
-}
-
+  );
+};

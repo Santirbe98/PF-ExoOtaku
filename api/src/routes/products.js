@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
     name,
     price,
     descriptions,
-    images,
+    imagesForm,
     stock,
     color,
     size,
@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
     !name ||
     !price ||
     !descriptions ||
-    !images ||
+    !imagesForm ||
     !stock ||
     !color ||
     !size ||
