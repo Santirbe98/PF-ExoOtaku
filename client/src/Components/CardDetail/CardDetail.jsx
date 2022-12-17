@@ -9,7 +9,7 @@ import Cart from "../Cart/Cart";
 import { Box, Grid, Typography, CardMedia, Button } from "@mui/material";
 
 export const CardDetail = ({ match }) => {
-  const { addItemToCart } = useContext(CartContext);
+  const { addItemToCart,redirectHome } = useContext(CartContext);
   let { id } = match.params;
   const dispatch = useDispatch();
   const [product, setProduct] = useState({});
@@ -99,7 +99,7 @@ export const CardDetail = ({ match }) => {
                   variant="contained"
                   color="success"
                   size="large"
-                  onClick={() => addItemToCart({ ...product, size: size })}
+                  onClick= {()=> {addItemToCart({ ...product, size: size }); redirectHome()}}
                 >
                   Agregar al carrito
                 </Button>

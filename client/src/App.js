@@ -10,6 +10,7 @@ import { CardDetail } from "./Components/CardDetail/CardDetail";
 import { LandingPage } from "./Components/LandingPage/LandingPage";
 import { CheckOutSuccess } from "./Components/CheckOutSuccess/CheckOutSuccess";
 import { CartProvider } from "./Components/Cart/CartContext";
+import CartBanner from "./Components/Cart/CartBanner";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/home" component={Home} />
+          <Route exact path="/cartDetail" component={CartBanner} />
           <Route exact path="/form" component={Form} />
           <Route exact path="/help" component={Help} />
           <Route exact path="/about" component={About} />

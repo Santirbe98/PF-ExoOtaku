@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-
+import { useHistory } from "react-router-dom";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -17,6 +17,7 @@ export const CartProvider = ({ children }) => {
     }, [cartItems]);
 
     const addItemToCart = (product) => {
+        console.log(localStorage.CartProducts,'hola '+ cartItems) 
         const inCart = cartItems.find((p) => p.id === product.id && p.size === product.size);
         if (inCart) {
             setCartItems(
@@ -31,7 +32,11 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-
+    const cleanCart =() =>{
+        localStorage.removeItem("CartProducts")
+        setCartItems([])
+        console.log(localStorage)
+    }
     const deleteItemToCart = (product) => {
         const inCart = cartItems.find((p) => p.id === product.id && p.size === product.size);
         if (inCart.amount === 1) {
@@ -46,9 +51,13 @@ export const CartProvider = ({ children }) => {
             );
         }
     };
+    let history = useHistory();
+    const redirectHome =()=>{
+        history.push("/home");
+    }
     return (
         <CartContext.Provider
-            value={{ cartItems, addItemToCart, deleteItemToCart }}
+            value={{ cartItems, addItemToCart, deleteItemToCart,redirectHome ,cleanCart}}
         >
             {children}
         </CartContext.Provider>
