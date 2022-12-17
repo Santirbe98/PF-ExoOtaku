@@ -17,7 +17,7 @@ export const PayButton = ({ cartItems, userId }) => {
         onClick={handleCheckOut}
         disabled={!cartItems.length ? true : false}
       >
-        Pagar carrito
+          Ir a Pagar
       </Button>
     </Box>
   );
