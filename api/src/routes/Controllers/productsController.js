@@ -58,7 +58,7 @@ const getAllProducts = async function () {
           name: field.name,
           price: field.price,
           description: field.descriptions,
-          images: field.images,
+          images: field.imagesForm,
           stock: field.stock,
           date_added: field.date_added,
           deleted: field.deleted,
@@ -80,12 +80,13 @@ const createNewProduct = async ({
   name,
   price,
   descriptions,
-  images,
+  imagesForm,
   stock,
   color,
   size,
   type,
   category,
+  imagesDb,
 }) => {
   try {
     name = (name.charAt(0).toUpperCase() + name.slice(1)).trim();
@@ -93,7 +94,7 @@ const createNewProduct = async ({
       name,
       price: parseInt(price),
       descriptions,
-      images,
+      imagesForm,
       stock: parseInt(stock),
     });
     // const colorName = await Color.findOrCreate({
@@ -106,6 +107,16 @@ const createNewProduct = async ({
       });
       newProduct.addColors(colorName[0]);
     });
+
+    imagesDb &&
+      imagesDb.map(async (i) => {
+        const colorDb = await Color.findOrCreate({
+          where: { color: i.color },
+        });
+        const algo = await colorDb[0].createImage({ url: i.url });
+        newProduct.addImage([algo]);
+      });
+
     // const sizeName = await Size.findOrCreate({
     //   where: { size},
     // });
