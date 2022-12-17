@@ -117,6 +117,30 @@ export const CardDetail = ({ match }) => {
                 </Box>
               </Grid>
             </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {product.imagesDb?.map((i, index) => (
+                    <CardMedia
+                      key={index}
+                      component="img"
+                      sx={{
+                        maxWidth: 100,
+                        margin: 2,
+                        borderRadius: 3,
+                        backgroundColor: "rgb(33, 33, 33)",
+                      }}
+                      image={i.image}
+                      alt={i.color}
+                    />
+                  ))}
+                </Box>
+              </Grid>
           </Box>
         ) : (
           <Grid container>
