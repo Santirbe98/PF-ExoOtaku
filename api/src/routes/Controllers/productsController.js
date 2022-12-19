@@ -1,4 +1,4 @@
-const { Product, Category, Size, Color, Type } = require("../../db");
+const { Product, Category, Size, Color, Type, Image } = require("../../db");
 // const { Op } = require("sequelize");
 
 function compare_lname(a, b) {
@@ -43,13 +43,23 @@ const getAllProducts = async function () {
             attributes: [],
           },
         },
+        {
+          model: Image,
+          attributes: ["url","colorId"],
+          through: {
+            attributes: [],
+          },
+        },
+        Image.findOne().getColor("colorId")
       ],
     });
+    console.log((await Image.getColor()).toJSON());
     if (products.length) {
       const dbData = await products.map((d) => {
         const colorArray = d.colors.map((t) => t.color);
         const typeArray = d.types.map((t) => t.type);
         const sizeArray = d.sizes.map((t) => t.size);
+        const imageArray = d.images.map((t) => ({color:t.colorId, image:t.url}));
         // const categoryArray = d.categorys.map((t) => t.category);
         field = d.dataValues;
 
@@ -65,7 +75,8 @@ const getAllProducts = async function () {
           color: colorArray,
           type: typeArray,
           size: sizeArray,
-          category: field.categories[0].category,
+          category: field.categories.category,
+          imagesDb: imageArray,
         };
         return dataProduct;
       });
@@ -96,6 +107,7 @@ const createNewProduct = async ({
       descriptions,
       imagesForm,
       stock: parseInt(stock),
+      imagesDb,
     });
     // const colorName = await Color.findOrCreate({
     //   where: { color},
@@ -114,6 +126,11 @@ const createNewProduct = async ({
           where: { color: i.color },
         });
         const algo = await colorDb[0].createImage({ url: i.url });
+        // console.log(colorDb)
+
+        console.log(colorDb[0]);
+        // console.log(colorDb[0].color); //nombre del color
+        console.log([algo]);
         newProduct.addImage([algo]);
       });
 
@@ -137,6 +154,7 @@ const createNewProduct = async ({
       where: { category },
     });
     newProduct.addCategory(categoryName[0]);
+    // console.log(newProduct)
     return newProduct;
   } catch (error) {
     console.log(error);

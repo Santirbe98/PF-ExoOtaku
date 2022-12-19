@@ -77,8 +77,15 @@ Type.belongsToMany(Product, {
 Color.hasMany(Image);
 Image.belongsTo(Color);
 
-Product.hasMany(Image);
-Image.belongsTo(Product);
+
+// Product.hasMany(Image);
+// Image.belongsTo(Product);
+Product.belongsToMany(Image, {
+  through: "Product_Images",
+});
+Image.belongsToMany(Product, {
+  through: "Product_Images",
+});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
