@@ -6,13 +6,28 @@ import Paged from "../Paged/Paged";
 import { Filter } from "../Filter/Filter.jsx";
 import s from "./Cards.module.css";
 import PagedSearch from "../PagedSearch/PagedSearch";
-//--------------------------------------------------------------//
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Unstable_Grid2";
+import { display } from "@mui/system";
+//--------------------------------------------------------------//
 
 export const Cards = () => {
   let dispatch = useDispatch();
   let products = useSelector((state) => state.filterProducts);
+
+  //=============================================
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   //PAGED LOGIC =============================================
   let componentId = 1;
@@ -59,39 +74,58 @@ export const Cards = () => {
   const productSearch = !search
     ? productsList
     : products.filter((p) =>
-      p.category.toLowerCase().includes(search.toLowerCase())
-    );
+        p.category.toLowerCase().includes(search.toLowerCase())
+      );
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
 
   //===========================================================
   return (
     <Box>
-      {/* <Box className={s.searchInput}> */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <TextField
-          placeholder="Busque por anime"
-          color="warning"
-          sx={{ width: "500px" }}
-          style={{
-            backgroundColor: "rgba(255, 253, 253, 0.900)",
-            borderRadius: "10px",
-          }}
-          focused
-          value={search}
-          onChange={searcher}
-        />
-      </Box>
-      <Box className={s.wrapperContainer}>
-        <Box className={s.wrapper}>
+      <Grid container>
+        <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "0px 10px 0px 10px",
+            }}
+          >
+            <TextField
+              placeholder="Busque por anime"
+              color="warning"
+              sx={{ width: "500px" }}
+              style={{
+                backgroundColor: "rgba(255, 253, 253, 0.900)",
+                borderRadius: "10px",
+              }}
+              focused
+              value={search}
+              onChange={searcher}
+            />
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid xs={12} sm={12} md={12} lg={4} xl={4}>
           <Filter setPage={setPage} setOrder={setOrder} />
-        </Box>
-        <Box className={s.wrapper2}>
+        </Grid>
+        <Grid
+          xs={12}
+          sm={12}
+          md={12}
+          lg={8}
+          xl={8}
+          className={`${
+            width <= 800
+              ? s.sx
+              : width < 1300
+              ? s.md
+              : width >= 1300
+              ? s.lg
+              : null
+          }`}
+        >
           {!productsList.length ? (
             <Box className={s.textLoading}>
               <h2>"No hay productos para mostrar"</h2>
@@ -99,7 +133,13 @@ export const Cards = () => {
           ) : search.length > 3 ? (
             productsList2.map((c) => {
               return (
-                <Box key={componentId++}>
+                <Box
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <MediaCard
                     key={c.id}
                     id={c.id}
@@ -113,7 +153,14 @@ export const Cards = () => {
             })
           ) : (
             productsList.map((p) => (
-              <Box key={componentId++}>
+              <Box
+                key={componentId++}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <MediaCard
                   key={p.id}
                   id={p.id}
@@ -125,8 +172,8 @@ export const Cards = () => {
               </Box>
             ))
           )}
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
       <Box>
         {search.length >= 3 ? (
           <Box>
