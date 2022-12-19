@@ -4,10 +4,13 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_URL } = process.env;
 
-const sequelize = new Sequelize(DB_URL, {
-  logging: false,
-  native: false,
-});
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/exOtaku`,
+  {
+    logging: false,
+    native: false,
+  }
+);
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -33,7 +36,17 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Product, Category, Color, Size, Type } = sequelize.models;
+const {
+  Product,
+  Category,
+  Color,
+  Size,
+  Type,
+  PurchaseOrder,
+  Payment,
+  ShoppingCart,
+  ShoppingList,
+} = sequelize.models;
 
 Product.belongsToMany(Category, {
   through: "Product_Categorys",
@@ -62,6 +75,18 @@ Product.belongsToMany(Type, {
 Type.belongsToMany(Product, {
   through: "Product_Types",
 });
+
+ShoppingCart.hasMany(ShoppingList);
+ShoppingList.belongsTo(ShoppingCart);
+
+Product.hasMany(ShoppingList);
+ShoppingList.belongsTo(Product);
+
+ShoppingCart.hasOne(PurchaseOrder);
+PurchaseOrder.belongsTo(ShoppingCart);
+
+Payment.hasOne(PurchaseOrder);
+PurchaseOrder.belongsTo(Payment);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
