@@ -106,16 +106,16 @@ export const Cards = () => {
           </Box>
         </Grid>
       </Grid>
-      <Grid container>
-        <Grid xs={12} sm={12} md={12} lg={4} xl={4}>
+      <Grid container pt={5}>
+        <Grid xs={12} sm={12} md={12} lg={3} xl={3}>
           <Filter setPage={setPage} setOrder={setOrder} />
         </Grid>
         <Grid
           xs={12}
           sm={12}
           md={12}
-          lg={8}
-          xl={8}
+          lg={9}
+          xl={9}
           className={`${
             width <= 800
               ? s.sx
