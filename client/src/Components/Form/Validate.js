@@ -1,41 +1,41 @@
-export function validate(input) {
+export const validate = (input) => {
   let errors = {};
   if (!input.name || input.name.length === 0) {
-    errors.name = "Name is required";
+    errors.name = "Debe ingresar Nombre";
   } else if (
     input.name.length > 0 &&
     (/[0-9]/.test(input.name) || !/[a-zA-Z ]/.test(input.name))
   ) {
-    errors.name = "A string is required";
+    errors.name = "Debe contener solo letras.";
   }
 
   if (!input.descriptions || input.descriptions.length === 0) {
-    errors.descriptions = "Descriptions are required";
+    errors.descriptions = "Debe ingresar Descripcion";
   }
 
   if (input.price < 0 || input.price === 0) {
-    errors.price = "A non-negative number is required";
+    errors.price = "Debe ser mayor a 0.";
   }
 
   if (input.stock <= 0) {
-    errors.stock = "A non-negative number is required";
+    errors.stock = "Debe ser mayor a 0.";
   }
 
   if (!input.category || input.category.length === 0) {
-    errors.category = "Category is required";
+    errors.category = "Debe ingresar Categoria.";
   }
 
   if (input.images.length === 0) {
-    errors.images = "Image is required";
+    errors.images = "Debe ingresar una Imagen";
   }
 
   if (input.type.length === 0) {
-    errors.type = "Type is Required";
+    errors.type = "Debe ingresar Tipo";
   }
 
   if (input.color.length === 0) {
-    errors.color = "Color is Required";
+    errors.color = "Debe ingresar Color";
   }
 
   return errors;
-}
+};

@@ -9,9 +9,8 @@ import PagedSearch from "../PagedSearch/PagedSearch";
 //--------------------------------------------------------------//
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { yellow } from "@mui/material/colors";
-const color = yellow[500];
-export function Cards() {
+
+export const Cards = () => {
   let dispatch = useDispatch();
   let products = useSelector((state) => state.filterProducts);
 
@@ -60,14 +59,14 @@ export function Cards() {
   const productSearch = !search
     ? productsList
     : products.filter((p) =>
-        p.category.toLowerCase().includes(search.toLowerCase())
-      );
+      p.category.toLowerCase().includes(search.toLowerCase())
+    );
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
 
   //===========================================================
   return (
-    <div>
+    <Box>
       {/* <Box className={s.searchInput}> */}
       <Box
         sx={{
@@ -88,19 +87,19 @@ export function Cards() {
           onChange={searcher}
         />
       </Box>
-      <div className={s.wrapperContainer}>
-        <div className={s.wrapper}>
+      <Box className={s.wrapperContainer}>
+        <Box className={s.wrapper}>
           <Filter setPage={setPage} setOrder={setOrder} />
-        </div>
-        <div className={s.wrapper2}>
+        </Box>
+        <Box className={s.wrapper2}>
           {!productsList.length ? (
-            <div className={s.textLoading}>
-              <h2>"No Products to Show"</h2>
-            </div>
+            <Box className={s.textLoading}>
+              <h2>"No hay productos para mostrar"</h2>
+            </Box>
           ) : search.length > 3 ? (
             productsList2.map((c) => {
               return (
-                <div key={componentId++}>
+                <Box key={componentId++}>
                   <MediaCard
                     key={c.id}
                     id={c.id}
@@ -109,12 +108,12 @@ export function Cards() {
                     category={c.category}
                     price={c.price}
                   />
-                </div>
+                </Box>
               );
             })
           ) : (
             productsList.map((p) => (
-              <div key={componentId++}>
+              <Box key={componentId++}>
                 <MediaCard
                   key={p.id}
                   id={p.id}
@@ -123,15 +122,15 @@ export function Cards() {
                   category={p.category}
                   price={p.price}
                 />
-              </div>
+              </Box>
             ))
           )}
-        </div>
-      </div>
-      <div>
+        </Box>
+      </Box>
+      <Box>
         {search.length >= 3 ? (
-          <div>
-            <div>
+          <Box>
+            <Box>
               <PagedSearch
                 productPage={productsPage}
                 productList={productSearch.length}
@@ -140,11 +139,11 @@ export function Cards() {
                 pageNext={pageNext}
                 currentPage={page}
               />
-            </div>
-          </div>
+            </Box>
+          </Box>
         ) : (
-          <div>
-            <div>
+          <Box>
+            <Box>
               <Paged
                 productPage={productsPage} // 9
                 productList={products.length} //
@@ -153,10 +152,10 @@ export function Cards() {
                 pageNext={pageNext}
                 currentPage={page}
               />
-            </div>
-          </div>
+            </Box>
+          </Box>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
-}
+};

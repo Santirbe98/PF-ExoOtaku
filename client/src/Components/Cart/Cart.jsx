@@ -5,6 +5,7 @@ import { CartContext } from "./CartContext";
 import styles from "./Cart.module.css";
 import { PayButton } from "../Payment/PayButton.jsx";
 import { Button, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Cart = ({ userId }) => {
     const { loginWithRedirect, isAuthenticated } = useAuth0();
@@ -85,9 +86,31 @@ const Cart = ({ userId }) => {
                     )}
                     <h2 className={styles.total}>Total: ${total}</h2>
                     <Box pb={3}>
-                        {isAuthenticated ? <PayButton cartItems={cartItems} userId={userId} /> : <Button variant="contained" color="success" onClick={() => loginWithRedirect()}>LOG IN</Button>}
+                        {isAuthenticated ? <PayButton cartItems={cartItems} userId={userId} /> : <Button variant="contained" color="success" onClick={() => loginWithRedirect()}>Iniciar sesion</Button>}
 
                     </Box>
+                    <Box pb={3}>
+            {cartItems.length > 0?(
+        <Link
+            to="/cartDetail"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+            > Detalle de Carrito
+            </Button>
+            </Link>):( <Button
+        variant="contained"
+        color="info"
+        disabled={!cartItems.length ? true : false}
+      >
+        Detalle de Carrito
+      </Button>)}
+          </Box>
                 </div>
             )}
         </div>
