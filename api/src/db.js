@@ -42,6 +42,7 @@ const {
   Color,
   Size,
   Type,
+  Image,
   PurchaseOrder,
   Payment,
   ShoppingCart,
@@ -74,6 +75,14 @@ Product.belongsToMany(Type, {
 });
 Type.belongsToMany(Product, {
   through: "Product_Types",
+});
+// Product.hasMany(Image);
+// Image.belongsTo(Product);
+Product.belongsToMany(Image, {
+  through: "Product_Images",
+});
+Image.belongsToMany(Product, {
+  through: "Product_Images",
 });
 
 ShoppingCart.hasMany(ShoppingList);
