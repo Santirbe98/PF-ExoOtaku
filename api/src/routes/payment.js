@@ -4,13 +4,51 @@ const router = Router();
 const Stripe = require("stripe");
 require("dotenv").config();
 const stripe = Stripe(process.env.STRIPE_KEY);
+const {
+  PurchaseOrder,
+  Payment,
+  ShoppingCart,
+  Product,
+  ShoppingList,
+} = require("../db");
 
 router.post("/create-checkout-session", async (req, res) => {
+  let Ammount = 0;
+  req.body.cartItems.forEach((item) => {
+    Ammount += item.price * item.amount;
+  });
+
+  const userCart = await ShoppingCart.create({
+    ammount: Ammount,
+  });
+
+  const cartId = userCart.dataValues.id;
   const customer = await stripe.customers.create({
     metadata: {
-      // userId: req.body.userId.toString(),
-      cart: JSON.stringify(req.body.cartItems.toString()),
+      cartId,
     },
+  });
+
+  await ShoppingCart.update(
+    {
+      checkout: customer.id,
+    },
+    {
+      where: {
+        id: cartId,
+      },
+    }
+  );
+
+  req.body.cartItems.forEach(async (item) => {
+    const Prod = await Product.findByPk(item.id);
+    const List = await ShoppingList.create({
+      price: item.price,
+      quantity: item.amount,
+      size: item.size,
+    });
+    await List.setProduct(Prod);
+    await List.setShoppingCart(userCart);
   });
 
   const line_items = req.body.cartItems.map((item) => {
@@ -61,17 +99,51 @@ router.post("/create-checkout-session", async (req, res) => {
   res.send({ url: session.url });
 });
 
-//!-------------------
-//! Creación de orden
-//!-------------------
-
 router.get("/checkout-success", async (req, res) => {
   const { session_id } = req.query;
   const session = await stripe.checkout.sessions.retrieve(session_id);
   const customer = await stripe.customers.retrieve(session.customer);
-  /* console.log(session) */
-  /* console.log(customer) */
-  res.send(session);
+
+  let newPayment = await Payment.create({
+    id: session.payment_intent,
+    method: session.payment_method_types[0],
+    reference: session.created,
+  });
+
+  let newOrder = await PurchaseOrder.create({
+    cart_ammount: session.amount_subtotal,
+    total_ammount: session.amount_total,
+    status: session.payment_status,
+  });
+
+  await newOrder.setPayment(session.payment_intent);
+  await newOrder.setShoppingCart(customer.metadata.cartId);
+
+  let orderUser = await PurchaseOrder.findOne({
+    where: {
+      PaymentId: session.payment_intent,
+    },
+    include: [
+      {
+        model: ShoppingCart,
+      },
+    ],
+  });
+
+  let userCart = await ShoppingCart.findByPk(customer.metadata.cartId, {
+    include: [
+      {
+        model: ShoppingList,
+        include: [
+          {
+            model: Product,
+          },
+        ],
+      },
+    ],
+  });
+  let paymentUser = await Payment.findByPk(session.payment_intent);
+  res.send({ orderUser, paymentUser, userCart });
 });
 
 module.exports = router;
