@@ -3,10 +3,10 @@ const router = Router();
 const RoutFunc = require('./Controllers/customerController')
 
 //CUSTOMER DETAIL
-router.get('/:id',async(req,res)=>{
-    const { id } = req.params;
+router.get('/:email',async(req,res)=>{
+    const { email } = req.params;
     try {
-        return res.status(200).json(await RoutFunc.getCustomerDetail(id))
+        return res.status(200).json(await RoutFunc.getCustomerDetail(email))
     } catch (error) {
         return res.status(400).send("Sorry there isn't information to show")
     }        
@@ -23,6 +23,7 @@ router.get('/',async(req,res)=>{
 
 //SAVE CUSTOMER
 router.post('/',async(req,res)=>{
+    console.log(req.body)
     let {name,token,email,country,provincia,departamento,comuna,shipping_address,billing_address,isadmin}=req.body
     try {
         return res.status(200).json(await RoutFunc.createNewCustomer(name,token,email,country,provincia,departamento,comuna,shipping_address,billing_address,isadmin))

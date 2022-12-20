@@ -4,9 +4,12 @@ const { Op } = require("sequelize");
 
 module.exports = {
 
-    getCustomerDetail: async function(id){
-        const Customer_detail=await Customer.findByPk(id,{
-            attributes:['id','name','token','email','country','provincia','departamento','comuna','shipping_address','billing_address','isadmin'],                  
+    getCustomerDetail: async function(email){
+        const Customer_detail=await Customer.findOne({
+            attributes:['id','name','token','email','country','provincia','phone','comuna','shipping_address','billing_address','isadmin'],                  
+            where: {
+              email: email
+            }
         })
         return Customer_detail
     },
@@ -14,7 +17,7 @@ module.exports = {
 
     getAllCustomer: async function () {
         const Customer_list= await Customer.findAll({
-            attributes:['id','name','token','email','shipping_address','billing_address','isadmin'],
+            attributes:['id','name','token','email','shipping_address','billing_address','phone','isadmin'],
             where:{
                 deleted:false
             }
@@ -22,14 +25,14 @@ module.exports = {
         return Customer_list
     },
 
-    createNewCustomer: async function(name,token,email,country,provincia,departamento,comuna,shipping_address,billing_address,isadmin){
+    createNewCustomer: async function(name,token,email,country,provincia,phone,comuna,shipping_address,billing_address,isadmin){
         const new_Customer= await Customer.create({
             name:name,
             token:token,
             email:email,
             country:country,
             provincia:provincia,
-            departamento:departamento,
+            phone:phone,
             comuna:comuna,
             shipping_address:shipping_address,
             billing_address:billing_address,
@@ -39,9 +42,9 @@ module.exports = {
         return new_Customer
     },
 
-    ModifyCustomer: async function(id,name,token,email,country,provincia,departamento,comuna,shipping_address,billing_address,isadmin){
+    ModifyCustomer: async function(id,name,token,email,country,provincia,phone,comuna,shipping_address,billing_address,isadmin){
         const updtCustomer= await Customer.findByPk(id,{})
-        await updtCustomer.update({name,token,email,country,provincia,departamento,comuna,shipping_address,billing_address,isadmin})           
+        await updtCustomer.update({name,token,email,country,provincia,phone,comuna,shipping_address,billing_address,isadmin})           
         return ("The Information was successfully Updated")
     },
 

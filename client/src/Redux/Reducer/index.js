@@ -4,6 +4,9 @@ import {
   GET_PRODUCT_DETAIL,
   ORDER_BY_PRICE,
   ORDER_DETAIL,
+
+  GET_USER_CREDENTIALS,
+  CUSTOMER_BY_EMAIL
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -11,6 +14,9 @@ const initialState = {
   filterProducts: [],
   details: {},
   orderdetail: {},
+
+  customer:{},
+  chk_customer:{},
 };
 
 function rootReducer(state = initialState, action) {
@@ -67,6 +73,19 @@ function rootReducer(state = initialState, action) {
         ...state,
         filterProducts: orderProduct,
       };
+
+    case GET_USER_CREDENTIALS:
+      return {
+        ...state,
+        user_credential: action.payload,
+      };
+
+    case CUSTOMER_BY_EMAIL:
+      return {
+        ...state,
+        chk_customer: action.payload,
+      };  
+
     default:
       return {
         ...state,
