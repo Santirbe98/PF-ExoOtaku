@@ -43,6 +43,15 @@ const getAllProducts = async function () {
             attributes: [],
           },
         },
+        
+{
+  model: Image,
+  attributes: ["url"],
+  include: {
+    model: Color,
+    attributes: ["color"],
+  },
+},
       ],
     });
     if (products.length) {
@@ -50,6 +59,10 @@ const getAllProducts = async function () {
         const colorArray = d.colors.map((t) => t.color);
         const typeArray = d.types.map((t) => t.type);
         const sizeArray = d.sizes.map((t) => t.size);
+        const imageArray = d.images.map((t) =>({
+          images: t.url,
+          color: t.color.color
+        }));
         // const categoryArray = d.categorys.map((t) => t.category);
         field = d.dataValues;
 
@@ -66,6 +79,7 @@ const getAllProducts = async function () {
           type: typeArray,
           size: sizeArray,
           category: field.categories[0].category,
+          imagesDb: imageArray,
         };
         return dataProduct;
       });
