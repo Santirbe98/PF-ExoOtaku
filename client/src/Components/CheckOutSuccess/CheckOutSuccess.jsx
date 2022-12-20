@@ -11,8 +11,6 @@ import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import BasicTable from "./table";
 
-
-
 export const CheckOutSuccess = () => {
   const dispatch = useDispatch();
   const { search } = useLocation();
@@ -35,7 +33,6 @@ export const CheckOutSuccess = () => {
     <div>
       <NavBar />
       <Box>
-
         <Typography sx={{ padding: "1%" }} variant="h2">
           ¡Gracias por tu compra!
         </Typography>
@@ -44,7 +41,6 @@ export const CheckOutSuccess = () => {
       <Box sx={{ padding: "2%" }}>
         {loading === true ? (
           <>
-
             <Typography variant="h5">Tu orden está siendo procesada</Typography>
 
             <Box sx={{ position: "relative", display: "inline-flex" }}>
@@ -56,9 +52,8 @@ export const CheckOutSuccess = () => {
             </Box>
           </>
         ) : (
-          <
+          <>
             <Typography variant="h5">
-
               Tu id de pago es
               <Typography sx={{ padding: "1%" }}> {Order} </Typography>
             </Typography>
@@ -69,7 +64,6 @@ export const CheckOutSuccess = () => {
             <Box sx={{ padding: "0% 5%" }}>
               <BasicTable Products={products} />
             </Box>
-
           </>
         )}
       </Box>
