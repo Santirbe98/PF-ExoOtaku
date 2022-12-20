@@ -8,13 +8,10 @@ const sizesRouter = require("./size.js");
 const filtersRouter = require("./filterAll.js");
 const mockRouter = require("./mock.js");
 const Payment = require("./payment.js");
-
 const customerRouter = require("./customer.js");
 const cloudinary = require("./cloudinary.js");
 // Ejemplo: const authRouter = require('./auth.js');
-
 const router = Router();
-
 // Configurar los routers
 router.use("/payment", Payment);
 router.use("/products", productsRouter);
