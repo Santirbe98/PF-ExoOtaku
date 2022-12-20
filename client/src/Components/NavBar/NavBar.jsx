@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import s from "./NavBar.module.css";
 import LoginButton from "../Authenticate/LoginButton";
-import Profile from "../Authenticate/Profile";
+import Profile from "../Authenticate/Profile2";
 import { useAuth0 } from "@auth0/auth0-react";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
