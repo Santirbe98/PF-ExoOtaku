@@ -145,7 +145,7 @@ export const CardDetail = ({ match }) => {
                         borderRadius: 3,
                         backgroundColor: "rgb(33, 33, 33)",
                       }}
-                      image={i.image}
+                      image={i.images}
                       alt={i.color}
                     />
                   ))}

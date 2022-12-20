@@ -1,6 +1,5 @@
 const { Product, Category, Size, Color, Type, Image } = require("../../db");
 // const { Op } = require("sequelize");
-
 function compare_lname(a, b) {
   if (a.name < b.name) {
     return -1;
@@ -45,21 +44,23 @@ const getAllProducts = async function () {
         },
         {
           model: Image,
-          attributes: ["url","colorId"],
-          through: {
-            attributes: [],
+          attributes: ["url"],
+          include: {
+            model: Color,
+            attributes: ["color"],
           },
         },
-        Image.findOne().getColor("colorId")
       ],
     });
-    console.log((await Image.getColor()).toJSON());
     if (products.length) {
       const dbData = await products.map((d) => {
         const colorArray = d.colors.map((t) => t.color);
         const typeArray = d.types.map((t) => t.type);
         const sizeArray = d.sizes.map((t) => t.size);
-        const imageArray = d.images.map((t) => ({color:t.colorId, image:t.url}));
+        const imageArray = d.images.map((t) =>({
+          images: t.url,
+          color: t.color.color
+        }));
         // const categoryArray = d.categorys.map((t) => t.category);
         field = d.dataValues;
 
@@ -75,7 +76,7 @@ const getAllProducts = async function () {
           color: colorArray,
           type: typeArray,
           size: sizeArray,
-          category: field.categories.category,
+          category: field.categories[0].category,
           imagesDb: imageArray,
         };
         return dataProduct;
