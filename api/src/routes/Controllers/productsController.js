@@ -1,4 +1,4 @@
-const { Product, Category, Size, Color, Type } = require("../../db");
+const { Product, Category, Size, Color, Type, Image } = require("../../db");
 // const { Op } = require("sequelize");
 
 function compare_lname(a, b) {
@@ -43,15 +43,15 @@ const getAllProducts = async function () {
             attributes: [],
           },
         },
-        
-{
-  model: Image,
-  attributes: ["url"],
-  include: {
-    model: Color,
-    attributes: ["color"],
-  },
-},
+
+        {
+          model: Image,
+          attributes: ["url"],
+          include: {
+            model: Color,
+            attributes: ["color"],
+          },
+        },
       ],
     });
     if (products.length) {
@@ -59,9 +59,9 @@ const getAllProducts = async function () {
         const colorArray = d.colors.map((t) => t.color);
         const typeArray = d.types.map((t) => t.type);
         const sizeArray = d.sizes.map((t) => t.size);
-        const imageArray = d.images.map((t) =>({
+        const imageArray = d.images.map((t) => ({
           images: t.url,
-          color: t.color.color
+          color: t.color.color,
         }));
         // const categoryArray = d.categorys.map((t) => t.category);
         field = d.dataValues;
