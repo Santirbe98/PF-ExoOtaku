@@ -127,9 +127,9 @@ export const Cards = () => {
           }`}
         >
           {!productsList.length ? (
-            <Box className={s.textLoading}>
+            <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
               <h2>"No hay productos para mostrar"</h2>
-            </Box>
+            </Grid>
           ) : search.length > 3 ? (
             productsList2.map((c) => {
               return (
