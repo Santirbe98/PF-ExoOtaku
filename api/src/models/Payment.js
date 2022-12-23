@@ -15,6 +15,11 @@ module.exports = (sequelize) => {
       reference: {
         type: DataTypes.INTEGER,
       },
+
+      delete: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       timestamps: true,

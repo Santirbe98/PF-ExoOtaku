@@ -5,9 +5,12 @@ import {
   GET_PRODUCT_DETAIL,
   ORDER_BY_PRICE,
   ORDER_DETAIL,
-
   GET_USER_CREDENTIALS,
-  CUSTOMER_BY_EMAIL
+  CUSTOMER_BY_EMAIL,
+  CUSTOMER_ORDERS,
+  GET_ALL_ORDERS,
+  DELETE_ORDER,
+  UPDATE_STATUS,
 } from "./actionsTypes";
 
 axios.defaults.baseURL = "http://localhost:3001";
@@ -87,16 +90,16 @@ export function getCheckout(session_id) {
 }
 
 export function postCustomer(payload) {
-  return async function(dispatch) {
-    console.log(payload)
-    var response
+  return async function (dispatch) {
+    console.log(payload);
+    var response;
     try {
-        response = await axios.post('http://localhost:3001/customer/', payload);
-        return response;
+      response = await axios.post("http://localhost:3001/customer/", payload);
+      return response;
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-} 
+  };
 }
 
 export function userCredential(payload) {
@@ -111,6 +114,48 @@ export function chkcustomer(email) {
     let json = await axios.get(`http://localhost:3001/customer/${email}`);
     return dispatch({
       type: CUSTOMER_BY_EMAIL,
+      payload: json.data,
+    });
+  };
+}
+
+export function customerOrders(id) {
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/orders/${id}`);
+    return dispatch({
+      type: CUSTOMER_ORDERS,
+      payload: json.data,
+    });
+  };
+}
+
+export function getAllOrders() {
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/orders/`);
+    return dispatch({
+      type: GET_ALL_ORDERS,
+      payload: json.data,
+    });
+  };
+}
+
+export function deleteOrder(id) {
+  return async function (dispatch) {
+    let json = await axios.delete(`http://localhost:3001/orders?id=${id}`);
+    return dispatch({
+      type: DELETE_ORDER,
+      payload: json.data,
+    });
+  };
+}
+
+export function modifyStatusORder({ id, state }) {
+  return async function (dispatch) {
+    let json = await axios.put(`http://localhost:3001/orders?id=${id}`, {
+      status: state,
+    });
+    return dispatch({
+      type: UPDATE_STATUS,
       payload: json.data,
     });
   };
