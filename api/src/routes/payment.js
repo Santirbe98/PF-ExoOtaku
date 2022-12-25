@@ -14,6 +14,7 @@ const {
 
 router.post("/create-checkout-session", async (req, res) => {
   let Ammount = 0;
+
   req.body.cartItems.forEach((item) => {
     Ammount += item.price * item.amount;
   });
@@ -26,6 +27,7 @@ router.post("/create-checkout-session", async (req, res) => {
   const customer = await stripe.customers.create({
     metadata: {
       cartId,
+      userId: req.body.userId,
     },
   });
 
@@ -54,7 +56,7 @@ router.post("/create-checkout-session", async (req, res) => {
   const line_items = req.body.cartItems.map((item) => {
     return {
       price_data: {
-        currency: "USD",
+        currency: "ARS",
         product_data: {
           name: item.name,
           brand: item.brand,
@@ -64,7 +66,7 @@ router.post("/create-checkout-session", async (req, res) => {
             id: item.id,
           },
         },
-        unit_amount: item.price * 100,
+        unit_amount: item.price * 10,
       },
       quantity: item.amount,
     };
@@ -130,6 +132,8 @@ router.get("/checkout-success", async (req, res) => {
     ],
   });
 
+  await orderUser.setCustomer(customer.metadata.userId);
+
   let userCart = await ShoppingCart.findByPk(customer.metadata.cartId, {
     include: [
       {
@@ -143,6 +147,7 @@ router.get("/checkout-success", async (req, res) => {
     ],
   });
   let paymentUser = await Payment.findByPk(session.payment_intent);
+
   res.send({ orderUser, paymentUser, userCart });
 });
 
