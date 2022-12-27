@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 import React from "react";
-import s from "./PagedSearch.module.css";
+import Grid from "@mui/material/Unstable_Grid2";
 
 const Paged = ({
   productPage,
@@ -16,45 +16,81 @@ const Paged = ({
   }
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       {pages.length <= 1 ? (
         <></>
       ) : (
-        <Box className={s.liPaged} sx={{ gap: "10px" }} pb={3} pt={2}>
-          <Box>
-            <Button
-              color="warning"
-              onClick={() => paged(pagePrev, pages.length)}
-              style={{ width: "50px" }}
-              disabled={currentPage === 1 ? true : false}
-              variant="contained"
-            >
-              ←
-            </Button>
-          </Box>
-          {pages.map((p) => (
-            <Box key={p}>
-              <Button
-                color="warning"
-                variant="contained"
-                onClick={() => paged(p, pages.length)}
+        <>
+          <Grid container sx={{ alignItems: "center" }}>
+            <Grid xs={12} sm={12} md={12} lg={12} xl={2}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "4px",
+                }}
               >
-                {p}
-              </Button>
-            </Box>
-          ))}
-          <Box>
-            <Button
-              color="warning"
-              onClick={() => paged(pageNext, pages.length)}
-              style={{ width: "50px" }}
-              variant="contained"
-              disabled={currentPage === pages.length ? true : false}
-            >
-              →
-            </Button>
-          </Box>
-        </Box>
+                <Button
+                  onClick={() => paged(pagePrev, pages.length)}
+                  disabled={currentPage === 1 ? true : false}
+                  variant="contained"
+                  color="warning"
+                >
+                  ←
+                </Button>
+              </Box>
+            </Grid>
+            <Grid xs={12} sm={12} md={12} lg={12} xl={8}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "3px",
+                }}
+              >
+                {pages.map((p) =>
+                  p > currentPage - 3 && p < currentPage + 3 ? (
+                    <Button
+                      onClick={() => paged(p, pages.length)}
+                      variant="contained"
+                      color="warning"
+                      sx={{
+                        margin: "3px",
+                      }}
+                    >
+                      {p}
+                    </Button>
+                  ) : (
+                    <></>
+                  )
+                )}
+              </Box>
+            </Grid>
+            <Grid xs={12} sm={12} md={12} lg={12} xl={2}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "4px",
+                }}
+              >
+                <Button
+                  onClick={() => paged(pageNext, pages.length)}
+                  disabled={currentPage === pages.length ? true : false}
+                  variant="contained"
+                  color="warning"
+                >
+                  →
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </>
       )}
     </Box>
   );
