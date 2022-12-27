@@ -9,7 +9,6 @@ import PagedSearch from "../PagedSearch/PagedSearch";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import { display } from "@mui/system";
 //--------------------------------------------------------------//
 
 export const Cards = () => {
@@ -176,31 +175,23 @@ export const Cards = () => {
       </Grid>
       <Box>
         {search.length >= 3 ? (
-          <Box>
-            <Box>
-              <PagedSearch
-                productPage={productsPage}
-                productList={productSearch.length}
-                paged={paged}
-                pagePrev={pagePrev}
-                pageNext={pageNext}
-                currentPage={page}
-              />
-            </Box>
-          </Box>
+          <PagedSearch
+            productPage={productsPage}
+            productList={productSearch.length}
+            paged={paged}
+            pagePrev={pagePrev}
+            pageNext={pageNext}
+            currentPage={page}
+          />
         ) : (
-          <Box>
-            <Box>
-              <Paged
-                productPage={productsPage} // 9
-                productList={products.length} //
-                paged={paged}
-                pagePrev={pagePrev}
-                pageNext={pageNext}
-                currentPage={page}
-              />
-            </Box>
-          </Box>
+          <Paged
+            productPage={productsPage} // 9
+            productList={products.length} //
+            paged={paged}
+            pagePrev={pagePrev}
+            pageNext={pageNext}
+            currentPage={page}
+          />
         )}
       </Box>
     </Box>
