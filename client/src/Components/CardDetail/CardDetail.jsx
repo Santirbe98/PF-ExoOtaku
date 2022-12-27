@@ -67,7 +67,7 @@ export const CardDetail = ({ match }) => {
                 >
                   {product.imagesDb?.map((i, index) => (
                     <CardMedia
-                      key={i.name}
+                      key={i.color}
                       component="img"
                       sx={{
                         maxWidth: 400,
