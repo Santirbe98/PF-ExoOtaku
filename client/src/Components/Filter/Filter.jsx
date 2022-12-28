@@ -81,7 +81,7 @@ export const Filter = (props) => {
   return (
     <Box>
       <Grid container padding="">
-        <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)" }}>
             <Box sx={{ padding: "5px" }}>
               <FormControl variant="standard" sx={{ m: 1, width: 250, backgroundColor: "white", textTransform: "uppercase" }}>
