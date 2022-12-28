@@ -1,6 +1,5 @@
 .cartContainer {
     width: 100vw;
-    height: 50px;
     display: flex;
     justify-content: flex-end;
     font-family: Roboto;
