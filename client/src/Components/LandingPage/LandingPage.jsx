@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import logo from "../../Resources/logo.jpg";
 import { Link } from "react-router-dom";
 import { Box, Button, keyframes } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useEffect } from "react";
 import styled from "@mui/material/styles/styled";
 
 const ShadowPopBr = keyframes`
@@ -38,17 +37,9 @@ const Holder = styled(Box)(({ roll }) => ({
 }));
 
 export const LandingPage = () => {
-  const [roll, setRoll] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setRoll(true);
-    }, 500);
-  }, []);
-
   return (
     <Box>
-      <Holder roll={roll} sx={{ bgcolor: "black" }}>
+      <Holder roll="false" sx={{ bgcolor: "black" }}>
         <img src={logo} alt="landing" width="500px"></img>
 
         <Link
@@ -70,7 +61,6 @@ export const LandingPage = () => {
               },
             }}
           >
-            {" "}
             <ShoppingCartIcon />
             Ver productos
           </Button>
