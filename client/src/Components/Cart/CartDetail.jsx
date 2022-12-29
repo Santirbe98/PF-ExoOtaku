@@ -47,7 +47,7 @@ export default function CartBanner({ userId }) {
         <Table sx={{ minWidth: 800 }} aria-label="spanning table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" colSpan={3}>
+              <TableCell align="center" colSpan={6}>
                 Detalles
               </TableCell>
               <TableCell align="right">Precio</TableCell>
@@ -56,6 +56,7 @@ export default function CartBanner({ userId }) {
               <TableCell></TableCell>
               <TableCell align="left">Descripcion</TableCell>
               <TableCell align="left">Talla</TableCell>
+              <TableCell align="center">Color</TableCell>
               <TableCell align="right">Cantidad</TableCell>
               <TableCell align="right">Unidad</TableCell>
               <TableCell align="right">Suma</TableCell>
@@ -73,6 +74,7 @@ export default function CartBanner({ userId }) {
                 </TableCell>
                 <TableCell align="left">{row.description}</TableCell>
                 <TableCell align="left">{row.size}</TableCell>
+                  <TableCell align="center">{row.color}</TableCell>
                 <TableCell align="right">
                   <ChevronLeftRoundedIcon
                     onClick={() => deleteItemToCart(row)}
@@ -134,7 +136,7 @@ export default function CartBanner({ userId }) {
                     color="success"
                     onClick={cleanCart}
                   >
-                   borrar historial
+                   Borrar historial
                   </Button>
             </TableRow>
           </TableBody>

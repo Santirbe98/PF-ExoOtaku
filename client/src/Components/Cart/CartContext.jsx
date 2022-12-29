@@ -18,11 +18,11 @@ export const CartProvider = ({ children }) => {
     }, [cartItems]);
 
     const addItemToCart = (product) => {
-        const inCart = cartItems.find((p) => p.id === product.id && p.size === product.size);
+        const inCart = cartItems.find((p) => p.id === product.id && p.size === product.size && p.color === product.color);
         if (inCart) {
             setCartItems(
                 cartItems.map((p) => {
-                    if (p.id === product.id && p.size === product.size) {
+                    if (p.id === product.id && p.size === product.size  && p.color === product.color) {
                         return { ...inCart, amount: inCart.amount + 1 };
                     } else return p;
                 })
