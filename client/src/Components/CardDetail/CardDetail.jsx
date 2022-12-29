@@ -45,10 +45,8 @@ export const CardDetail = ({ match }) => {
     <div>
       <NavBar />
       <Cart />
-      
-      <Box
-        sx={{ display: "flex", justifyContent: "center"}}
-      >
+
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         {Object.entries(product).length ? (
           <Box
             sx={{
@@ -159,7 +157,6 @@ export const CardDetail = ({ match }) => {
                         images: [productColor.images],
                         color: [productColor.color],
                       });
-
                       redirectHome();
                     }}
                   >
@@ -178,38 +175,31 @@ export const CardDetail = ({ match }) => {
         )}
       </Box>
       <Grid item xs={12} sm={12} md={6}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    paddingBottom: "25px",
-                  }}
-                > <Carousel
-                index={selectedValue}
-                fullHeightHover={false}
-                autoPlay={false}
-                navButtonsAlwaysVisible={true}
-                navButtonsWrapperProps={{ margin: "20" }}
-                next={(prev, active) => handleColor(prev)}
-                prev={(prev, active) => handleColor(prev)}
-              >
-                  {product.imagesDb?.map((i, index) => (
-                    <CardMedia
-                      key={index}
-                      component="img"
-                      sx={{
-                        maxWidth: 100,
-                        margin: 2,
-                        borderRadius: 3,
-                        backgroundColor: "rgb(33, 33, 33)",
-                      }}
-                      image={i.images}
-                      alt={i.color}
-                    />
-                  ))} </Carousel>
-                </Box>
-              </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingBottom: "25px",
+          }}
+        >
+          {product.imagesDb?.map((i, index) => (
+            <CardMedia
+              key={index}
+              component="img"
+              sx={{
+                maxWidth: 150,
+                margin: 2,
+                borderRadius: 3,
+                backgroundColor: "rgb(33, 33, 33)",
+              }}
+              onClick={()=>{handleColor(index); console.log(productColor)}}
+              image={i.images}
+              alt={i.color}
+            />
+          ))}
+        </Box>
+      </Grid>
 
       <Footer />
     </div>
