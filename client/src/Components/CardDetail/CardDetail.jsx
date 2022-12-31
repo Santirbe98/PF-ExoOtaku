@@ -18,46 +18,48 @@ export const CardDetail = ({ match }) => {
   const dispatch = useDispatch();
   const [product, setProduct] = useState("");
   const [size, setSize] = useState("");
-
+  const [productColor, setProductColor] = useState("");
   const handleSize = (e) => {
     setSize(e.target.value);
+  };
+  const handleColor1 = (e) => {
+    console.log(productColor);
+    setProductColor(product.imagesDb[e]);
   };
   const [selectedValue, setSelectedValue] = React.useState(0);
   const handleChange1 = (event) => {
     setSelectedValue(Number(event.target.value));
-    console.log(selectedValue, Number(event.target.value))}
+  };
   const handleColor = (e) => {
     setSelectedValue(e);
-    console.log(selectedValue);
+    handleColor1(e);
   };
   useEffect(() => {
     dispatch(getProductDetail(id)).then((res) => {
       setProduct(res.payload);
       setSize(res.payload.size[0]);
+      setProductColor(res.payload.imagesDb[0]);
     });
   }, [dispatch, id]);
   return (
     <div>
       <NavBar />
       <Cart />
-      <Box
-        sx={{ display: "flex", justifyContent: "center", paddingBottom: 30 }}
-      >
 
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         {Object.entries(product).length ? (
           <Box
-          sx={{
-            width: 1000,
-            height: 600,
-            display: "flex",
-            alignItems: "center",
-          }}
+            sx={{
+              width: 1000,
+              height: 600,
+              display: "flex",
+              alignItems: "center",
+            }}
           >
-           
             <Grid container spacing={30}>
               <Grid item xs={12} sm={12} md={6}>
                 <Carousel
-                index={selectedValue}
+                  index={selectedValue}
                   fullHeightHover={false}
                   autoPlay={false}
                   navButtonsAlwaysVisible={true}
@@ -79,7 +81,6 @@ export const CardDetail = ({ match }) => {
                       alt={i.color}
                     />
                   ))}
-
                 </Carousel>
               </Grid>
 
@@ -95,35 +96,31 @@ export const CardDetail = ({ match }) => {
                     Seleccionar color
                   </Typography>
                   <div>
-              {product.imagesDb?.map(
-                (i, index) => (
-                  (
-                    <FormControlLabel
-                      value={index}
-                      label={i.color}
-                      control={
-                        <Radio
-                          checked={selectedValue == index}
-                          onChange={handleChange1}
-                          value={index}
-                          name="radio-buttons"
-                          inputProps={{ "aria-label": "A" }}
-                          sx={{
-                            "& .MuiSvgIcon-root": {
-                              fontSize: 58,
-                            },
-                            color: pink[800],
-                            "&.Mui-checked": {
-                              color: i.color.toLowerCase()[600],
-                            },
-                          }}
-                        />
-                      }
-                    />
-                  )
-                )
-              )}
-            </div>
+                    {product.imagesDb?.map((i, index) => (
+                      <FormControlLabel
+                        value={index}
+                        label={i.color}
+                        control={
+                          <Radio
+                            checked={selectedValue == index}
+                            onChange={handleChange1}
+                            value={index}
+                            name="radio-buttons"
+                            inputProps={{ "aria-label": "A" }}
+                            sx={{
+                              "& .MuiSvgIcon-root": {
+                                fontSize: 58,
+                              },
+                              color: pink[800],
+                              "&.Mui-checked": {
+                                color: i.color.toLowerCase()[600],
+                              },
+                            }}
+                          />
+                        }
+                      />
+                    ))}
+                  </div>
                   {/* <select className={s.filterSelect}>
                     {product.imagesDb.map((c, index) => (
                       <option key={index}>{c.color}</option>
@@ -154,7 +151,12 @@ export const CardDetail = ({ match }) => {
                     color="success"
                     size="large"
                     onClick={() => {
-                      addItemToCart({ ...product, size: size });
+                      addItemToCart({
+                        ...product,
+                        size: size,
+                        images: [productColor.images],
+                        color: [productColor.color],
+                      });
                       redirectHome();
                     }}
                   >
@@ -172,30 +174,32 @@ export const CardDetail = ({ match }) => {
           </Grid>
         )}
       </Box>
-      {/* <Grid item xs={12} sm={12} md={6}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {product.imagesDb?.map((i, index) => (
-                    <CardMedia
-                      key={index}
-                      component="img"
-                      sx={{
-                        maxWidth: 100,
-                        margin: 2,
-                        borderRadius: 3,
-                        backgroundColor: "rgb(33, 33, 33)",
-                      }}
-                      image={i.images}
-                      alt={i.color}
-                    />
-                  ))}
-                </Box>
-              </Grid> */}
+      <Grid item xs={12} sm={12} md={6}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingBottom: "25px",
+          }}
+        >
+          {product.imagesDb?.map((i, index) => (
+            <CardMedia
+              key={index}
+              component="img"
+              sx={{
+                maxWidth: 150,
+                margin: 2,
+                borderRadius: 3,
+                backgroundColor: "rgb(33, 33, 33)",
+              }}
+              onClick={()=>{handleColor(index); console.log(productColor)}}
+              image={i.images}
+              alt={i.color}
+            />
+          ))}
+        </Box>
+      </Grid>
 
       <Footer />
     </div>
