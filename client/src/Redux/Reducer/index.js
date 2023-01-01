@@ -4,9 +4,8 @@ import {
   GET_PRODUCT_DETAIL,
   ORDER_BY_PRICE,
   ORDER_DETAIL,
-
   GET_USER_CREDENTIALS,
-  CUSTOMER_BY_EMAIL
+  CUSTOMER_BY_EMAIL,
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -14,9 +13,9 @@ const initialState = {
   filterProducts: [],
   details: {},
   orderdetail: {},
-
-  customer:{},
-  chk_customer:{},
+  colorSelected: [],
+  customer: {},
+  chk_customer: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -47,15 +46,26 @@ function rootReducer(state = initialState, action) {
         type === "All"
           ? filterProducts
           : filterProducts.filter((p) => p.type.find((t) => t === type));
-
+         let colorSelectedArr=[]
       const filterProducts3 =
         color === "All"
           ? filterProducts2
-          : filterProducts2.filter((p) => p.color.find((c) => c === color));
-
+          : // : filterProducts2.filter((p) => p.color.find((c) => c === color));
+            filterProducts2.filter((p) =>
+              p.imagesDb.find((c,index) => {if(c.color === color){ colorSelectedArr.push(index); return c}})
+            );
+      const filterProducts4 = filterProducts3.map((p,index,arr) =>{
+        if(colorSelectedArr.length >0){
+          let newImage = colorSelectedArr[index];
+        return{... p, images: p.imagesDb[newImage].images}
+      } else return p;
+        } )
+      console.log(filterProducts4);
+      console.log(colorSelectedArr);
       return {
         ...state,
-        filterProducts: filterProducts3,
+        filterProducts: filterProducts4,
+        colorSelected: colorSelectedArr,
       };
 
     case GET_PRODUCT_DETAIL:
@@ -84,7 +94,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         chk_customer: action.payload,
-      };  
+      };
 
     default:
       return {
