@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { getAllOrders, modifyStatusORder } from "../../Redux/Actions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { InputLabel } from "@mui/material";
+import sendEmailOrder from "./emailorder";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,6 +36,7 @@ function createData(
   orden,
   estado,
   usuario,
+  email,
   fecha,
   articulos,
   costo,
@@ -47,6 +49,7 @@ function createData(
     orden,
     estado,
     usuario,
+    email,
     fecha,
     articulos,
     costo,
@@ -71,8 +74,14 @@ function Row(props) {
     dispatch(modifyStatusORder({ id, state }));
     alert("estado modificado");
     dispatch(getAllOrders());
+    if (e.target.value.includes("Completada")) {
+      console.log(e.target.value);
+    }
   };
 
+  const consoleStatus = (e) => {
+    console.log(e.target.value);
+  };
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -100,7 +109,16 @@ function Row(props) {
                 id="demo-simple-select"
                 value={status}
                 label="Estado"
-                onChange={handleChange2}
+                onChange={(e) => {
+                  handleChange2(e);
+                  if (e.target.value === "Completada") {
+                    sendEmailOrder({
+                      email: rows.email,
+                      name: rows.usuario,
+                      paymentId: rows.orden,
+                    });
+                  }
+                }}
               >
                 <MenuItem value={"paid"}>Pago</MenuItem>
                 <MenuItem value={"Procesando"}>Procesando</MenuItem>
@@ -111,6 +129,7 @@ function Row(props) {
           </Box>
         </StyledTableCell>
         <StyledTableCell align="center">{rows.usuario}</StyledTableCell>
+        <StyledTableCell align="center">{rows.email}</StyledTableCell>
         <StyledTableCell align="center">{rows.fecha}</StyledTableCell>
         <StyledTableCell align="center">{rows.articulos}</StyledTableCell>
         <StyledTableCell align="center">{rows.costo}</StyledTableCell>
@@ -156,7 +175,7 @@ function Row(props) {
                           <CardMedia
                             component="img"
                             height="80"
-                            image={productsRow.imagen}
+                            image={productsRow.imagen[0]}
                             alt="Product"
                           />
                         </Link>
@@ -183,7 +202,7 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
+/* Row.propTypes = {
   row: PropTypes.shape({
     orden: PropTypes.string.isRequired,
     usuario: PropTypes.string.isRequired,
@@ -206,7 +225,7 @@ Row.propTypes = {
     producto: PropTypes.string.isRequired,
     precio: PropTypes.number.isRequired,
   }).isRequired,
-};
+}; */
 
 export default function CollapsibleTable({ Products, handleClick }) {
   let rows = [];
@@ -217,6 +236,7 @@ export default function CollapsibleTable({ Products, handleClick }) {
         Products[i].order,
         Products[i].status,
         Products[i].user,
+        Products[i].email,
         Products[i].date,
         Products[i].articles,
         Products[i].cost,
@@ -252,6 +272,7 @@ export default function CollapsibleTable({ Products, handleClick }) {
             <StyledTableCell align="center">Orden de Compra</StyledTableCell>
             <StyledTableCell align="center"> Estado </StyledTableCell>
             <StyledTableCell align="center"> Usuario </StyledTableCell>
+            <StyledTableCell align="center"> Email </StyledTableCell>
             <StyledTableCell align="center">Fecha</StyledTableCell>
             <StyledTableCell align="center">Articulos</StyledTableCell>
             <StyledTableCell align="center">Costo($)</StyledTableCell>

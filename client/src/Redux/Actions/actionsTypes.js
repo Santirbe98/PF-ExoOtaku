@@ -11,3 +11,6 @@ export const CUSTOMER_ORDERS = "CUSTOMER_ORDERS";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const DELETE_ORDER = "DELETE_ORDER";
 export const UPDATE_STATUS = "UPDATE_STATUS";
+export const GET_USERS = "GET_USERS";
+export const UPDATE_ADMIN = "UPDATE_ADMIN";
+export const DELETE_USER = "DELETE_USER";
