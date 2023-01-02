@@ -28,6 +28,8 @@ router.post("/create-checkout-session", async (req, res) => {
     metadata: {
       cartId,
       userId: req.body.userId,
+      name: req.body.name,
+      email: req.body.email,
     },
   });
 
@@ -148,7 +150,12 @@ router.get("/checkout-success", async (req, res) => {
   });
   let paymentUser = await Payment.findByPk(session.payment_intent);
 
-  res.send({ orderUser, paymentUser, userCart });
+  let userData = {
+    name: customer.metadata.name,
+    email: customer.metadata.email,
+  };
+
+  res.send({ orderUser, paymentUser, userCart, userData });
 });
 
 module.exports = router;
