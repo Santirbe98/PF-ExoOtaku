@@ -1,17 +1,18 @@
 import Grid from "@mui/material/Unstable_Grid2";
 import { useAuth0, User } from "@auth0/auth0-react";
-import { useDispatch,useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { chkcustomer } from "../../Redux/Actions";
 import { Button, Box, Avatar } from "@mui/material";
-import  SignIn  from "../SignIn/SingIn";
-import * as React from 'react';
-import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
+import SignIn from "../SignIn/SingIn";
+import * as React from "react";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
 import AcountButton from "../Authenticate/AcountButton";
+import Admin from "./adminbutton";
 
 function SimpleDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -25,13 +26,13 @@ function SimpleDialog(props) {
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         Registrarme
-      </Button>   
-      <br/>   
-      <br/>  
+      </Button>
+      <br />
+      <br />
       <Dialog open={open} onClose={handleClose} background-color="black">
         <DialogTitle>Regisro de Usuario</DialogTitle>
         <DialogContent>
-          <SignIn/>
+          <SignIn />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
@@ -45,16 +46,16 @@ const Profile = () => {
   const { user, isAuthenticated } = useAuth0();
   const { logout } = useAuth0();
   const dispatch = useDispatch();
-  const history=useHistory()
+  const history = useHistory();
 
-  var usermail=""
+  var usermail = "";
   useEffect(() => {
-    dispatch(chkcustomer(usermail))
+    dispatch(chkcustomer(usermail));
   }, [isAuthenticated]);
-  const UserValidate = useSelector((state) => state.chk_customer)
+  const UserValidate = useSelector((state) => state.chk_customer);
 
-  if(isAuthenticated) {
-    usermail=user?.email
+  if (isAuthenticated) {
+    usermail = user?.email;
   }
 
   const [open, setOpen] = React.useState(false);
@@ -65,8 +66,7 @@ const Profile = () => {
     setOpen(false);
   };
 
-  if (UserValidate!== null) {
-
+  if (UserValidate !== null) {
     return (
       isAuthenticated && (
         <Grid container margin={0} padding={0} mt={2}>
@@ -95,7 +95,8 @@ const Profile = () => {
             )}
           </Grid>
           <Grid xs={12} sm={12} md={12} lg={6} xl={12} pb={10}>
-            <AcountButton/>
+            <AcountButton />
+            {UserValidate.isadmin === true && <Admin />}
             <Button
               color="warning"
               size="medium"
@@ -109,18 +110,11 @@ const Profile = () => {
         </Grid>
       )
     );
-
+  } else {
+    return (
+      isAuthenticated && <SimpleDialog open={open} onClose={handleClose} />
+    );
   }
-  else {
-    return(
-      isAuthenticated && (
-        <SimpleDialog
-          open={open}
-          onClose={handleClose}
-      />
-      )
-    )
-  }  
 };
 
 export default Profile;

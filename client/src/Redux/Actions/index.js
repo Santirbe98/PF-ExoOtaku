@@ -11,6 +11,8 @@ import {
   GET_ALL_ORDERS,
   DELETE_ORDER,
   UPDATE_STATUS,
+  GET_USERS,
+  DELETE_USER,
 } from "./actionsTypes";
 
 axios.defaults.baseURL = "http://localhost:3001";
@@ -59,11 +61,13 @@ export function orderByPrice(payload) {
   };
 }
 
-export function payment({ cartItems, userId }) {
+export function payment({ cartItems, userId, name, email }) {
   axios
     .post(`/payment/create-checkout-session`, {
       cartItems,
       userId,
+      name,
+      email,
     })
     .then((res) => {
       if (res.data.url) {
@@ -129,9 +133,14 @@ export function customerOrders(id) {
   };
 }
 
-export function getAllOrders() {
+export function getAllOrders(status) {
   return async function (dispatch) {
-    let json = await axios.get(`http://localhost:3001/orders/`);
+    let json;
+    if (status) {
+      json = await axios.get(`http://localhost:3001/orders?status=${status}`);
+    } else {
+      json = await axios.get(`http://localhost:3001/orders/`);
+    }
     return dispatch({
       type: GET_ALL_ORDERS,
       payload: json.data,
@@ -156,6 +165,39 @@ export function modifyStatusORder({ id, state }) {
     });
     return dispatch({
       type: UPDATE_STATUS,
+      payload: json.data,
+    });
+  };
+}
+
+export function getAllUsers() {
+  return async function (dispatch) {
+    let json = await axios.get("http://localhost:3001/customer");
+    return dispatch({
+      type: GET_USERS,
+      payload: json.data,
+    });
+  };
+}
+
+export function updateAdmin({ id, isadmin }) {
+  return async function (dispatch) {
+    let json = await axios.put("http://localhost:3001/customer", {
+      id,
+      isadmin,
+    });
+    return dispatch({
+      type: UPDATE_STATUS,
+      payload: json.data,
+    });
+  };
+}
+
+export function deleteUser(id) {
+  return async function (dispatch) {
+    let json = await axios.delete(`http://localhost:3001/customer/${id}`);
+    return dispatch({
+      type: DELETE_USER,
       payload: json.data,
     });
   };

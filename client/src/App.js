@@ -11,6 +11,7 @@ import { LandingPage } from "./Components/LandingPage/LandingPage";
 import { CheckOutSuccess } from "./Components/CheckOutSuccess/CheckOutSuccess";
 import { CartProvider } from "./Components/Cart/CartContext";
 import CartBanner from "./Components/Cart/CartDetail";
+import Orders from "./Components/Orders/Orders";
 
 import { Acount } from "./Components/Acount/Acount";
 
@@ -28,14 +29,14 @@ export default function App() {
 
           <Route exact path="/acount" component={Acount} />
 
-          <Route extac path='/checkout-success' component={CheckOutSuccess} />
+          <Route extac path="/checkout-success" component={CheckOutSuccess} />
           <Route
             exact
             path="/detail/:id"
             component={({ match }) => <CardDetail match={match} />}
           />
+          <Route exact path="/settings" component={Orders} />
           <Route exact path="*" component={Error} />
-
         </Switch>
       </CartProvider>
     </div>

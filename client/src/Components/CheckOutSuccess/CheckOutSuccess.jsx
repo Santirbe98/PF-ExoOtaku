@@ -10,6 +10,8 @@ import { Typography } from "@mui/material";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import BasicTable from "./table";
+import emailjs from "@emailjs/browser";
+import sendEmailSuccess from "./emailsuccess";
 import { CartContext } from "../Cart/CartContext";
 import { useContext } from "react";
 
@@ -17,20 +19,31 @@ export const CheckOutSuccess = () => {
   const dispatch = useDispatch();
   const { search } = useLocation();
   const [Order, setOrder] = useState("");
+  const [user, setUser] = useState({});
   const [products, setproducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [info, setInfo] = useState({});
   let session_id = search.substring(12, search.length);
-  const { cartItems, addItemToCart, deleteItemToCart,cleanCart } =
-  useContext(CartContext);
+  const { cartItems, addItemToCart, deleteItemToCart, cleanCart } =
+    useContext(CartContext);
 
   useEffect(() => {
     dispatch(getCheckout(session_id)).then((data) => {
+      console.log(data.payload);
       setOrder(data.payload.paymentUser.id);
       setproducts(data.payload.userCart.ShoppingLists);
+      setUser(data.payload.userData);
+      setInfo({
+        fecha: data.payload.orderUser.createdAt,
+        total_prod: data.payload.orderUser.cart_ammount,
+        total_env: data.payload.orderUser.delivery_ammount,
+        estado: data.payload.orderUser.status,
+      });
+
       setTimeout(() => {
         setLoading(false);
       }, 3000);
-    },cleanCart());
+    }, cleanCart());
   }, [dispatch]);
 
   return (
@@ -67,6 +80,15 @@ export const CheckOutSuccess = () => {
             </Typography>
             <Box sx={{ padding: "0% 5%" }}>
               <BasicTable Products={products} />
+              {sendEmailSuccess({
+                Order: Order,
+                email: user.email,
+                name: user.name,
+                fecha: info.fecha,
+                total_prod: info.total_prod,
+                total_env: info.total_env,
+                estado: info.estado,
+              })}
             </Box>
           </>
         )}
