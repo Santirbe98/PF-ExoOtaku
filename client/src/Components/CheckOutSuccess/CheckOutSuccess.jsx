@@ -10,6 +10,8 @@ import { Typography } from "@mui/material";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import BasicTable from "./table";
+import { CartContext } from "../Cart/CartContext";
+import { useContext } from "react";
 
 export const CheckOutSuccess = () => {
   const dispatch = useDispatch();
@@ -18,7 +20,8 @@ export const CheckOutSuccess = () => {
   const [products, setproducts] = useState([]);
   const [loading, setLoading] = useState(true);
   let session_id = search.substring(12, search.length);
-
+  const {  cleanCart } =
+  useContext(CartContext);
   useEffect(() => {
     dispatch(getCheckout(session_id)).then((data) => {
       setOrder(data.payload.paymentUser.id);
@@ -26,6 +29,7 @@ export const CheckOutSuccess = () => {
       setTimeout(() => {
         setLoading(false);
       }, 3000);
+      cleanCart();
     });
   }, [dispatch]);
 
