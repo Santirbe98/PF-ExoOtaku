@@ -20,8 +20,7 @@ export const CheckOutSuccess = () => {
   const [products, setproducts] = useState([]);
   const [loading, setLoading] = useState(true);
   let session_id = search.substring(12, search.length);
-  const {  cleanCart } =
-  useContext(CartContext);
+  const { cleanCart } = useContext(CartContext);
   useEffect(() => {
     dispatch(getCheckout(session_id)).then((data) => {
       setOrder(data.payload.paymentUser.id);
