@@ -12,9 +12,19 @@ const {
   Color,
 } = require("../../db");
 
-const getAllOrders = async () => {
+const getAllOrders = async (status = null) => {
   try {
-    let ordersByUser = await PurchaseOrder.findAll({
+    let ordersByUser;
+    if (status) {
+      ordersByUser = await PurchaseOrder.findAll({
+        where: {
+          deleted: false,
+          status: status,
+        },
+      });
+    }
+
+    ordersByUser = await PurchaseOrder.findAll({
       where: {
         deleted: false,
       },
@@ -56,6 +66,7 @@ const getAllOrders = async () => {
       return {
         order_id: item.order_id,
         user: item.customer.name,
+        email: item.customer.email,
         status: item.status,
         order: item.PaymentId,
         date: item.createdAt,

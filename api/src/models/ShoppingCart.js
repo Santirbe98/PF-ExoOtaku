@@ -11,6 +11,7 @@ module.exports = (sequelize) => {
 
       ammount: {
         type: DataTypes.FLOAT,
+        defaultValue: 0,
       },
 
       checkout: {

@@ -9,13 +9,14 @@ const {
 } = require("./Controllers/ordersController");
 
 router.get("/", async (req, res) => {
-  const { id } = req.query;
+  const { id, status } = req.query;
   try {
-    let result;
+    let result = await getAllOrders(status);
     if (id) {
       result = await getOrderDetail(id);
-    } else {
-      result = await getAllOrders();
+    }
+    if (status) {
+      result = result.filter((order) => order.status.includes(status));
     }
     typeof result === "string"
       ? res.status(404).send(result)
