@@ -128,7 +128,7 @@ const createNewProduct = async ({
 
     name = (name.charAt(0).toUpperCase() + name.slice(1)).trim();
     imagesForm = [
-      imagesAndColors[getRandomInt(imagesAndColors.length - 1)].url,
+      imagesAndColors[getRandomInt(imagesAndColors.length)].url,
     ];
     let newProduct = await Product.create({
       name,
