@@ -27,8 +27,13 @@ export const CardDetail = ({ match }) => {
     setProductColor(product.imagesDb[e]);
   };
   const [selectedValue, setSelectedValue] = React.useState(0);
-  const handleChange1 = (event) => {
-    setSelectedValue(Number(event.target.value));
+  const handleChange1 = (e) => {
+    var f=Number(e.target.value)
+    setSelectedValue(f);
+    setProductColor(product.imagesDb[f]);
+    console.log(selectedValue)
+    console.log(productColor)
+ 
   };
   const handleColor = (e) => {
     setSelectedValue(e);
