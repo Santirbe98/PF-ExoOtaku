@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Box, Button, keyframes } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import styled from "@mui/material/styles/styled";
+import Grid from "@mui/material/Unstable_Grid2";
+
 
 const ShadowPopBr = keyframes`
 0% {
@@ -38,10 +40,11 @@ const Holder = styled(Box)(({ roll }) => ({
 
 export const LandingPage = () => {
   return (
-    <Box>
-      <Holder roll="false" sx={{ bgcolor: "black" }}>
-        <img src={logo} alt="landing" width="500px"></img>
-
+    <Grid xs={12} sm={12} md={12} lg={12} xl={12} mt={10}>
+      <Grid>
+        <img src={logo} alt="landing" width="30%"></img>
+      </Grid>
+      <Grid width="100%" mt={5}>
         <Link
           style={{
             textDecoration: "none",
@@ -51,7 +54,7 @@ export const LandingPage = () => {
         >
           <Button
             variant="contained"
-            size="large"
+            size="small"
             sx={{
               bgcolor: "rgb(235, 203, 100)",
               color: "#181111",
@@ -62,10 +65,10 @@ export const LandingPage = () => {
             }}
           >
             <ShoppingCartIcon />
-            Ver productos
+            Ingresar
           </Button>
         </Link>
-      </Holder>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
