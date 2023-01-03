@@ -1,5 +1,7 @@
-const { Product, Category, Size, Color, Type } = require("../../db");
+const { Product, Category, Size, Color, Type, Image } = require("../../db");
 // const { Op } = require("sequelize");
+require("dotenv").config();
+const { cloudinary } = require("../Utils/CludinarySettings.js");
 
 function compare_lname(a, b) {
   if (a.name < b.name) {
@@ -43,15 +45,15 @@ const getAllProducts = async function () {
             attributes: [],
           },
         },
-        
-{
-  model: Image,
-  attributes: ["url"],
-  include: {
-    model: Color,
-    attributes: ["color"],
-  },
-},
+
+        {
+          model: Image,
+          attributes: ["url"],
+          include: {
+            model: Color,
+            attributes: ["color"],
+          },
+        },
       ],
     });
     if (products.length) {
@@ -59,9 +61,9 @@ const getAllProducts = async function () {
         const colorArray = d.colors.map((t) => t.color);
         const typeArray = d.types.map((t) => t.type);
         const sizeArray = d.sizes.map((t) => t.size);
-        const imageArray = d.images.map((t) =>({
+        const imageArray = d.images.map((t) => ({
           images: t.url,
-          color: t.color.color
+          color: t.color.color,
         }));
         // const categoryArray = d.categorys.map((t) => t.category);
         field = d.dataValues;
@@ -90,6 +92,21 @@ const getAllProducts = async function () {
   }
 };
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+const getUrlCloud = async (imageBase64) => {
+  try {
+    const uploadedResponse = await cloudinary.uploader.upload(imageBase64, {
+      upload_preset: "ExoOtaku",
+    });
+    return uploadedResponse.url;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const createNewProduct = async ({
   name,
   price,
@@ -103,7 +120,16 @@ const createNewProduct = async ({
   imagesDb,
 }) => {
   try {
+    let urls = await Promise.all(imagesDb.map((i) => getUrlCloud(i.url)));
+    let imagesAndColors = imagesDb.map((e, index) => ({
+      url: urls[index],
+      color: e.color,
+    }));
+
     name = (name.charAt(0).toUpperCase() + name.slice(1)).trim();
+    imagesForm = [
+      imagesAndColors[getRandomInt(imagesAndColors.length - 1)].url,
+    ];
     let newProduct = await Product.create({
       name,
       price: parseInt(price),
@@ -122,8 +148,8 @@ const createNewProduct = async ({
       newProduct.addColors(colorName[0]);
     });
 
-    imagesDb &&
-      imagesDb.map(async (i) => {
+    imagesAndColors &&
+      imagesAndColors.map(async (i) => {
         const colorDb = await Color.findOrCreate({
           where: { color: i.color },
         });

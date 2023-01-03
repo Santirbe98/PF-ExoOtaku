@@ -5,9 +5,8 @@ import {
   GET_PRODUCT_DETAIL,
   ORDER_BY_PRICE,
   ORDER_DETAIL,
-
   GET_USER_CREDENTIALS,
-  CUSTOMER_BY_EMAIL
+  CUSTOMER_BY_EMAIL,
 } from "./actionsTypes";
 
 axios.defaults.baseURL = "http://localhost:3001";
@@ -87,16 +86,16 @@ export function getCheckout(session_id) {
 }
 
 export function postCustomer(payload) {
-  return async function(dispatch) {
-    console.log(payload)
-    var response
+  return async function (dispatch) {
+    console.log(payload);
+    var response;
     try {
-        response = await axios.post('http://localhost:3001/customer/', payload);
-        return response;
+      response = await axios.post("http://localhost:3001/customer/", payload);
+      return response;
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-} 
+  };
 }
 
 export function userCredential(payload) {

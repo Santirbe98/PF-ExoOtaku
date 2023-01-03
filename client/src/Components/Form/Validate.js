@@ -1,5 +1,9 @@
 export const validate = (input) => {
-  let errors = {};
+  let errors = {
+    images: "Debe ingresar al menos una imagen.",
+    color: "Debe ingresar color.",
+  };
+
   if (!input.name || input.name.length === 0) {
     errors.name = "Debe ingresar Nombre";
   } else if (
@@ -25,16 +29,8 @@ export const validate = (input) => {
     errors.category = "Debe ingresar Categoria.";
   }
 
-  if (input.images.length === 0) {
-    errors.images = "Debe ingresar una Imagen";
-  }
-
   if (input.type.length === 0) {
     errors.type = "Debe ingresar Tipo";
-  }
-
-  if (input.color.length === 0) {
-    errors.color = "Debe ingresar Color";
   }
 
   return errors;
