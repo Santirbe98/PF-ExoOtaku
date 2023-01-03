@@ -22,7 +22,7 @@ export const CartProvider = ({ children }) => {
       (p) =>
         p.id === product.id &&
         p.size === product.size &&
-        p.color === product.color
+        p.color[0] === product.color[0]
     );
 
     if (inCart) {
@@ -31,7 +31,7 @@ export const CartProvider = ({ children }) => {
           if (
             p.id === product.id &&
             p.size === product.size &&
-            p.color === product.color
+            p.color[0] === product.color[0]
           ) {
             return { ...inCart, amount: inCart.amount + 1 };
           } else return p;
