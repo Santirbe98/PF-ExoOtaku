@@ -17,7 +17,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import { useSelector } from "react-redux";
+import Profile2 from "../Authenticate/Profile2"
+
+
 export default function CartBanner({ userId }) {
+  const UserValidate = useSelector((state) => state.chk_customer);
   const { loginWithRedirect, isAuthenticated } = useAuth0();
   const { cartItems, addItemToCart, deleteItemToCart, cleanCart } =
     useContext(CartContext);
@@ -124,16 +129,21 @@ export default function CartBanner({ userId }) {
                 </TableCell>
                 <TableCell colSpan={2}>
                   {isAuthenticated ? (
-                    <PayButton cartItems={cartItems} userId={userId} />
-                  ) : (
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={() => loginWithRedirect()}
-                    >
-                      Iniciar sesion
-                    </Button>
-                  )}
+                    UserValidate !== null ? (
+                      <PayButton cartItems={cartItems} userId={userId} />
+                    ) : (
+                      <Profile2 />
+                    )
+                  )
+                    : (
+                      <Button
+                        variant="contained"
+                        color="success"
+                        onClick={() => loginWithRedirect()}
+                      >
+                        Iniciar sesion
+                      </Button>
+                    )}
                 </TableCell>
                 <Button variant="contained" color="success" onClick={cleanCart}>
                   Borrar historial
