@@ -163,7 +163,7 @@ export const Cards = () => {
                 <MediaCard
                   key={p.id}
                   id={p.id}
-                  image={p.images[0]}
+                  image={p.images}
                   name={p.name}
                   category={p.category}
                   price={p.price}
