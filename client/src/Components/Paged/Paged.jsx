@@ -25,7 +25,7 @@ const Paged = ({
       ) : (
         <>
           <Grid container sx={{ alignItems: "center" }}>
-            <Grid xs={12} sm={12} md={12} lg={12} xl={2}>
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={2}>
               <Box
                 sx={{
                   display: "flex",
@@ -44,6 +44,7 @@ const Paged = ({
               </Box>
             </Grid>
             <Grid
+              item
               xs={12}
               sm={12}
               md={12}
@@ -61,6 +62,7 @@ const Paged = ({
                 {pages.map((p) =>
                   p > currentPage - 3 && p < currentPage + 3 ? (
                     <Button
+                      key={p}
                       onClick={() => paged(p, pages.length)}
                       variant="contained"
                       color="warning"

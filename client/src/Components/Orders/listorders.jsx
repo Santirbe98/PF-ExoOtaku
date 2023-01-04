@@ -23,6 +23,7 @@ import { getAllOrders, modifyStatusORder } from "../../Redux/Actions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { InputLabel } from "@mui/material";
 import sendEmailOrder from "./emailorder";
+import Swal from "sweetalert2";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -69,11 +70,24 @@ function Row(props) {
   let id = rows.id;
 
   const handleChange2 = (e) => {
-    let state = e.target.value;
-    setEstado(e.target.value);
-    dispatch(modifyStatusORder({ id, state }));
-    alert("estado modificado");
-    dispatch(getAllOrders());
+    Swal.fire({
+      title: "¿Seguro que quieres modificar el estado?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Si",
+      denyButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let state = e.target.value;
+        setEstado(e.target.value);
+        dispatch(modifyStatusORder({ id, state }));
+        dispatch(getAllOrders());
+        Swal.fire("Saved!", "", "success");
+      } else if (result.isDenied) {
+        return;
+      }
+    });
+
     if (e.target.value.includes("Completada")) {
       console.log(e.target.value);
     }
@@ -111,19 +125,27 @@ function Row(props) {
                 label="Estado"
                 onChange={(e) => {
                   handleChange2(e);
-                  if (e.target.value === "Completada") {
+                  /* if (e.target.value === "Completada") {
                     sendEmailOrder({
                       email: rows.email,
                       name: rows.usuario,
                       paymentId: rows.orden,
                     });
-                  }
+                  } */
                 }}
               >
-                <MenuItem value={"paid"}>Pago</MenuItem>
-                <MenuItem value={"Procesando"}>Procesando</MenuItem>
-                <MenuItem value={"Completada"}>Completada</MenuItem>
-                <MenuItem value={"Cancelada"}>Cancelada</MenuItem>
+                <MenuItem value={"paid"} sx={{ width: "100%" }}>
+                  Pago
+                </MenuItem>
+                <MenuItem value={"Procesando"} sx={{ width: "100%" }}>
+                  Procesando
+                </MenuItem>
+                <MenuItem value={"Completada"} sx={{ width: "100%" }}>
+                  Completada
+                </MenuItem>
+                <MenuItem value={"Cancelada"} sx={{ width: "100%" }}>
+                  Cancelada
+                </MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -140,7 +162,23 @@ function Row(props) {
             value={rows.id}
             variant="outlined"
             size="small"
-            onClick={(e) => handleClick(e.target.value)}
+            onClick={(e) => {
+              e.preventDefault();
+              Swal.fire({
+                title: "¿Seguro que quieres eliminar la orden?",
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: "Si",
+                denyButtonText: "No",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  handleClick(e.target.value);
+                  Swal.fire("Orden eliminada", "", "success");
+                } else if (result.isDenied) {
+                  return;
+                }
+              });
+            }}
             startIcon={<DeleteIcon />}
           >
             Borrar
@@ -169,7 +207,9 @@ function Row(props) {
                 </TableHead>
                 <TableBody>
                   {rows.products.map((productsRow) => (
-                    <TableRow key={productsRow.producto}>
+                    <TableRow
+                      /* key={productsRow.producto} */ key={Math.random()}
+                    >
                       <TableCell component="th" scope="row">
                         <Link to={`/detail/${productsRow.id}`}>
                           <CardMedia
@@ -284,7 +324,7 @@ export default function CollapsibleTable({ Products, handleClick }) {
         <TableBody>
           {rows
             .map((row) => (
-              <Row key={row.name} rows={row} handleClick={handleClick} />
+              <Row key={Math.random()} rows={row} handleClick={handleClick} />
             ))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
         </TableBody>

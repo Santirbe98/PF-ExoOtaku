@@ -10,6 +10,7 @@ const {
   Product,
   Category,
   Color,
+  Image,
 } = require("../../db");
 
 const getAllOrders = async (status = null) => {
@@ -232,6 +233,14 @@ const getOrdersByUser = async (userId) => {
                     {
                       model: Color,
                     },
+                    {
+                      model: Image,
+                      attributes: ["url"],
+                      include: {
+                        model: Color,
+                        attributes: ["color"],
+                      },
+                    },
                   ],
                 },
               ],
@@ -258,7 +267,7 @@ const getOrdersByUser = async (userId) => {
             precio: it.price,
             categoria: it.product.categories[0].category,
             color: it.product.colors[0].color,
-            imagen: it.product.imagesForm,
+            imagen: it.dataValues.product.dataValues.images[0].url,
           };
         }),
       };

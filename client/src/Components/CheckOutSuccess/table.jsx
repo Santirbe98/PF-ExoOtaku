@@ -59,7 +59,7 @@ export default function BasicTable({ Products }) {
         <TableBody>
           {rows.map((row) => (
             <StyledTableRow
-              key={row.name}
+              key={Math.random()}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">

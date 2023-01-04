@@ -26,12 +26,11 @@ export const CardDetail = ({ match }) => {
   };
   const [selectedValue, setSelectedValue] = React.useState(0);
   const handleChange1 = (e) => {
-    var f = Number(e.target.value)
+    var f = Number(e.target.value);
     setSelectedValue(f);
     setProductColor(product.imagesDb[f]);
-    console.log(selectedValue)
-    console.log(productColor)
-
+    console.log(selectedValue);
+    console.log(productColor);
   };
   const handleColor = (e) => {
     setSelectedValue(e);
@@ -71,7 +70,8 @@ export const CardDetail = ({ match }) => {
                 >
                   {product.imagesDb?.map((i, index) => (
                     <CardMedia
-                      key={i.color}
+                      key={Math.random()}
+                      /* key={i.color} */
                       component="img"
                       sx={{
                         maxWidth: 400,
@@ -100,6 +100,7 @@ export const CardDetail = ({ match }) => {
                   <div>
                     {product.imagesDb?.map((i, index) => (
                       <FormControlLabel
+                        key={index}
                         value={index}
                         label={i.color}
                         control={
@@ -170,7 +171,7 @@ export const CardDetail = ({ match }) => {
           </Box>
         ) : (
           <Grid container>
-            <Grid xs={12} sm={12} md={12}>
+            <Grid item xs={12} sm={12} md={12}>
               <Typography variant="h3">"Cargando Producto"</Typography>
             </Grid>
           </Grid>
@@ -195,7 +196,10 @@ export const CardDetail = ({ match }) => {
                 borderRadius: 3,
                 backgroundColor: "rgb(33, 33, 33)",
               }}
-              onClick={() => { handleColor(index); console.log(productColor) }}
+              onClick={() => {
+                handleColor(index);
+                console.log(productColor);
+              }}
               image={i.images}
               alt={i.color}
             />

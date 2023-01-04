@@ -2,7 +2,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { useAuth0, User } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { chkcustomer } from "../../Redux/Actions";
 import { Button, Box, Avatar } from "@mui/material";
 import SignIn from "../SignIn/SingIn";
@@ -13,6 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import AcountButton from "../Authenticate/AcountButton";
 import Admin from "./adminbutton";
+import Swal from "sweetalert2";
 
 function SimpleDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -52,7 +53,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(chkcustomer(usermail));
   }, [isAuthenticated]);
-  const UserValidate = useSelector((state) => state.chk_customer);
+  let UserValidate = useSelector((state) => state.chk_customer);
 
   if (isAuthenticated) {
     usermail = user?.email;
@@ -96,7 +97,9 @@ const Profile = () => {
           </Grid>
           <Grid xs={12} sm={12} md={12} lg={6} xl={12} pb={10}>
             <AcountButton />
+
             {UserValidate.isadmin === true && <Admin />}
+
             <Button
               color="warning"
               size="medium"

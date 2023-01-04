@@ -18,6 +18,7 @@ import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -137,8 +138,8 @@ Row.propTypes = {
         precio: PropTypes.number.isRequired,
       })
     ).isRequired,
-    producto: PropTypes.string.isRequired,
-    precio: PropTypes.number.isRequired,
+    producto: PropTypes.string,
+    precio: PropTypes.number,
   }).isRequired,
 };
 
@@ -210,7 +211,7 @@ export default function CollapsibleTable({ Products }) {
         </TableHead>
         <TableBody>
           {rows
-            .map((row) => <Row key={row.name} row={row} />)
+            .map((row) => <Row key={Math.random()} row={row} />)
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
         </TableBody>
       </Table>

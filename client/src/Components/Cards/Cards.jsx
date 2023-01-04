@@ -77,7 +77,7 @@ export const Cards = () => {
       );
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
-  
+
   //===========================================================
   return (
     <Box>
@@ -163,7 +163,7 @@ export const Cards = () => {
                 <MediaCard
                   key={p.id}
                   id={p.id}
-                  image={p.images}
+                  image={p.images[0]}
                   name={p.name}
                   category={p.category}
                   price={p.price}

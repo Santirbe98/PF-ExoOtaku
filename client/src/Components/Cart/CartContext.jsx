@@ -66,7 +66,7 @@ export const CartProvider = ({ children }) => {
   const cleanCart = () => {
     localStorage.removeItem("CartProducts");
     setCartItems([]);
-    console.log(localStorage);
+    /*     console.log(localStorage); */
   };
   const deleteItemToCart = (product) => {
     Swal.fire({
