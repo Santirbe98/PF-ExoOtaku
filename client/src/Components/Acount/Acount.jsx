@@ -16,8 +16,6 @@ import Orders from "./Orders";
 import Rated from "./Rated";
 import WishList from "./WishList";
 
-import { Footer } from "../Footer/Footer.jsx";
-import { NavBar } from "../NavBar/NavBar.jsx";
 import { customerOrders } from "../../Redux/Actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -53,8 +51,6 @@ export const Acount = () => {
   return (
     isAuthenticated && (
       <div>
-        <NavBar />
-        <div></div>
         <>
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
@@ -177,8 +173,6 @@ export const Acount = () => {
             </Grid>
           </Box>
         </>
-        <div></div>
-        <Footer />
       </div>
     )
   );

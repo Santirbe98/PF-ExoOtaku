@@ -5,8 +5,6 @@ import { CartContext } from "./CartContext";
 import styles from "./CartItem.module.css";
 import { Button, Box } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Footer } from "../Footer/Footer.jsx";
-import { NavBar } from "../NavBar/NavBar.jsx";
 import { Link } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -46,7 +44,6 @@ export default function CartBanner({ userId }) {
 
   return (
     <>
-      <NavBar />
       <Box sx={{ display: "flex", justifyContent: "center", maxWidth: "95%" }}>
         <TableContainer sx={{ marginLeft: 40 }} component={Paper}>
           <Table sx={{ minWidth: 800 }} aria-label="spanning table">
@@ -153,7 +150,6 @@ export default function CartBanner({ userId }) {
           </Table>
         </TableContainer>
       </Box>
-      <Footer />
     </>
   );
 }

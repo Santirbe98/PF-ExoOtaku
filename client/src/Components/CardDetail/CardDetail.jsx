@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getProductDetail } from "../../Redux/Actions";
 import s from "./CardDetail.module.css";
-import { NavBar } from "../NavBar/NavBar.jsx";
-import { Footer } from "../Footer/Footer.jsx";
 import { CartContext } from "../Cart/CartContext";
 import Cart from "../Cart/Cart";
 import { Box, Grid, Typography, CardMedia, Button } from "@mui/material";
@@ -28,12 +26,12 @@ export const CardDetail = ({ match }) => {
   };
   const [selectedValue, setSelectedValue] = React.useState(0);
   const handleChange1 = (e) => {
-    var f=Number(e.target.value)
+    var f = Number(e.target.value)
     setSelectedValue(f);
     setProductColor(product.imagesDb[f]);
     console.log(selectedValue)
     console.log(productColor)
- 
+
   };
   const handleColor = (e) => {
     setSelectedValue(e);
@@ -48,7 +46,6 @@ export const CardDetail = ({ match }) => {
   }, [dispatch, id]);
   return (
     <div>
-      <NavBar />
       <Cart />
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -162,7 +159,7 @@ export const CardDetail = ({ match }) => {
                         images: [productColor.images],
                         color: [productColor.color],
                       });
-                      redirectHome();
+                      /*  redirectHome(); */
                     }}
                   >
                     Agregar al carrito
@@ -198,15 +195,13 @@ export const CardDetail = ({ match }) => {
                 borderRadius: 3,
                 backgroundColor: "rgb(33, 33, 33)",
               }}
-              onClick={()=>{handleColor(index); console.log(productColor)}}
+              onClick={() => { handleColor(index); console.log(productColor) }}
               image={i.images}
               alt={i.color}
             />
           ))}
         </Box>
       </Grid>
-
-      <Footer />
     </div>
   );
 };

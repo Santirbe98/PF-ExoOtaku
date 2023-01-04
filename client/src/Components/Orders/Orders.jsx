@@ -1,6 +1,5 @@
 import { Button, Typography } from "@mui/material";
 import React from "react";
-import { NavBar } from "../NavBar/NavBar";
 import { Box } from "@mui/system";
 import CollapsibleTable from "./listorders";
 import { useDispatch } from "react-redux";
@@ -70,8 +69,6 @@ const Orders = () => {
 
   return (
     <div>
-      <NavBar />
-
       <Typography variant="h4"> Panel de administrador </Typography>
 
       <Typography variant="h5">
