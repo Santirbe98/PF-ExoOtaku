@@ -93,15 +93,24 @@ const Cart = () => {
           )}
           <h2 className={styles.total}>Total: ${total}</h2>
           <Box pb={3}>
-            {isAuthenticated && UserValidate !== null ? (
-              <PayButton
-                cartItems={cartItems}
-                userId={UserValidate.id}
-                name={UserValidate.name}
-                email={UserValidate.email}
-              />
-            ) : (
-              <Profile2 />
+            {isAuthenticated ? (
+              UserValidate !== null ? (
+                <PayButton
+                  cartItems={cartItems}
+                  userId={UserValidate.id}
+                  name={UserValidate.name}
+                  email={UserValidate.email}
+                />
+              ) : (
+                <Profile2 />
+              )) : (
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => loginWithRedirect()}
+              >
+                Iniciar sesion
+              </Button>
             )}
           </Box>
           <Box pb={3}>

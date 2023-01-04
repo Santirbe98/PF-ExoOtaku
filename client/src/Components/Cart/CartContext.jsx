@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const CartContext = createContext();
 
@@ -18,29 +19,48 @@ export const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   const addItemToCart = (product) => {
-    const inCart = cartItems.find(
-      (p) =>
-        p.id === product.id &&
-        p.size === product.size &&
-        p.color[0] === product.color[0]
-    );
-
-    if (inCart) {
-      setCartItems(
-        cartItems.map((p) => {
-          if (
+    Swal.fire({
+      /*  title: "Estas seguro que desea agregar este item?", */
+      text: "Estas seguro que deseas agregar este item?",
+      width: "30%",
+      padding: "10px",
+      allowEnterKey: true,
+      allowEscapeKey: true,
+      icon: "question",
+      background: "black",
+      imageUrl: `${product.images[0]}`,
+      imageHeight: 200,
+      imageWidth: 200,
+      showCancelButton: true,
+      confirmButtonColor: "#00711a",
+      cancelButtonColor: "#b50707",
+      confirmButtonText: "Si, agregalo!",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        const inCart = cartItems.find(
+          (p) =>
             p.id === product.id &&
             p.size === product.size &&
             p.color[0] === product.color[0]
-          ) {
-            return { ...inCart, amount: inCart.amount + 1 };
-          } else return p;
-        })
-      );
-    } else {
-      setCartItems([...cartItems, { ...product, amount: 1 }]);
-    }
-    alert("Producto agregado a su carrito");
+        );
+        if (inCart) {
+          setCartItems(
+            cartItems.map((p) => {
+              if (
+                p.id === product.id &&
+                p.size === product.size &&
+                p.color[0] === product.color[0]
+              ) {
+                return { ...inCart, amount: inCart.amount + 1 };
+              } else return p;
+            })
+          );
+        } else {
+          setCartItems([...cartItems, { ...product, amount: 1 }]);
+        }
+      }
+    })
+
   };
 
   const cleanCart = () => {
@@ -49,21 +69,40 @@ export const CartProvider = ({ children }) => {
     console.log(localStorage);
   };
   const deleteItemToCart = (product) => {
-    const inCart = cartItems.find(
-      (p) => p.id === product.id && p.size === product.size
-    );
-    if (inCart.amount === 1) {
-      setCartItems(cartItems.filter((p) => p !== inCart));
-    } else {
-      setCartItems(
-        cartItems.map((p) => {
-          if (p.id === product.id && p.size === product.size) {
-            return { ...inCart, amount: inCart.amount - 1 };
-          } else return p;
-        })
-      );
-    }
-    alert("Producto quitado de su carrito");
+    Swal.fire({
+      /*  title: "Estas seguro que desea agregar este item?", */
+      text: "Estas seguro que deseas quitar este item?",
+      width: "30%",
+      padding: "10px",
+      background: "black",
+      allowEnterKey: true,
+      allowEscapeKey: true,
+      imageUrl: `${product.images[0]}`,
+      imageHeight: 200,
+      imageWidth: 200,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3a3c3b",
+      cancelButtonColor: "#b50707",
+      confirmButtonText: "Si, quitalo!"
+    }).then((response) => {
+      if (response.isConfirmed) {
+        const inCart = cartItems.find(
+          (p) => p.id === product.id && p.size === product.size
+        );
+        if (inCart.amount === 1) {
+          setCartItems(cartItems.filter((p) => p !== inCart));
+        } else {
+          setCartItems(
+            cartItems.map((p) => {
+              if (p.id === product.id && p.size === product.size) {
+                return { ...inCart, amount: inCart.amount - 1 };
+              } else return p;
+            })
+          );
+        }
+      }
+    })
   };
 
   let history = useHistory();
