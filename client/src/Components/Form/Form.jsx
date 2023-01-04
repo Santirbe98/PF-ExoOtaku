@@ -364,22 +364,22 @@ export const Form = () => {
                                 name={`${index}`}
                               >
                                 <FormControlLabel
-                                  value="black"
+                                  value="Black"
                                   control={<Radio size="small" />}
                                   label="Negro"
                                 />
                                 <FormControlLabel
-                                  value="white"
+                                  value="White"
                                   control={<Radio size="small" />}
                                   label="Blanco"
                                 />
                                 <FormControlLabel
-                                  value="blue"
+                                  value="Blue"
                                   control={<Radio size="small" />}
                                   label="Azul"
                                 />
                                 <FormControlLabel
-                                  value="pink"
+                                  value="Pink"
                                   control={<Radio size="small" />}
                                   label="Rosado"
                                 />
