@@ -214,16 +214,16 @@ export const NavBar = () => {
           justifyContent: "center",
         }}
       >
-        <>
+        <Box>
           {error && <p>Error de autenticacion</p>}
           {!error && isLoading && <p>Cargando...</p>}
           {!error && !isLoading && (
-            <>
+            <Box sx={{ paddingRight: 10 }}>
               <Profile />
               <LoginButton />
-            </>
+            </Box>
           )}
-        </>
+        </Box>
       </Grid>
     </Grid>
   );
