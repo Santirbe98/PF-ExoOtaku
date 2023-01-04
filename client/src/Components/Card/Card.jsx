@@ -15,6 +15,7 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       className={s.container}
       sx={{
         width: 300,
+        height: 450,
         margin: 2,
         backgroundColor: "rgb(33, 33, 33)",
       }}
