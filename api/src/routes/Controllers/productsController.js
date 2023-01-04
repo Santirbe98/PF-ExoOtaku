@@ -125,11 +125,8 @@ const createNewProduct = async ({
       url: urls[index],
       color: e.color,
     }));
-
     name = (name.charAt(0).toUpperCase() + name.slice(1)).trim();
-    imagesForm = [
-      imagesAndColors[getRandomInt(imagesAndColors.length)].url,
-    ];
+    imagesForm = [imagesAndColors[getRandomInt(imagesAndColors.length)].url];
     let newProduct = await Product.create({
       name,
       price: parseInt(price),
@@ -137,10 +134,7 @@ const createNewProduct = async ({
       imagesForm,
       stock: parseInt(stock),
     });
-    // const colorName = await Color.findOrCreate({
-    //   where: { color},
-    // });
-    //  newProduct.addColors(colorName[0]);
+
     color?.map(async (d) => {
       const colorName = await Color.findOrCreate({
         where: { color: d },
@@ -157,10 +151,6 @@ const createNewProduct = async ({
         newProduct.addImage([algo]);
       });
 
-    // const sizeName = await Size.findOrCreate({
-    //   where: { size},
-    // });
-    //  newProduct.addSizes(sizeName[0]);
     const typeName = await Type.findOrCreate({
       where: { type },
     });
