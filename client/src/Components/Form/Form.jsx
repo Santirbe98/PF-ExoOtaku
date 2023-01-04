@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postProduct } from "../../Redux/Actions";
-import { NavBar } from "../NavBar/NavBar.jsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { validate } from "./Validate";
@@ -162,9 +161,6 @@ export const Form = () => {
   const classes = useStyles();
   return (
     <Box>
-      <Box>
-        <NavBar />
-      </Box>
       <Grid container spacing={3}>
         <Grid xs={12} md={12} lg={12} xl={12}>
           <h1>Nuevo Producto</h1>
@@ -328,66 +324,66 @@ export const Form = () => {
                 <Grid container justifyContent="center">
                   {urlImages.length
                     ? urlImages.map((i, index) => (
-                        <Grid item key={index} spacing={2} xs={6} md={4} lg={3}>
-                          <img
-                            key={index}
-                            height="100px"
-                            src={i}
-                            alt="Product"
-                          />
-                          <DeleteIcon
-                            className={classes.imgPreview}
-                            onClick={() => eliminarPreview(index)}
-                          />
-                          <Box>
-                            <FormControl
+                      <Grid item key={index} spacing={2} xs={6} md={4} lg={3}>
+                        <img
+                          key={index}
+                          height="100px"
+                          src={i}
+                          alt="Product"
+                        />
+                        <DeleteIcon
+                          className={classes.imgPreview}
+                          onClick={() => eliminarPreview(index)}
+                        />
+                        <Box>
+                          <FormControl
+                            sx={{
+                              backgroundColor: "white",
+                              borderRadius: 3,
+                              margin: 1,
+                              padding: 1,
+                              minWidth: 80,
+                            }}
+                          >
+                            <FormLabel id="demo-radio-buttons-group-label">
+                              Color*
+                            </FormLabel>
+                            <RadioGroup
+                              size="small"
+                              onChange={addcolor}
                               sx={{
-                                backgroundColor: "white",
-                                borderRadius: 3,
-                                margin: 1,
+                                color: "black",
+                                flexWrap: "nowrap",
                                 padding: 1,
-                                minWidth: 80,
                               }}
+                              aria-labelledby="demo-radio-buttons-group-label"
+                              name={`${index}`}
                             >
-                              <FormLabel id="demo-radio-buttons-group-label">
-                                Color*
-                              </FormLabel>
-                              <RadioGroup
-                                size="small"
-                                onChange={addcolor}
-                                sx={{
-                                  color: "black",
-                                  flexWrap: "nowrap",
-                                  padding: 1,
-                                }}
-                                aria-labelledby="demo-radio-buttons-group-label"
-                                name={`${index}`}
-                              >
-                                <FormControlLabel
-                                  value="Black"
-                                  control={<Radio size="small" />}
-                                  label="Negro"
-                                />
-                                <FormControlLabel
-                                  value="White"
-                                  control={<Radio size="small" />}
-                                  label="Blanco"
-                                />
-                                <FormControlLabel
-                                  value="Blue"
-                                  control={<Radio size="small" />}
-                                  label="Azul"
-                                />
-                                <FormControlLabel
-                                  value="Pink"
-                                  control={<Radio size="small" />}
-                                  label="Rosado"
-                                />
-                              </RadioGroup>
-                            </FormControl>
-                          </Box>
-                        </Grid>
-                      ))
+                              <FormControlLabel
+                                value="Black"
+                                control={<Radio size="small" />}
+                                label="Negro"
+                              />
+                              <FormControlLabel
+                                value="White"
+                                control={<Radio size="small" />}
+                                label="Blanco"
+                              />
+                              <FormControlLabel
+                                value="Blue"
+                                control={<Radio size="small" />}
+                                label="Azul"
+                              />
+                              <FormControlLabel
+                                value="Pink"
+                                control={<Radio size="small" />}
+                                label="Rosado"
+                              />
+                            </RadioGroup>
+                          </FormControl>
+                        </Box>
+                      </Grid>
+                    ))
                     : false}
                 </Grid>
               </Box>

@@ -107,7 +107,7 @@ export const CartProvider = ({ children }) => {
 
   let history = useHistory();
   const redirectHome = () => {
-    history.push("/home");
+    history.push("/shop");
   };
   return (
     <CartContext.Provider

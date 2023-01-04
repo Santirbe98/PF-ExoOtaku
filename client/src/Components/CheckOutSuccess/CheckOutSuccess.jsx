@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getCheckout } from "../../Redux/Actions";
-import { NavBar } from "../NavBar/NavBar";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
@@ -48,7 +47,6 @@ export const CheckOutSuccess = () => {
 
   return (
     <div>
-      <NavBar />
       <Box>
         <Typography sx={{ padding: "1%" }} variant="h2">
           ¡Gracias por tu compra!

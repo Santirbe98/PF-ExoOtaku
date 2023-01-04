@@ -14,7 +14,7 @@ export const Footer = () => {
             <Grid item xs={4} sm={4}>
               <Box>
                 <Link
-                  to="/home"
+                  to="/"
                   style={{
                     textDecoration: "none",
                     color: "white",

@@ -43,7 +43,7 @@ export const NavBar = () => {
           }}
         >
           <Link
-            to="/home"
+            to="/shop"
             style={{
               textDecoration: "none",
             }}
@@ -62,7 +62,7 @@ export const NavBar = () => {
             >
               <span>
                 <HomeIcon />
-                Inicio
+                Productos
               </span>
             </Button>
           </Link>
