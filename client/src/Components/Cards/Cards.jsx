@@ -72,12 +72,14 @@ export const Cards = () => {
 
   const productSearch = !search
     ? productsList
-    : products.filter((p) =>
-        p.category.toLowerCase().includes(search.toLowerCase())
+    : products.filter((p) =>{
+      const regex =new RegExp (search,'gi');
+return p.category.match(regex) || p.name.match(regex) }
       );
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
 
+  console.log(productSearch)
   //===========================================================
   return (
     <Box>
@@ -91,7 +93,7 @@ export const Cards = () => {
             }}
           >
             <TextField
-              placeholder="Busque por anime"
+              placeholder="Busque por Anime o Nombre"
               color="warning"
               sx={{ width: "500px" }}
               style={{
@@ -125,12 +127,12 @@ export const Cards = () => {
               : null
           }`}
         >
-          {!productsList.length ? (
+          {!productSearch.length ? (
             <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
-              <h2>"No hay productos para mostrar"</h2>
+              <h2>"No hay productos para mostrar intenta otra busqueda"</h2>
             </Grid>
-          ) : search.length > 3 ? (
-            productsList2.map((c) => {
+          ) : search.length > 2 ? 
+             (productsList2.map((c) => {
               return (
                 <Box
                   style={{
