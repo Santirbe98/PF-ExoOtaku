@@ -145,7 +145,7 @@ return p.category.match(regex) || p.name.match(regex) }
                     key={c.id}
                     id={c.id}
                     image={c.images}
-                    name={c.name}
+                    name={c.name.substring(0,25)}
                     category={c.category}
                     price={c.price}
                   />
@@ -153,7 +153,7 @@ return p.category.match(regex) || p.name.match(regex) }
               );
             })
           ) : (
-            productsList.map((p) => (
+            productsList.map((p) => (         
               <Box
                 key={componentId++}
                 style={{
@@ -166,7 +166,7 @@ return p.category.match(regex) || p.name.match(regex) }
                   key={p.id}
                   id={p.id}
                   image={p.images}
-                  name={p.name}
+                  name={p.name.substring(0,25)}
                   category={p.category}
                   price={p.price}
                 />
