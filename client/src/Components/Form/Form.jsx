@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { postProduct } from "../../Redux/Actions";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import { validate } from "./Validate";
+import { postProduct } from "../../Redux/Actions";
+
+import { makeStyles } from "@material-ui/core/styles";
 import style from "./Form.module.css";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import { FormHelperText, MenuItem, Select } from "@mui/material";
-import { Box } from "@mui/material";
+import {
+  Box,
+  Button,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -38,7 +41,7 @@ export const Form = () => {
     name: "",
     price: 0,
     descriptions: "",
-    images: [],
+    imagesForm: [],
     stock: 0,
     color: [""],
     type: "",
@@ -50,6 +53,8 @@ export const Form = () => {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({
     category: "Los campos con * son obligatorios.",
+    imagen: "Debe ingresar una imagen",
+    color: "Debe ingresar un color",
   });
   const [input, setInput] = useState(initialState);
   const [urlImages, setUrlImages] = useState([]);
@@ -83,24 +88,25 @@ export const Form = () => {
     if (colors.includes(col)) {
       setErrors({ ...errors, color: "No se pueden repetir colores." });
       alert("No se pueden repetir colores.");
-    } else {
-      if (colors.length < imagesDb.length) {
-        setErrors({ ...errors, color: "Faltan ingresar Colores." });
-      } else delete errors.color;
     }
   };
 
   function addcolor(e) {
     let id = Number(e.target.name);
     imagesDb[id].color = e.target.value;
-    let colors = imagesDb.map((e) => e.color);
-    setColors(colors);
-    handleErrorColor(e.target.value);
+    let colores = imagesDb.map((e) => e.color).filter((e) => e !== "");
+    setColors(colores);
     setInput({
       ...input,
       imagesDb: imagesDb,
-      color: colors,
+      color: colores,
     });
+
+    if (input.color.length + 1 < input.imagesDb.length) {
+      setErrors({ ...errors, color: "Faltan ingresar Colores." });
+    } else delete errors.color;
+
+    handleErrorColor(e.target.value);
   }
 
   function handleTypes(e) {
@@ -126,6 +132,7 @@ export const Form = () => {
   const previewImages = async (e) => {
     e.preventDefault();
     if (e.target.files) {
+      delete errors.imagen;
       const fileArray = Array.from(e.target.files).map((f) =>
         URL.createObjectURL(f)
       );
@@ -140,8 +147,12 @@ export const Form = () => {
         color: "",
       }));
       setImagesDb((prev) => prev.concat(filesArray));
+      setInput({
+        ...input,
+        imagesDb: [...input.imagesDb, ...filesArray],
+      });
+      setErrors({ ...errors, color: "Faltan ingresar Colores." });
     }
-    delete errors.images;
   };
   const eliminarPreview = (i) => {
     let filtered = urlImages.filter((f, index) => index !== i);
@@ -156,6 +167,15 @@ export const Form = () => {
       imagesDb: imagesDbFiltered,
       color: colorFilter,
     });
+
+    if (imagesDb.length === 1) {
+      setErrors({ ...errors, imagen: "Debe ingresar una imagen" });
+      setImagesDb([]);
+      setInput({
+        ...input,
+        imagesDb: [],
+      });
+    }
   };
 
   const classes = useStyles();
@@ -289,7 +309,7 @@ export const Form = () => {
                   <MenuItem sx={{ width: "100%" }} value="Tshirt">
                     Remera
                   </MenuItem>
-                  <MenuItem sx={{ width: "100%" }} value="Sweter">
+                  <MenuItem sx={{ width: "100%" }} value="Swetter">
                     Buzo
                   </MenuItem>
                   <MenuItem sx={{ width: "100%" }} value="Other">
@@ -314,7 +334,7 @@ export const Form = () => {
                   onChange={previewImages}
                 />
                 <label htmlFor="contained-button-file">
-                  <Button variant="contained" color="primary" component="span">
+                  <Button variant="contained" color="warning" component="span">
                     Agregar
                   </Button>
                 </label>
@@ -324,78 +344,90 @@ export const Form = () => {
                 <Grid container justifyContent="center">
                   {urlImages.length
                     ? urlImages.map((i, index) => (
-                      <Grid item key={index} spacing={2} xs={6} md={4} lg={3}>
-                        <img
-                          key={index}
-                          height="100px"
-                          src={i}
-                          alt="Product"
-                        />
-                        <DeleteIcon
-                          className={classes.imgPreview}
-                          onClick={() => eliminarPreview(index)}
-                        />
-                        <Box>
-                          <FormControl
-                            sx={{
-                              backgroundColor: "white",
-                              borderRadius: 3,
-                              margin: 1,
-                              padding: 1,
-                              minWidth: 80,
-                            }}
-                          >
-                            <FormLabel id="demo-radio-buttons-group-label">
-                              Color*
-                            </FormLabel>
-                            <RadioGroup
-                              size="small"
-                              onChange={addcolor}
+                        <Grid item key={index} spacing={2} xs={6} md={4} lg={3}>
+                          <img
+                            key={index}
+                            height="100px"
+                            src={i}
+                            alt="Product"
+                          />
+                          <DeleteIcon
+                            className={classes.imgPreview}
+                            onClick={() => eliminarPreview(index)}
+                          />
+                          <Box>
+                            <FormControl
                               sx={{
-                                color: "black",
-                                flexWrap: "nowrap",
+                                backgroundColor: "white",
+                                borderRadius: 3,
+                                margin: 1,
                                 padding: 1,
+                                minWidth: 80,
                               }}
-                              aria-labelledby="demo-radio-buttons-group-label"
-                              name={`${index}`}
                             >
-                              <FormControlLabel
-                                value="Black"
-                                control={<Radio size="small" />}
-                                label="Negro"
-                              />
-                              <FormControlLabel
-                                value="White"
-                                control={<Radio size="small" />}
-                                label="Blanco"
-                              />
-                              <FormControlLabel
-                                value="Blue"
-                                control={<Radio size="small" />}
-                                label="Azul"
-                              />
-                              <FormControlLabel
-                                value="Pink"
-                                control={<Radio size="small" />}
-                                label="Rosado"
-                              />
-                            </RadioGroup>
-                          </FormControl>
-                        </Box>
-                      </Grid>
-                    ))
+                              <FormLabel id="demo-radio-buttons-group-label">
+                                Color*
+                              </FormLabel>
+                              <RadioGroup
+                                size="small"
+                                onChange={addcolor}
+                                sx={{
+                                  color: "black",
+                                  flexWrap: "nowrap",
+                                  padding: 1,
+                                }}
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                name={`${index}`}
+                              >
+                                <FormControlLabel
+                                  value="Black"
+                                  control={
+                                    <Radio size="small" color="warning" />
+                                  }
+                                  label="Negro"
+                                />
+                                <FormControlLabel
+                                  value="White"
+                                  control={
+                                    <Radio size="small" color="warning" />
+                                  }
+                                  label="Blanco"
+                                />
+                                <FormControlLabel
+                                  value="Blue"
+                                  control={
+                                    <Radio size="small" color="warning" />
+                                  }
+                                  label="Azul"
+                                />
+                                <FormControlLabel
+                                  value="Pink"
+                                  control={
+                                    <Radio size="small" color="warning" />
+                                  }
+                                  label="Rosado"
+                                />
+                              </RadioGroup>
+                            </FormControl>
+                          </Box>
+                        </Grid>
+                      ))
                     : false}
                 </Grid>
               </Box>
             </>
           </Box>
-          <button
-            onClick={handleSubmit}
-            disabled={Object.keys(errors).length > 0 ? true : false}
-            className={style.button}
-          >
-            Crear
-          </button>
+          <Box>
+            <Button
+              size="large"
+              variant="contained"
+              color="warning"
+              onClick={handleSubmit}
+              disabled={Object.keys(errors).length > 0 ? true : false}
+            >
+              CREAR
+            </Button>
+          </Box>
         </Grid>
       </Grid>
     </Box>

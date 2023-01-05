@@ -140,7 +140,7 @@ const createNewProduct = async ({
         where: { color: d },
       });
       console.log(colorName);
-      newProduct.addColors(colorName[0].dataValues.id);
+      newProduct.addColors(colorName[0]);
     });
 
     imagesAndColors &&
