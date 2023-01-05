@@ -13,6 +13,7 @@ import {
   UPDATE_STATUS,
   GET_USERS,
   DELETE_USER,
+  ORDER_RANK,
 } from "./actionsTypes";
 
 axios.defaults.baseURL = "http://localhost:3001";
@@ -58,6 +59,11 @@ export function orderByPrice(payload) {
   return {
     type: ORDER_BY_PRICE,
     payload: payload,
+  };
+}
+export function orderByRank() {
+  return {
+    type: ORDER_RANK,
   };
 }
 

@@ -24,6 +24,7 @@ export default function App() {
         <NavBar />
         <Switch>
           <Route exact path="/" component={LandingPage} />
+          <Route exact path="/home" component={LandingPage} />
           <Route exact path="/cartDetail" component={CartBanner} />
           <Route exact path="/shop" component={Shop} />
           <Route exact path="/form" component={Form} />
