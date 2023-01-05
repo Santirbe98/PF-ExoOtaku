@@ -310,7 +310,7 @@ export const Form = () => {
                   <MenuItem sx={{ width: "100%" }} value="Tshirt">
                     Remera
                   </MenuItem>
-                  <MenuItem sx={{ width: "100%" }} value="Sweter">
+                  <MenuItem sx={{ width: "100%" }} value="Swetter">
                     Buzo
                   </MenuItem>
                   <MenuItem sx={{ width: "100%" }} value="Other">
