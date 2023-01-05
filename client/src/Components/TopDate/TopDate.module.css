@@ -1,0 +1,14 @@
+.sx {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.md {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.lg {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}

@@ -14,3 +14,4 @@ export const UPDATE_STATUS = "UPDATE_STATUS";
 export const GET_USERS = "GET_USERS";
 export const UPDATE_ADMIN = "UPDATE_ADMIN";
 export const DELETE_USER = "DELETE_USER";
+export const ORDER_BY_DATE = "ORDER_BY_DATE";

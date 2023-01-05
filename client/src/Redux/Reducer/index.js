@@ -5,6 +5,7 @@ import {
   ORDER_BY_PRICE,
   ORDER_DETAIL,
   ORDER_RANK,
+  ORDER_BY_DATE,
   GET_USER_CREDENTIALS,
   CUSTOMER_BY_EMAIL,
 } from "../Actions/actionsTypes.js";
@@ -15,6 +16,7 @@ const initialState = {
   orderByRank: [],
   details: {},
   orderdetail: {},
+  orderByDate:[],
   colorSelected: [],
   customer: {},
   chk_customer: {},
@@ -41,6 +43,16 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         orderByRank: orderProductRank,
+      };
+
+    case ORDER_BY_DATE:
+      const productsDate = state.filterProducts;
+      const orderProductDate = productsDate.sort((a, b) => new Date(b.date_added).getTime() - new Date(a.date_added).getTime())
+      // const orderProductDate = productsDate.sort(
+      //   (a, b) => Number(a.date_added) - Number(b.date_added));
+      return {
+        ...state,
+        orderByDate: orderProductDate,
       };
 
     case FILTER_ALL:

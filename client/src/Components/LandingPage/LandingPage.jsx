@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getProducts, orderByRank } from "../../Redux/Actions";
+import { getProducts, orderByRank, orderByDate } from "../../Redux/Actions";
 import {
   Box,
   Button,
@@ -11,12 +11,15 @@ import {
 } from "@mui/material";
 import { TopRanked } from "../TopRanked/TopRanked";
 import { Link } from "react-router-dom";
-
+import { TopDate } from "../TopDate/TopDate"
 export const LandingPage = () => {
   let dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProducts()).then(() => dispatch(orderByRank()));
+    dispatch(getProducts())
+      .then(() => dispatch(orderByRank()))
+      .then(() => dispatch(orderByDate()));
+
   }, [dispatch]);
 
   return (
@@ -87,6 +90,18 @@ export const LandingPage = () => {
           color="white"
           sx={{ marginTop: 3, width: "90%", marginLeft: "5%" }}
         />
+        <Typography variant="h3" mt={10}>
+          Nuevos Productos y Ofertas
+        </Typography>
+        <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TopDate />
+      </Box>
       </Box>
     </Box>
   );
