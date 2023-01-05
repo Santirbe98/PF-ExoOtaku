@@ -41,7 +41,7 @@ export const Form = () => {
     name: "",
     price: 0,
     descriptions: "",
-    images: [],
+    imagesForm: [],
     stock: 0,
     color: [""],
     type: "",
@@ -63,7 +63,7 @@ export const Form = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-
+    console.log(input);
     dispatch(postProduct(input));
     alert("Guardado!");
     setInput(initialState);
