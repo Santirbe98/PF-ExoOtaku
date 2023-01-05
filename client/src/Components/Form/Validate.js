@@ -1,9 +1,10 @@
 export const validate = (input) => {
-  let errors = {
-    images: "Debe ingresar al menos una imagen.",
-    color: "Debe ingresar color.",
-  };
+  let errors = {};
+  if (input.imagesDb.length === 0) errors.imagen = "Debe ingresar una imagen ";
 
+  if (input.color.length < input.imagesDb.length) {
+    errors.color = "Debe ingresar un color";
+  }
   if (!input.name || input.name.length === 0) {
     errors.name = "Debe ingresar Nombre";
   } else if (
@@ -27,6 +28,9 @@ export const validate = (input) => {
 
   if (!input.category || input.category.length === 0) {
     errors.category = "Debe ingresar Categoria.";
+  } else {
+    if (!/^[A-Za-z0-9\s]+$/g.test(input.category))
+      errors.category = "No puede contener simbolos.";
   }
 
   if (input.type.length === 0) {
