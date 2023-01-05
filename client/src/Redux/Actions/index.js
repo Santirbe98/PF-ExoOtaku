@@ -14,6 +14,7 @@ import {
   GET_USERS,
   DELETE_USER,
   ORDER_RANK,
+  ORDER_BY_DATE,
 } from "./actionsTypes";
 
 axios.defaults.baseURL = "http://localhost:3001";
@@ -64,6 +65,11 @@ export function orderByPrice(payload) {
 export function orderByRank() {
   return {
     type: ORDER_RANK,
+  };
+}
+export function orderByDate() {
+  return {
+    type: ORDER_BY_DATE,
   };
 }
 
