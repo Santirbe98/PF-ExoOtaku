@@ -91,7 +91,7 @@ export const LandingPage = () => {
           sx={{ marginTop: 3, width: "90%", marginLeft: "5%" }}
         />
         <Typography variant="h3" mt={10}>
-          Nuevos Productos y Ofertas !!!
+          Nuevos Productos y Ofertas
         </Typography>
         <Box
         sx={{
