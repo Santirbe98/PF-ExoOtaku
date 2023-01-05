@@ -96,7 +96,7 @@ export const Filter = (props) => {
                   <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"All"}>Colores</MenuItem>
                   <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Black"}>Negro</MenuItem>
                   <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"White"}>Blanco</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Blue"}>Blue</MenuItem>
+                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Blue"}>Azul</MenuItem>
                   <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Pink"}>Rosado</MenuItem>
                 </Select>
               </FormControl>
@@ -114,7 +114,7 @@ export const Filter = (props) => {
                 >
                   <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"All"}>Tipo de prenda</MenuItem>
                   <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Tshirt"}>Remera</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Sweter"}>Buzo</MenuItem>
+                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Swetter"}>Buzo</MenuItem>
                 </Select>
               </FormControl>
             </Box>
