@@ -17,6 +17,7 @@ module.exports = {
         "shipping_address",
         "billing_address",
         "isadmin",
+        "deleted",
       ],
       where: {
         email: email,

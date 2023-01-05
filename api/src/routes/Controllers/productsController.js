@@ -139,7 +139,8 @@ const createNewProduct = async ({
       const colorName = await Color.findOrCreate({
         where: { color: d },
       });
-      newProduct.addColors(colorName[0]);
+      console.log(colorName);
+      newProduct.addColors(colorName[0].dataValues.id);
     });
 
     imagesAndColors &&
@@ -147,8 +148,10 @@ const createNewProduct = async ({
         const colorDb = await Color.findOrCreate({
           where: { color: i.color },
         });
+        let colorId = colorDb[0].dataValues.id;
         const algo = await colorDb[0].createImage({ url: i.url });
         newProduct.addImage([algo]);
+        newProduct.addColors(colorId);
       });
 
     const typeName = await Type.findOrCreate({
@@ -166,7 +169,7 @@ const createNewProduct = async ({
     const categoryName = await Category.findOrCreate({
       where: { category },
     });
-    newProduct.addCategory(categoryName[0]);
+    newProduct.addCategory(categoryName[0].dataValues.id);
     return newProduct;
   } catch (error) {
     console.log(error);

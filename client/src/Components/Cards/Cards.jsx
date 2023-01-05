@@ -77,7 +77,7 @@ export const Cards = () => {
       );
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
-  
+
   //===========================================================
   return (
     <Box>

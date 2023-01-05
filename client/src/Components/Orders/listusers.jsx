@@ -7,14 +7,18 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Checkbox from "@mui/material/Checkbox";
-import { Button } from "@material-ui/core";
+import { Button, ButtonBase } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getAllUsers, updateAdmin } from "../../Redux/Actions";
 import { useDispatch } from "react-redux";
-import emailjs from "@emailjs/browser";
 import sendEmailUserDedleted from "./emailuser";
+import Swal from "sweetalert2";
+import Radio from "@mui/material/Radio";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import RadioGroup from "@mui/material/RadioGroup";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -53,6 +57,8 @@ function createData(
 export default function CustomizedTables({ users, handleDeleteUser }) {
   const dispatch = useDispatch();
   let rows = [];
+  let checks = [];
+
   for (let i = 0; i < users.length; i++) {
     rows.push(
       createData(
@@ -65,13 +71,33 @@ export default function CustomizedTables({ users, handleDeleteUser }) {
         users[i].deleted
       )
     );
+    checks.push(users[i].isadmin);
   }
 
+  const [isChecked, setIsChecked] = React.useState(checks);
+  console.log(isChecked);
+  const toggleCheckboxValue = (index) => {
+    setIsChecked(isChecked.map((v, i) => (i === index ? !v : v)));
+  };
+
   const handleStatus = (e) => {
-    alert("Seguro quieres cambiar los permisos de este usuario?");
-    dispatch(updateAdmin({ id: e.target.value, isadmin: e.target.checked }));
-    alert("Permisos cambiados");
-    dispatch(getAllUsers());
+    Swal.fire({
+      title: "Seguro quieres cambiar los permisos de este usuario?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Si",
+      denyButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(
+          updateAdmin({ id: e.target.value, isadmin: e.target.checked })
+        );
+        dispatch(getAllUsers());
+        Swal.fire("Permisos cambiados!", "", "success");
+      } else if (result.isDenied) {
+        return;
+      }
+    });
   };
 
   return (
@@ -89,9 +115,9 @@ export default function CustomizedTables({ users, handleDeleteUser }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row, index) => (
             <StyledTableRow key={row.id}>
-              <StyledTableCell component="th" scope="row">
+              <StyledTableCell component="th" scope="row" key={row.id}>
                 {row.id}
               </StyledTableCell>
               <StyledTableCell align="left">{row.nombre}</StyledTableCell>
@@ -102,8 +128,31 @@ export default function CustomizedTables({ users, handleDeleteUser }) {
                 <Checkbox
                   {...label}
                   value={row.id}
-                  defaultChecked={row.administrador === true ? true : false}
-                  onChange={handleStatus}
+                  checked={row.administrador}
+                  onClick={(e) => {
+                    Swal.fire({
+                      title:
+                        "Seguro quieres cambiar los permisos de este usuario?",
+                      showDenyButton: true,
+                      showCancelButton: false,
+                      confirmButtonText: "Si",
+                      denyButtonText: "No",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        dispatch(
+                          updateAdmin({
+                            id: e.target.value,
+                            isadmin: !row.administrador,
+                          })
+                        ).then(() => {
+                          dispatch(getAllUsers());
+                        });
+                        Swal.fire("Permisos cambiados!", "", "success");
+                      } else if (result.isDenied) {
+                        return;
+                      }
+                    });
+                  }}
                 />
               </StyledTableCell>
               <StyledTableCell align="left">
@@ -111,12 +160,26 @@ export default function CustomizedTables({ users, handleDeleteUser }) {
                   value={row.id}
                   variant="outlined"
                   size="small"
-                  onClick={() => {
-                    handleDeleteUser(row.id);
-                    sendEmailUserDedleted({
+                  onClick={(e) => {
+                    e.preventDefault();
+                    Swal.fire({
+                      title: "¿Seguro que quieres eliminar este usuario?",
+                      showDenyButton: true,
+                      showCancelButton: false,
+                      confirmButtonText: "Si",
+                      denyButtonText: "No",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleDeleteUser(e.target.value);
+                        Swal.fire("¡Usuario eliminado!", "", "success");
+                      } else if (result.isDenied) {
+                        return;
+                      }
+                    });
+                    /*                     sendEmailUserDedleted({
                       email: row.email,
                       name: row.nombre,
-                    });
+                    }); */
                   }}
                   startIcon={<DeleteIcon />}
                 >

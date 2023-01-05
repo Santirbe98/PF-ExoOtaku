@@ -78,7 +78,7 @@ export const CheckOutSuccess = () => {
             </Typography>
             <Box sx={{ padding: "0% 5%" }}>
               <BasicTable Products={products} />
-              {sendEmailSuccess({
+              {/*               {sendEmailSuccess({
                 Order: Order,
                 email: user.email,
                 name: user.name,
@@ -86,7 +86,7 @@ export const CheckOutSuccess = () => {
                 total_prod: info.total_prod,
                 total_env: info.total_env,
                 estado: info.estado,
-              })}
+              })} */}
             </Box>
           </>
         )}
