@@ -63,7 +63,6 @@ export const Form = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(input);
     dispatch(postProduct(input));
     alert("Guardado!");
     setInput(initialState);
