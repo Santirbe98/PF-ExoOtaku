@@ -113,7 +113,6 @@ const createNewProduct = async ({
   descriptions,
   imagesForm,
   stock,
-  color,
   size,
   type,
   category,
@@ -133,13 +132,6 @@ const createNewProduct = async ({
       descriptions,
       imagesForm,
       stock: parseInt(stock),
-    });
-
-    color?.map(async (d) => {
-      const colorName = await Color.findOrCreate({
-        where: { color: d },
-      });
-      newProduct.addColors(colorName[0]);
     });
 
     imagesAndColors &&
