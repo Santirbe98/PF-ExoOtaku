@@ -17,12 +17,11 @@ import {
   ORDER_BY_DATE,
 } from "./actionsTypes";
 
-axios.defaults.baseURL = "http://localhost:3001";
-// axios.defaults.baseURL = 'https://exo-otaku.up.railway.app/'
+// axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://exo-otaku.up.railway.app/";
 
 export function getProducts() {
   return async function (dispatch) {
-
     let json = await axios.get(`/products`);
 
     return dispatch({
@@ -51,7 +50,6 @@ export function getProductDetail(id) {
 export function postProduct(body) {
   return async function () {
     try {
-
       var json = await axios.post(`/products`, body);
 
       return json;
@@ -114,7 +112,7 @@ export function postCustomer(payload) {
     console.log(payload);
     var response;
     try {
-      response = await axios.post("http://localhost:3001/customer/", payload);
+      response = await axios.post("/customer", payload);
       return response;
     } catch (error) {
       console.log(error);
@@ -131,7 +129,7 @@ export function userCredential(payload) {
 
 export function chkcustomer(email) {
   return async function (dispatch) {
-    let json = await axios.get(`http://localhost:3001/customer/${email}`);
+    let json = await axios.get(`/customer/${email}`);
     return dispatch({
       type: CUSTOMER_BY_EMAIL,
       payload: json.data,
@@ -141,7 +139,7 @@ export function chkcustomer(email) {
 
 export function customerOrders(id) {
   return async function (dispatch) {
-    let json = await axios.get(`http://localhost:3001/orders/${id}`);
+    let json = await axios.get(`/orders/${id}`);
     return dispatch({
       type: CUSTOMER_ORDERS,
       payload: json.data,
@@ -153,9 +151,9 @@ export function getAllOrders(status) {
   return async function (dispatch) {
     let json;
     if (status) {
-      json = await axios.get(`http://localhost:3001/orders?status=${status}`);
+      json = await axios.get(`/orders?status=${status}`);
     } else {
-      json = await axios.get(`http://localhost:3001/orders/`);
+      json = await axios.get(`/orders/`);
     }
     return dispatch({
       type: GET_ALL_ORDERS,
@@ -166,7 +164,7 @@ export function getAllOrders(status) {
 
 export function deleteOrder(id) {
   return async function (dispatch) {
-    let json = await axios.delete(`http://localhost:3001/orders?id=${id}`);
+    let json = await axios.delete(`/orders?id=${id}`);
     return dispatch({
       type: DELETE_ORDER,
       payload: json.data,
@@ -176,7 +174,7 @@ export function deleteOrder(id) {
 
 export function modifyStatusORder({ id, state }) {
   return async function (dispatch) {
-    let json = await axios.put(`http://localhost:3001/orders?id=${id}`, {
+    let json = await axios.put(`/orders?id=${id}`, {
       status: state,
     });
     return dispatch({
@@ -188,7 +186,7 @@ export function modifyStatusORder({ id, state }) {
 
 export function getAllUsers() {
   return async function (dispatch) {
-    let json = await axios.get("http://localhost:3001/customer");
+    let json = await axios.get("/customer");
     return dispatch({
       type: GET_USERS,
       payload: json.data,
@@ -198,7 +196,7 @@ export function getAllUsers() {
 
 export function updateAdmin({ id, isadmin }) {
   return async function (dispatch) {
-    let json = await axios.put("http://localhost:3001/customer", {
+    let json = await axios.put("/customer", {
       id,
       isadmin,
     });
@@ -211,7 +209,7 @@ export function updateAdmin({ id, isadmin }) {
 
 export function deleteUser(id) {
   return async function (dispatch) {
-    let json = await axios.delete(`http://localhost:3001/customer/${id}`);
+    let json = await axios.delete(`/customer/${id}`);
     return dispatch({
       type: DELETE_USER,
       payload: json.data,
