@@ -72,14 +72,12 @@ export const Cards = () => {
 
   const productSearch = !search
     ? productsList
-    : products.filter((p) =>{
-      const regex =new RegExp (search,'gi');
-return p.category.match(regex) || p.name.match(regex) }
-      );
+    : products.filter((p) => {
+        const regex = new RegExp(search, "gi");
+        return p.category.match(regex) || p.name.match(regex);
+      });
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
-
-  console.log(productSearch)
   //===========================================================
   return (
     <Box>
@@ -131,8 +129,8 @@ return p.category.match(regex) || p.name.match(regex) }
             <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
               <h2>"No hay productos para mostrar intenta otra busqueda"</h2>
             </Grid>
-          ) : search.length > 2 ? 
-             (productsList2.map((c) => {
+          ) : search.length > 2 ? (
+            productsList2.map((c) => {
               return (
                 <Box
                   style={{
@@ -145,7 +143,7 @@ return p.category.match(regex) || p.name.match(regex) }
                     key={c.id}
                     id={c.id}
                     image={c.images}
-                    name={c.name.substring(0,25)}
+                    name={c.name.substring(0, 25)}
                     category={c.category}
                     price={c.price}
                   />
@@ -153,7 +151,7 @@ return p.category.match(regex) || p.name.match(regex) }
               );
             })
           ) : (
-            productsList.map((p) => (         
+            productsList.map((p) => (
               <Box
                 key={componentId++}
                 style={{
@@ -166,7 +164,7 @@ return p.category.match(regex) || p.name.match(regex) }
                   key={p.id}
                   id={p.id}
                   image={p.images}
-                  name={p.name.substring(0,25)}
+                  name={p.name.substring(0, 25)}
                   category={p.category}
                   price={p.price}
                 />

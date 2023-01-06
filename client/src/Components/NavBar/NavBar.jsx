@@ -2,6 +2,7 @@ import { Button, Box } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./NavBar.module.css";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import LoginButton from "../Authenticate/LoginButton";
 import Profile from "../Authenticate/Profile2";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -23,7 +24,50 @@ export const NavBar = () => {
           alt="exootakulogo"
         />
       </Grid>
-
+      <Grid
+        xs={12}
+        sm={12}
+        md={6}
+        lg={2}
+        xl={2}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box
+          style={{
+            textDecoration: "none",
+            color: "white",
+          }}
+        >
+          <Link
+            to="/"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <Button
+              className={s.navButton}
+              style={{
+                maxWidth: "180px",
+                maxHeight: "70px",
+                minWidth: "100px",
+                minHeight: "50px",
+                textDecoration: "none",
+                color: "white",
+              }}
+              sx={{ borderRadius: "0.8em" }}
+            >
+              <span>
+                <HomeIcon />
+                Inicio
+              </span>
+            </Button>
+          </Link>
+        </Box>
+      </Grid>
       <Grid
         xs={12}
         sm={12}
@@ -61,7 +105,7 @@ export const NavBar = () => {
               sx={{ borderRadius: "0.8em" }}
             >
               <span>
-                <HomeIcon />
+                <AddShoppingCartIcon />
                 Productos
               </span>
             </Button>
@@ -113,50 +157,7 @@ export const NavBar = () => {
           </Link>
         </Box>
       </Grid>
-      <Grid
-        xs={12}
-        sm={12}
-        md={6}
-        lg={2}
-        xl={2}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box
-          style={{
-            textDecoration: "none",
-            color: "white",
-          }}
-        >
-          <Link
-            to="/form"
-            style={{
-              textDecoration: "none",
-            }}
-          >
-            <Button
-              className={s.navButton}
-              style={{
-                maxWidth: "180px",
-                maxHeight: "70px",
-                minWidth: "100px",
-                minHeight: "50px",
-                textDecoration: "none",
-                color: "white",
-              }}
-              sx={{ borderRadius: "0.8em" }}
-            >
-              <span>
-                <AddIcon />
-                Formulario
-              </span>
-            </Button>
-          </Link>
-        </Box>
-      </Grid>
+
       <Grid
         xs={12}
         sm={12}

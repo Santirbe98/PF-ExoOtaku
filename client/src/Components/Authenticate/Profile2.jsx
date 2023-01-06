@@ -23,19 +23,19 @@ function SimpleDialog(props) {
   };
   return (
     <div>
-      <Button 
+      <Button
         color="warning"
         size="medium"
         variant="outlined"
-        sx={{ width: 150, padding: 1, margin: 0.5 }}      
+        sx={{ width: 150, padding: 1, margin: 0.5 }}
         onClick={handleClickOpen}
-        > 
+      >
         Registrarme
       </Button>
       <Dialog open={open} onClose={handleClose} background-color="black">
         <DialogTitle>Regisro de Usuario</DialogTitle>
         <DialogContent>
-          <SignIn closedialog={handleClose}/>
+          <SignIn closedialog={handleClose} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
@@ -53,7 +53,7 @@ const Profile = () => {
   var usermail = "";
   useEffect(() => {
     dispatch(chkcustomer(usermail));
-  }, [isAuthenticated]);
+  }, [dispatch, isAuthenticated, usermail]);
   const UserValidate = useSelector((state) => state.chk_customer);
 
   if (isAuthenticated) {
@@ -113,7 +113,7 @@ const Profile = () => {
     return (
       isAuthenticated && (
         <Grid xs={12} sm={12} md={12} lg={6} xl={12}>
-          <SimpleDialog open={open} onClose={handleClose}/>
+          <SimpleDialog open={open} onClose={handleClose} />
           <Button
             color="warning"
             size="medium"
@@ -123,11 +123,10 @@ const Profile = () => {
           >
             Cerrar Sesion
           </Button>
-        </Grid>                   
+        </Grid>
       )
     );
   }
 };
 
 export default Profile;
-

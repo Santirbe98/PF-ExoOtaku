@@ -26,7 +26,12 @@ export const CardRanked = ({ name, image, id }) => {
           }}
           to={`/detail/${id}`}
         >
-          <CardMedia component="img" height="180" image={image} alt="Product" />
+          <CardMedia
+            component="img"
+            height="180"
+            image={image.toString()}
+            alt="Product"
+          />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div" color="white">
               {name}
