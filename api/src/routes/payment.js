@@ -32,6 +32,7 @@ router.post("/create-checkout-session", async (req, res) => {
       email: req.body.email,
     },
   });
+  console.log(customer.metadata.userId);
 
   await ShoppingCart.update(
     {
@@ -68,7 +69,7 @@ router.post("/create-checkout-session", async (req, res) => {
             id: item.id,
           },
         },
-        unit_amount: item.price * 10,
+        unit_amount: item.price * 100,
       },
       quantity: item.amount,
     };
