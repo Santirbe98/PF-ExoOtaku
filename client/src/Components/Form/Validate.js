@@ -7,18 +7,17 @@ export const validate = (input) => {
   }
   if (!input.name || input.name.length === 0) {
     errors.name = "Debe ingresar Nombre";
-  } else if (
-    input.name.length > 0 &&
-    (/[0-9]/.test(input.name) || !/[a-zA-Z ]/.test(input.name))
-  ) {
-    errors.name = "Debe contener solo letras.";
+  } else if (input.name.length > 30) {
+    errors.name = "Debe contener menos de 30 caracteres.";
   }
 
   if (!input.descriptions || input.descriptions.length === 0) {
     errors.descriptions = "Debe ingresar Descripcion";
+  } else if (input.descriptions.length > 140) {
+    errors.descriptions = "Debe contener menos de 140 caracteres.";
   }
 
-  if (input.price < 0 || input.price === 0) {
+  if (input.price <= 0) {
     errors.price = "Debe ser mayor a 0.";
   }
 
@@ -28,9 +27,8 @@ export const validate = (input) => {
 
   if (!input.category || input.category.length === 0) {
     errors.category = "Debe ingresar Categoria.";
-  } else {
-    if (!/^[A-Za-z0-9\s]+$/g.test(input.category))
-      errors.category = "No puede contener simbolos.";
+  } else if (input.category.length > 30) {
+    errors.category = "Debe contener menos de 30 caracteres.";
   }
 
   if (input.type.length === 0) {
