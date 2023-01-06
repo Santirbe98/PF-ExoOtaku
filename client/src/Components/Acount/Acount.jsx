@@ -3,19 +3,19 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import { useAuth0, User } from "@auth0/auth0-react";
+import { useAuth0} from "@auth0/auth0-react";
 import { InputLabel, Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import TableRow from "@mui/material/TableRow";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import { CircularProgress } from "@mui/material";
 
-import Orders from "./Orders";
 import Rated from "./Rated";
 import WishList from "./WishList";
 
+import { Footer } from "../Footer/Footer.jsx";
 import { customerOrders } from "../../Redux/Actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -46,22 +46,23 @@ export const Acount = () => {
         setLoading(false);
       }, 3000);
     });
-  }, [dispatch]);
+  }, [dispatch, UserValidate.id]);
 
   return (
     isAuthenticated && (
       <div>
+        <div></div>
         <>
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
-              {/* LINEA 1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
+              {/* ROW 1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
 
-              {/* IZQUIERDA =========================================== */}
+              {/* LEFT =========================================== */}
               <Grid item xs={1}></Grid>
 
-              {/* CENTRO =========================================== */}
+              {/* MIDLE =========================================== */}
 
-              {/* col data de usuario */}
+              {/* COL USER DATA */}
               <Grid item xs={3}>
                 <Item>
                   <TableRow>
@@ -135,15 +136,15 @@ export const Acount = () => {
                 </Item>
               </Grid>
 
-              {/* col lista de deseos */}
+              {/* COL WISHLIST */}
               <Grid item xs={7}>
                 <WishList />
               </Grid>
 
-              {/* DERECHA =========================================== */}
+              {/* RIGTH =========================================== */}
               <Grid item xs={1}></Grid>
 
-              {/* LINEA 2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
+              {/* ROW 2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
 
               <Grid item xs={1}></Grid>
 
@@ -162,7 +163,7 @@ export const Acount = () => {
 
               <Grid item xs={1}></Grid>
 
-              {/* LINEA 3 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
+              {/* ROW 3 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
               <Grid item xs={1}></Grid>
 
               <Grid item xs={10}>
@@ -173,6 +174,8 @@ export const Acount = () => {
             </Grid>
           </Box>
         </>
+        <div></div>
+        <Footer />
       </div>
     )
   );
