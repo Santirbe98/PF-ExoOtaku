@@ -22,7 +22,9 @@ axios.defaults.baseURL = "http://localhost:3001";
 
 export function getProducts() {
   return async function (dispatch) {
+
     let json = await axios.get(`/products`);
+
     return dispatch({
       type: GET_PRODUCTS,
       payload: json.data,
@@ -49,7 +51,9 @@ export function getProductDetail(id) {
 export function postProduct(body) {
   return async function () {
     try {
+
       var json = await axios.post(`/products`, body);
+
       return json;
     } catch (error) {
       console.error({ error: error.message });

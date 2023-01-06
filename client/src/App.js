@@ -30,10 +30,8 @@ export default function App() {
           <Route exact path="/form" component={Form} />
           <Route exact path="/help" component={Help} />
           <Route exact path="/about" component={About} />
-
           <Route exact path="/acount" component={Acount} />
-
-          <Route extac path="/checkout-success" component={CheckOutSuccess} />
+          <Route exact path="/checkout-success" component={CheckOutSuccess} />
           <Route
             exact
             path="/detail/:id"
