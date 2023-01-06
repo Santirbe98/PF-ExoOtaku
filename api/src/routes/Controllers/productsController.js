@@ -139,7 +139,6 @@ const createNewProduct = async ({
       const colorName = await Color.findOrCreate({
         where: { color: d },
       });
-      console.log(colorName);
       newProduct.addColors(colorName[0]);
     });
 
@@ -148,10 +147,9 @@ const createNewProduct = async ({
         const colorDb = await Color.findOrCreate({
           where: { color: i.color },
         });
-        let colorId = colorDb[0].dataValues.id;
         const algo = await colorDb[0].createImage({ url: i.url });
         newProduct.addImage([algo]);
-        newProduct.addColors(colorId);
+        newProduct.addColors(colorDb[0]);
       });
 
     const typeName = await Type.findOrCreate({
