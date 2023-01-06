@@ -17,13 +17,14 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
+    backgroundColor: "#464543",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#f29d12 !important",
+    },  
+  }
 }));
 
 function createData(orden, fecha, articulos, costo, delivery, total, products) {
@@ -82,6 +83,7 @@ function Row(props) {
                     <TableCell align="center">Talla</TableCell>
                     <TableCell align="center">Cantidad</TableCell>
                     <TableCell align="center">Precio</TableCell>
+                    <TableCell align="center">Calificar</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -108,6 +110,7 @@ function Row(props) {
                       </TableCell>
                       <TableCell align="center">{productsRow.precio}</TableCell>
                     </TableRow>
+
                   ))}
                 </TableBody>
               </Table>
@@ -138,23 +141,10 @@ Row.propTypes = {
         precio: PropTypes.number.isRequired,
       })
     ).isRequired,
-    producto: PropTypes.string,
-    precio: PropTypes.number,
+    producto: PropTypes.string.isRequired,
+    precio: PropTypes.number.isRequired,
   }).isRequired,
 };
-
-/* const rows = [
-  createData("#25488guui", "15/07/2022", 6, 80000, 45, 80045),
-  createData("#ht66488guui", "19/09/2022", 8, 80000, 95, 80095),
-  createData("#er666guui", "12/10/2022", 1, 80000, 12, 80012),
-  createData("#t09yyy", "19/10/2022", 7, 7000, 45, 7045),
-  createData("#ww214wer", "20/11/2022", 5, 100, 45, 145),
-  createData("#251218guui", "15/07/2022", 6, 80000, 45, 80045),
-  createData("#34466488guui", "18/01/2021", 8, 80000, 95, 80095),
-  createData("#e2366guui", "08/10/2020", 1, 80000, 12, 80012),
-  createData("0009yyy", "30/05/2020", 7, 7000, 45, 7045),
-  createData("#w614wer", "20/03/2021", 5, 100, 45, 145),
-]; */
 
 export default function CollapsibleTable({ Products }) {
   let rows = [];
@@ -183,8 +173,7 @@ export default function CollapsibleTable({ Products }) {
     setPage(0);
   };
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  //const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <TableContainer component={Paper}>
@@ -211,7 +200,7 @@ export default function CollapsibleTable({ Products }) {
         </TableHead>
         <TableBody>
           {rows
-            .map((row) => <Row key={Math.random()} row={row} />)
+            .map((row) => <Row key={row.name} row={row} />)
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
         </TableBody>
       </Table>

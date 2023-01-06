@@ -24,7 +24,6 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { styled } from '@mui/material/styles';
 import CardMedia from "@mui/material/CardMedia";
-import Rating from '@mui/material/Rating';
 
 function createData(imagen, producto, precio) {
   return {
@@ -54,9 +53,12 @@ const rows = [
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
+    backgroundColor: "#464543",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#f29d12 !important",
+    },  
+  }
 }));
 
 function descendingComparator(a, b, orderBy) {

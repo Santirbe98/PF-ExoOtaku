@@ -169,7 +169,7 @@ const createNewProduct = async ({
     const categoryName = await Category.findOrCreate({
       where: { category },
     });
-    newProduct.addCategory(categoryName[0].dataValues.id);
+    newProduct.addCategory(categoryName[0]);
     return newProduct;
   } catch (error) {
     console.log(error);
