@@ -28,7 +28,12 @@ export const MediaCard = ({ name, price, image, id, category }) => {
           }}
           to={`/detail/${id}`}
         >
-          <CardMedia component="img" height="250" image={image} alt="Product" />
+          <CardMedia
+            component="img"
+            height="250"
+            image={image.toString()}
+            alt="Product"
+          />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div" color="white">
               {name}

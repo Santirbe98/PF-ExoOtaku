@@ -40,6 +40,7 @@ export const TopDate = () => {
           {topFiveProducts.map((c) => {
             return (
               <Box
+                key={c.id}
                 style={{
                   display: "flex",
                   alignItems: "center",
