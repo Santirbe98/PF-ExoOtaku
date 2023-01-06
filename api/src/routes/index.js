@@ -9,11 +9,9 @@ const filtersRouter = require("./filterAll.js");
 const mockRouter = require("./mock.js");
 const Payment = require("./payment.js");
 const customerRouter = require("./customer.js");
-const cloudinary = require("./cloudinary.js");
+const ordersRouter = require("./orders");
 // Ejemplo: const authRouter = require('./auth.js');
-
 const router = Router();
-
 // Configurar los routers
 router.use("/payment", Payment);
 router.use("/products", productsRouter);
@@ -23,6 +21,6 @@ router.use("/types", typesRouter);
 router.use("/sizes", sizesRouter);
 router.use("/filters", filtersRouter);
 router.use("/mock", mockRouter);
+router.use("/orders", ordersRouter);
 router.use("/customer", customerRouter);
-router.use("/cloudinary", cloudinary);
 module.exports = router;

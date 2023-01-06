@@ -1,89 +1,108 @@
-import React, { useState } from "react";
-import logo from "../../Resources/logo.jpg";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getProducts, orderByRank, orderByDate } from "../../Redux/Actions";
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  Divider,
+} from "@mui/material";
+import { TopRanked } from "../TopRanked/TopRanked";
 import { Link } from "react-router-dom";
-import { Box, Button, keyframes } from "@mui/material";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useEffect } from "react";
-import styled from "@mui/material/styles/styled"
-
-
-const ShadowPopBr = keyframes `
-0% {
-  -webkit-transform: scaleY(0);
-          transform: scaleY(0);
-  opacity: 1
-}
-100% {
-  -webkit-transform: scaleY(1);
-          transform: scaleY(1);
-  opacity: 1        
-
-}
-
-`
-
-const Holder = styled(Box)(({roll}) => ({
-  translate: '0% 4%',
-  border: '1px solid white',
-  borderRadius: '2%', 
-  margin: '1% 30%',
-  padding: '2%',
-  bgcolor: 'black',
-  display:'flex', 
-  flexDirection: 'column', 
-  alignItems: 'center', 
-  justifyContent: 'center',
-  visibility: !roll && "hidden",
-  animation: roll && `${ShadowPopBr} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`
-}))
-
-
-
-
-
+import { TopDate } from "../TopDate/TopDate"
 export const LandingPage = () => {
-
-  const [roll, setRoll] = useState(false)
+  let dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
-      setRoll(true)
+    dispatch(getProducts())
+      .then(() => dispatch(orderByRank()))
+      .then(() => dispatch(orderByDate()));
 
-    }, 500)
-
-  }, [])
+  }, [dispatch]);
 
   return (
     <Box>
-      <Holder roll={roll} sx={{bgcolor: 'black', 
-   
-    }}>
-      <img src={logo} alt="landing" width="500px"></img>
-
-      <Link
-        style={{
-          textDecoration: "none",
-          color: "Black",
+      <Typography variant="h3">ExoOtaku anime top 5</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
-        to="/home"
       >
-        <Button
-        variant="contained" size="large"
-        sx={{bgcolor : 'rgb(235, 203, 100)', color: '#181111', 
-        padding: '1em',
-        ':hover': {
-          bgcolor: 'rgb(242, 157, 18)',
-        }
-      }}
-      
-        > <ShoppingCartIcon/>
-          Ver productos
-          </Button>
-        </Link>
-    </Holder>
+        <TopRanked />
+      </Box>
+      <Link to="/shop" style={{ textDecoration: "none" }}>
+        <Button variant="contained" color="warning">
+          Ir a la tienda
+        </Button>
+      </Link>
+      <Divider
+        color="white"
+        sx={{ marginTop: 3, width: "90%", marginLeft: "5%" }}
+      />
+      <Box
+        sx={{
+          marginTop: 3,
+        }}
+      >
+        <Grid container>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="h5">
+              Queres saber de nuestras nuevas ofertas?
+            </Typography>
+            <Typography variant="subtitle2">
+              Dejanos tu email para robar todos tus datos y los de tus seres
+              queridos
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                padding: "0px 10px 0px 10px",
+              }}
+            >
+              <TextField
+                placeholder="E-mail"
+                color="success"
+                style={{
+                  backgroundColor: "rgba(255, 253, 253, 0.900)",
+                  borderRadius: "10px",
+                  width: 450,
+                }}
+                focused
+              />
+              <Button
+                variant="contained"
+                color="success"
+                sx={{ marginLeft: 3 }}
+              >
+                Subcribirme
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+        <Divider
+          color="white"
+          sx={{ marginTop: 3, width: "90%", marginLeft: "5%" }}
+        />
+        <Typography variant="h3" mt={10}>
+          Nuevos Productos y Ofertas
+        </Typography>
+        <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TopDate />
+      </Box>
+      </Box>
     </Box>
-    
-        
-          
   );
 };

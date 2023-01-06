@@ -1,8 +1,8 @@
-.filterSelect {
+/* .filterSelect {
   padding: 1.3em 3em;
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 2.5px;
+  letter-spacing: 6px;
   font-weight: 500;
   color: #000;
   background-color: #fff;
@@ -12,7 +12,6 @@
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
-  margin-top: 10px;
 }
 
 .filterSelecthover {
@@ -24,4 +23,4 @@
 
 .aboutButton {
   margin: 0px 10px;
-}
+} */

@@ -2,26 +2,40 @@ import { Button, Box } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./NavBar.module.css";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import LoginButton from "../Authenticate/LoginButton";
-import Profile from "../Authenticate/Profile";
+import Profile from "../Authenticate/Profile2";
 import { useAuth0 } from "@auth0/auth0-react";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import AddIcon from "@mui/icons-material/Add";
 import Diversity1Icon from "@mui/icons-material/Diversity1";
+import Grid from "@mui/material/Unstable_Grid2";
 
 export const NavBar = () => {
   const { isLoading, error } = useAuth0();
   return (
-    <Box className={s.divSection}>
-      <Box className={s.imgContainer}>
+    <Grid container spacing={2} pt={5} mr={5} ml={5}>
+      <Grid xs={12} sm={12} md={12} lg={2} xl={2}>
+        {/* <Box className={s.imgContainer}> */}
         <img
           src="http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0"
           width="200px"
           alt="exootakulogo"
         />
-      </Box>
-      <Box className={s.boxsContainer}>
+      </Grid>
+      <Grid
+        xs={12}
+        sm={12}
+        md={6}
+        lg={2}
+        xl={2}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Box
           style={{
             textDecoration: "none",
@@ -29,7 +43,7 @@ export const NavBar = () => {
           }}
         >
           <Link
-            to="/home"
+            to="/"
             style={{
               textDecoration: "none",
             }}
@@ -37,7 +51,51 @@ export const NavBar = () => {
             <Button
               className={s.navButton}
               style={{
-                maxWidth: "120px",
+                maxWidth: "180px",
+                maxHeight: "70px",
+                minWidth: "100px",
+                minHeight: "50px",
+                textDecoration: "none",
+                color: "white",
+              }}
+              sx={{ borderRadius: "0.8em" }}
+            >
+              <span>
+                <HomeIcon />
+                Inicio
+              </span>
+            </Button>
+          </Link>
+        </Box>
+      </Grid>
+      <Grid
+        xs={12}
+        sm={12}
+        md={6}
+        lg={2}
+        xl={2}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box
+          sx={{
+            textDecoration: "none",
+            color: "white",
+          }}
+        >
+          <Link
+            to="/shop"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <Button
+              className={s.navButton}
+              style={{
+                maxWidth: "180px",
                 maxHeight: "70px",
                 minWidth: "150px",
                 minHeight: "50px",
@@ -47,12 +105,25 @@ export const NavBar = () => {
               sx={{ borderRadius: "0.8em" }}
             >
               <span>
-                <HomeIcon />
-                Home
+                <AddShoppingCartIcon />
+                Productos
               </span>
             </Button>
           </Link>
         </Box>
+      </Grid>
+      <Grid
+        xs={12}
+        sm={12}
+        md={6}
+        lg={2}
+        xl={2}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Box
           textAlign="center"
           style={{
@@ -69,8 +140,8 @@ export const NavBar = () => {
             <Button
               className={s.navButton}
               style={{
-                maxWidth: "120px",
-                maxHeight: "70px",
+                maxWidth: "180px",
+                maxHeight: "65px",
                 minWidth: "150px",
                 minHeight: "50px",
                 textDecoration: "none",
@@ -80,42 +151,25 @@ export const NavBar = () => {
             >
               <span>
                 <Diversity1Icon />
-                About
+                Sobre nosotros
               </span>
             </Button>
           </Link>
         </Box>
-        <Box
-          style={{
-            textDecoration: "none",
-            color: "white",
-          }}
-        >
-          <Link
-            to="/form"
-            style={{
-              textDecoration: "none",
-            }}
-          >
-            <Button
-              className={s.navButton}
-              style={{
-                maxWidth: "120px",
-                maxHeight: "70px",
-                minWidth: "150px",
-                minHeight: "50px",
-                textDecoration: "none",
-                color: "white",
-              }}
-              sx={{ borderRadius: "0.8em" }}
-            >
-              <span>
-                <AddIcon />
-                Form
-              </span>
-            </Button>
-          </Link>
-        </Box>
+      </Grid>
+
+      <Grid
+        xs={12}
+        sm={12}
+        md={6}
+        lg={2}
+        xl={2}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Box
           textAlign="center"
           style={{
@@ -132,7 +186,7 @@ export const NavBar = () => {
             <Button
               className={s.navButton}
               style={{
-                maxWidth: "120px",
+                maxWidth: "180px",
                 maxHeight: "70px",
                 minWidth: "150px",
                 minHeight: "50px",
@@ -143,23 +197,35 @@ export const NavBar = () => {
             >
               <span>
                 <InfoIcon />
-                Help
+                Ayuda
               </span>
             </Button>
           </Link>
         </Box>
+      </Grid>
+      <Grid
+        xs={12}
+        sm={12}
+        md={12}
+        lg={2}
+        xl={2}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Box>
-          {error && <p>Authentication Error</p>}
-          {!error && isLoading && <p>Loading...</p>}
+          {error && <p>Error de autenticacion</p>}
+          {!error && isLoading && <p>Cargando...</p>}
           {!error && !isLoading && (
-            <>
+            <Box sx={{ paddingRight: 10 }}>
               <Profile />
               <LoginButton />
-              {/* <LogoutButton /> */}
-            </>
+            </Box>
           )}
         </Box>
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };

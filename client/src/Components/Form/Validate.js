@@ -1,41 +1,39 @@
-export function validate(input) {
+export const validate = (input) => {
   let errors = {};
+  if (input.imagesDb.length === 0) errors.imagen = "Debe ingresar una imagen ";
+
+  if (input.color.length < input.imagesDb.length) {
+    errors.color = "Debe ingresar un color";
+  }
   if (!input.name || input.name.length === 0) {
-    errors.name = "Name is required";
-  } else if (
-    input.name.length > 0 &&
-    (/[0-9]/.test(input.name) || !/[a-zA-Z ]/.test(input.name))
-  ) {
-    errors.name = "A string is required";
+    errors.name = "Debe ingresar Nombre";
+  } else if (input.name.length > 30) {
+    errors.name = "Debe contener menos de 30 caracteres.";
   }
 
   if (!input.descriptions || input.descriptions.length === 0) {
-    errors.descriptions = "Descriptions are required";
+    errors.descriptions = "Debe ingresar Descripcion";
+  } else if (input.descriptions.length > 140) {
+    errors.descriptions = "Debe contener menos de 140 caracteres.";
   }
 
-  if (input.price < 0 || input.price === 0) {
-    errors.price = "A non-negative number is required";
+  if (input.price <= 0) {
+    errors.price = "Debe ser mayor a 0.";
   }
 
   if (input.stock <= 0) {
-    errors.stock = "A non-negative number is required";
+    errors.stock = "Debe ser mayor a 0.";
   }
 
   if (!input.category || input.category.length === 0) {
-    errors.category = "Category is required";
-  }
-
-  if (input.images.length === 0) {
-    errors.images = "Image is required";
+    errors.category = "Debe ingresar Categoria.";
+  } else if (input.category.length > 30) {
+    errors.category = "Debe contener menos de 30 caracteres.";
   }
 
   if (input.type.length === 0) {
-    errors.type = "Type is Required";
-  }
-
-  if (input.color.length === 0) {
-    errors.color = "Color is Required";
+    errors.type = "Debe ingresar Tipo";
   }
 
   return errors;
-}
+};

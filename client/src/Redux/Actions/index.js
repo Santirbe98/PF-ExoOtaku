@@ -5,12 +5,26 @@ import {
   GET_PRODUCT_DETAIL,
   ORDER_BY_PRICE,
   ORDER_DETAIL,
+  GET_USER_CREDENTIALS,
+  CUSTOMER_BY_EMAIL,
+  CUSTOMER_ORDERS,
+  GET_ALL_ORDERS,
+  DELETE_ORDER,
+  UPDATE_STATUS,
+  GET_USERS,
+  DELETE_USER,
+  ORDER_RANK,
+  ORDER_BY_DATE,
 } from "./actionsTypes";
 
-// cambiar el puerto del localhost al que usen localmente
+axios.defaults.baseURL = "http://localhost:3001";
+// axios.defaults.baseURL = 'https://exo-otaku.up.railway.app/'
+
 export function getProducts() {
   return async function (dispatch) {
-    let json = await axios.get(`/products/`);
+
+    let json = await axios.get(`/products`);
+
     return dispatch({
       type: GET_PRODUCTS,
       payload: json.data,
@@ -37,7 +51,9 @@ export function getProductDetail(id) {
 export function postProduct(body) {
   return async function () {
     try {
-      var json = await axios.post(`/products/`, body);
+
+      var json = await axios.post(`/products`, body);
+
       return json;
     } catch (error) {
       console.error({ error: error.message });
@@ -50,12 +66,24 @@ export function orderByPrice(payload) {
     payload: payload,
   };
 }
+export function orderByRank() {
+  return {
+    type: ORDER_RANK,
+  };
+}
+export function orderByDate() {
+  return {
+    type: ORDER_BY_DATE,
+  };
+}
 
-export function payment({ cartItems, userId }) {
+export function payment({ cartItems, userId, name, email }) {
   axios
     .post(`/payment/create-checkout-session`, {
       cartItems,
       userId,
+      name,
+      email,
     })
     .then((res) => {
       if (res.data.url) {
@@ -78,5 +106,115 @@ export function getCheckout(session_id) {
     } catch (error) {
       console.error({ error: error.message });
     }
+  };
+}
+
+export function postCustomer(payload) {
+  return async function (dispatch) {
+    console.log(payload);
+    var response;
+    try {
+      response = await axios.post("http://localhost:3001/customer/", payload);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function userCredential(payload) {
+  return {
+    type: GET_USER_CREDENTIALS,
+    payload: payload,
+  };
+}
+
+export function chkcustomer(email) {
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/customer/${email}`);
+    return dispatch({
+      type: CUSTOMER_BY_EMAIL,
+      payload: json.data,
+    });
+  };
+}
+
+export function customerOrders(id) {
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/orders/${id}`);
+    return dispatch({
+      type: CUSTOMER_ORDERS,
+      payload: json.data,
+    });
+  };
+}
+
+export function getAllOrders(status) {
+  return async function (dispatch) {
+    let json;
+    if (status) {
+      json = await axios.get(`http://localhost:3001/orders?status=${status}`);
+    } else {
+      json = await axios.get(`http://localhost:3001/orders/`);
+    }
+    return dispatch({
+      type: GET_ALL_ORDERS,
+      payload: json.data,
+    });
+  };
+}
+
+export function deleteOrder(id) {
+  return async function (dispatch) {
+    let json = await axios.delete(`http://localhost:3001/orders?id=${id}`);
+    return dispatch({
+      type: DELETE_ORDER,
+      payload: json.data,
+    });
+  };
+}
+
+export function modifyStatusORder({ id, state }) {
+  return async function (dispatch) {
+    let json = await axios.put(`http://localhost:3001/orders?id=${id}`, {
+      status: state,
+    });
+    return dispatch({
+      type: UPDATE_STATUS,
+      payload: json.data,
+    });
+  };
+}
+
+export function getAllUsers() {
+  return async function (dispatch) {
+    let json = await axios.get("http://localhost:3001/customer");
+    return dispatch({
+      type: GET_USERS,
+      payload: json.data,
+    });
+  };
+}
+
+export function updateAdmin({ id, isadmin }) {
+  return async function (dispatch) {
+    let json = await axios.put("http://localhost:3001/customer", {
+      id,
+      isadmin,
+    });
+    return dispatch({
+      type: UPDATE_STATUS,
+      payload: json.data,
+    });
+  };
+}
+
+export function deleteUser(id) {
+  return async function (dispatch) {
+    let json = await axios.delete(`http://localhost:3001/customer/${id}`);
+    return dispatch({
+      type: DELETE_USER,
+      payload: json.data,
+    });
   };
 }

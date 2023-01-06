@@ -6,14 +6,27 @@ import Paged from "../Paged/Paged";
 import { Filter } from "../Filter/Filter.jsx";
 import s from "./Cards.module.css";
 import PagedSearch from "../PagedSearch/PagedSearch";
-//--------------------------------------------------------------//
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { yellow } from "@mui/material/colors";
-const color = yellow[500];
-export function Cards() {
+import Grid from "@mui/material/Unstable_Grid2";
+//--------------------------------------------------------------//
+
+export const Cards = () => {
   let dispatch = useDispatch();
   let products = useSelector((state) => state.filterProducts);
+
+  //=============================================
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   //PAGED LOGIC =============================================
   let componentId = 1;
@@ -59,104 +72,128 @@ export function Cards() {
 
   const productSearch = !search
     ? productsList
-    : products.filter((p) =>
-        p.category.toLowerCase().includes(search.toLowerCase())
-      );
+    : products.filter((p) => {
+        const regex = new RegExp(search, "gi");
+        return p.category.match(regex) || p.name.match(regex);
+      });
 
   const productsList2 = productSearch.slice(firstPage, totalPage);
-
   //===========================================================
   return (
-    <div>
-      {/* <Box className={s.searchInput}> */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <TextField
-          placeholder="Busque por anime"
-          color="warning"
-          sx={{ width: "500px" }}
-          style={{
-            backgroundColor: "rgba(255, 253, 253, 0.900)",
-            borderRadius: "10px",
-          }}
-          focused
-          value={search}
-          onChange={searcher}
-        />
-      </Box>
-      <div className={s.wrapperContainer}>
-        <div className={s.wrapper}>
+    <Box>
+      <Grid container>
+        <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "0px 10px 0px 10px",
+            }}
+          >
+            <TextField
+              placeholder="Busque por Anime o Nombre"
+              color="warning"
+              sx={{ width: "500px" }}
+              style={{
+                backgroundColor: "rgba(255, 253, 253, 0.900)",
+                borderRadius: "10px",
+              }}
+              focused
+              value={search}
+              onChange={searcher}
+            />
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid container pt={5}>
+        <Grid xs={12} sm={12} md={12} lg={3} xl={3}>
           <Filter setPage={setPage} setOrder={setOrder} />
-        </div>
-        <div className={s.wrapper2}>
-          {!productsList.length ? (
-            <div className={s.textLoading}>
-              <h2>"No Products to Show"</h2>
-            </div>
-          ) : search.length > 3 ? (
+        </Grid>
+        <Grid
+          xs={12}
+          sm={12}
+          md={12}
+          lg={9}
+          xl={9}
+          className={`${
+            width <= 800
+              ? s.sx
+              : width < 1300
+              ? s.md
+              : width >= 1300
+              ? s.lg
+              : null
+          }`}
+        >
+          {!productSearch.length ? (
+            <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
+              <h2>"No hay productos para mostrar intenta otra busqueda"</h2>
+            </Grid>
+          ) : search.length > 2 ? (
             productsList2.map((c) => {
               return (
-                <div key={componentId++}>
+                <Box
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <MediaCard
                     key={c.id}
                     id={c.id}
-                    image={c.images[0]}
-                    name={c.name}
+                    image={c.images}
+                    name={c.name.substring(0, 25)}
                     category={c.category}
                     price={c.price}
                   />
-                </div>
+                </Box>
               );
             })
           ) : (
             productsList.map((p) => (
-              <div key={componentId++}>
+              <Box
+                key={componentId++}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <MediaCard
                   key={p.id}
                   id={p.id}
-                  image={p.images[0]}
-                  name={p.name}
+                  image={p.images}
+                  name={p.name.substring(0, 25)}
                   category={p.category}
                   price={p.price}
                 />
-              </div>
+              </Box>
             ))
           )}
-        </div>
-      </div>
-      <div>
+        </Grid>
+      </Grid>
+      <Box>
         {search.length >= 3 ? (
-          <div>
-            <div>
-              <PagedSearch
-                productPage={productsPage}
-                productList={productSearch.length}
-                paged={paged}
-                pagePrev={pagePrev}
-                pageNext={pageNext}
-                currentPage={page}
-              />
-            </div>
-          </div>
+          <PagedSearch
+            productPage={productsPage}
+            productList={productSearch.length}
+            paged={paged}
+            pagePrev={pagePrev}
+            pageNext={pageNext}
+            currentPage={page}
+          />
         ) : (
-          <div>
-            <div>
-              <Paged
-                productPage={productsPage} // 9
-                productList={products.length} //
-                paged={paged}
-                pagePrev={pagePrev}
-                pageNext={pageNext}
-                currentPage={page}
-              />
-            </div>
-          </div>
+          <Paged
+            productPage={productsPage} // 9
+            productList={products.length} //
+            paged={paged}
+            pagePrev={pagePrev}
+            pageNext={pageNext}
+            currentPage={page}
+          />
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
-}
+};

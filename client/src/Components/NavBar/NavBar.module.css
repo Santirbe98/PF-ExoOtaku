@@ -1,25 +1,3 @@
-.divSection {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-.divSection2 {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-}
-
-.boxsContainer {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.imgContainer {
-  margin-right: 10px;
-}
-
 .navButton {
   text-align: center;
   margin: 0px 10px 0px 10px;
@@ -68,7 +46,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 101%;
   z-index: 0;
 }
 

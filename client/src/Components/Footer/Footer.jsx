@@ -1,10 +1,9 @@
 import React from "react";
-import { Container, Grid, Box, Button } from "@mui/material";
+import { Container, Grid, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import EmailIcon from "@mui/icons-material/Email";
 
 export const Footer = () => {
   return (
@@ -12,7 +11,7 @@ export const Footer = () => {
       <Box bgcolor="black" py={{ xs: 5, sm: 3 }} color="white">
         <Container maxWidth="lg">
           <Grid container spacing={5}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={4} sm={4}>
               <Box>
                 <Link
                   to="/home"
@@ -21,11 +20,11 @@ export const Footer = () => {
                     color: "white",
                   }}
                 >
-                  Home
+                  Inicio
                 </Link>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={4} sm={4}>
               <Box>
                 <Link
                   to="/about"
@@ -34,11 +33,11 @@ export const Footer = () => {
                     color: "white",
                   }}
                 >
-                  About
+                  Sobre nosotros
                 </Link>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={4} sm={4}>
               <Box>
                 <Link
                   to="/help"
@@ -47,7 +46,7 @@ export const Footer = () => {
                     color: "white",
                   }}
                 >
-                  Help
+                  Ayuda
                 </Link>
               </Box>
             </Grid>

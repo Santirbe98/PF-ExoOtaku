@@ -34,9 +34,9 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      departamento: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      phone: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
 
       comuna: {
@@ -66,7 +66,7 @@ module.exports = (sequelize) => {
       }
     },
     {
-      timestamps: false,
+      timestamps: true,
     }    
   );
 };

@@ -8,7 +8,7 @@ import { store } from "./Store/index.js";
 import axios from "axios";
 import { Auth0Provider } from "@auth0/auth0-react";
 
-axios.defaults.baseURL = "https://exo-otaku.up.railway.app/";
+axios.defaults.baseURL = "pf-exootaku-production.up.railway.app";
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
