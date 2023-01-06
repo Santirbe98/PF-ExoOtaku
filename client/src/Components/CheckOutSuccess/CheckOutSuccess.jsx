@@ -29,7 +29,7 @@ export const CheckOutSuccess = () => {
   useEffect(() => {
     dispatch(getCheckout(session_id)).then((data) => {
       console.log(data.payload);
-      setOrder(data.payload.paymentUser.id);
+      setOrder(data.payload.orderUser.order_id);
       setproducts(data.payload.userCart.ShoppingLists);
       setUser(data.payload.userData);
       setInfo({
@@ -44,6 +44,7 @@ export const CheckOutSuccess = () => {
       }, 3000);
     }, cleanCart());
   }, [dispatch]);
+  console.log(Order);
 
   return (
     <div>
@@ -68,17 +69,17 @@ export const CheckOutSuccess = () => {
           </>
         ) : (
           <>
-            <Typography variant="h5">
-              Tu id de pago es
-              <Typography sx={{ padding: "1%" }}> {Order} </Typography>
-            </Typography>
+            <Typography variant="h5">Tu compra es la número {Order}</Typography>
 
-            <Typography variant="h5" sx={{ paddingBottom: "2%" }}>
-              Productos
+            <Typography
+              variant="h5"
+              sx={{ paddingBottom: "2%", paddingTop: "2%" }}
+            >
+              Resumen de compra
             </Typography>
             <Box sx={{ padding: "0% 5%" }}>
               <BasicTable Products={products} />
-              {/*               {sendEmailSuccess({
+              {/* sendEmailSuccess({
                 Order: Order,
                 email: user.email,
                 name: user.name,
@@ -86,7 +87,7 @@ export const CheckOutSuccess = () => {
                 total_prod: info.total_prod,
                 total_env: info.total_env,
                 estado: info.estado,
-              })} */}
+              }) */}
             </Box>
           </>
         )}
@@ -100,7 +101,7 @@ export const CheckOutSuccess = () => {
           }}
         >
           <Button variant="contained" color="success">
-            Back to Home
+            Volver a la tienda
           </Button>
         </Link>
       </Box>
