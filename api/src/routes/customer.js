@@ -23,18 +23,18 @@ router.get("/", async (req, res) => {
 
 //SAVE CUSTOMER
 router.post("/", async (req, res) => {
-  console.log(req.body);
   let {
     name,
-    phone,
     token,
     email,
     country,
     provincia,
+    departamento,
     comuna,
     shipping_address,
     billing_address,
     isadmin,
+    phone,
   } = req.body;
   try {
     return res
@@ -42,25 +42,25 @@ router.post("/", async (req, res) => {
       .json(
         await RoutFunc.createNewCustomer(
           name,
-          phone,
           token,
           email,
           country,
           provincia,
+          departamento,
           comuna,
           shipping_address,
           billing_address,
-          isadmin
+          isadmin,
+          phone
         )
       );
   } catch (error) {
-    return res.status(400).send(error.message);
+    return res.status(400).send("Sorry the information couldn't be save");
   }
 });
 
 //MODIFY CUSTOMER
 router.put("/", async (req, res) => {
-  console.log(req.body);
   let {
     id,
     name,
@@ -73,6 +73,8 @@ router.put("/", async (req, res) => {
     shipping_address,
     billing_address,
     isadmin,
+    phone,
+    wishList,
   } = req.body;
   try {
     return res
@@ -89,7 +91,9 @@ router.put("/", async (req, res) => {
           comuna,
           shipping_address,
           billing_address,
-          isadmin
+          isadmin,
+          wishList,
+          phone
         )
       );
   } catch (error) {
