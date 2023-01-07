@@ -18,6 +18,7 @@ module.exports = {
         "billing_address",
         "isadmin",
         "deleted",
+        "whishList",
       ],
       where: {
         email: email,
@@ -85,7 +86,8 @@ module.exports = {
     comuna,
     shipping_address,
     billing_address,
-    isadmin
+    isadmin,
+    whishList
   ) {
     const updtCustomer = await Customer.findByPk(id, {});
     await updtCustomer.update({
@@ -99,6 +101,7 @@ module.exports = {
       shipping_address,
       billing_address,
       isadmin,
+      whishList,
     });
     return "The Information was successfully Updated";
   },
