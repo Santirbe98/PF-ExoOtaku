@@ -18,6 +18,10 @@ export const MediaCard = ({ name, price, image, id, category }) => {
         height: 450,
         margin: 2,
         backgroundColor: "rgb(33, 33, 33)",
+        padding: 1,
+        border: "1px solid black",
+        borderRadius: "5px",
+        opacity: 0.8,
       }}
     >
       <CardActionArea>
@@ -29,6 +33,9 @@ export const MediaCard = ({ name, price, image, id, category }) => {
           to={`/detail/${id}`}
         >
           <CardMedia
+            style={{
+              borderRadius: "5px",
+            }}
             component="img"
             height="250"
             image={image.toString()}

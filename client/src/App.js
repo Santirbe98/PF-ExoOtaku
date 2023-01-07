@@ -16,12 +16,14 @@ import { NavBar } from "./Components/NavBar/NavBar";
 import { Footer } from "./Components/Footer/Footer";
 
 import { Acount } from "./Components/Acount/Acount";
+import Cart from "./Components/Cart/Cart";
 
 export default function App() {
   return (
     <div className="App">
       <CartProvider>
         <NavBar />
+        <Cart />
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/home" component={LandingPage} />

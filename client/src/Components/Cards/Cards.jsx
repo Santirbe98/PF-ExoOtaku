@@ -9,6 +9,7 @@ import PagedSearch from "../PagedSearch/PagedSearch";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
+import { CircularProgress } from "@mui/material";
 //--------------------------------------------------------------//
 
 export const Cards = () => {
@@ -80,7 +81,7 @@ export const Cards = () => {
   const productsList2 = productSearch.slice(firstPage, totalPage);
   //===========================================================
   return (
-    <Box>
+    <Box minHeight="100vh">
       <Grid container>
         <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
           <Box
@@ -106,10 +107,12 @@ export const Cards = () => {
         </Grid>
       </Grid>
       <Grid container pt={5}>
-        <Grid xs={12} sm={12} md={12} lg={3} xl={3}>
+        <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
           <Filter setPage={setPage} setOrder={setOrder} />
         </Grid>
+
         <Grid
+          item
           xs={12}
           sm={12}
           md={12}
@@ -126,9 +129,9 @@ export const Cards = () => {
           }`}
         >
           {!productSearch.length ? (
-            <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
-              <h2>"No hay productos para mostrar intenta otra busqueda"</h2>
-            </Grid>
+            <Box width={500} padding={15} display="inline-block">
+              <CircularProgress color="warning" />
+            </Box>
           ) : search.length > 2 ? (
             productsList2.map((c) => {
               return (
@@ -173,6 +176,7 @@ export const Cards = () => {
           )}
         </Grid>
       </Grid>
+
       <Box>
         {search.length >= 3 ? (
           <PagedSearch

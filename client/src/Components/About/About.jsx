@@ -3,7 +3,7 @@ import img1 from "../../Resources/imagnes pag1.jpeg";
 import img2 from "../../Resources/imagenes pag 2.jpeg";
 import img3 from "../../Resources/uvjet-impresora-dtg-easy-tx-04-500x571.jpg";
 import Carousel from "react-material-ui-carousel";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 
 export const About = () => {
@@ -19,7 +19,7 @@ export const About = () => {
   };
 
   return (
-    <div>
+    <Box minHeight="100vh">
       <Grid container spacing={2}>
         <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
           <Carousel next={nextImg} prev={prevImg}>
@@ -58,6 +58,6 @@ export const About = () => {
           <h4 key={6}>Nuestros productos son 100% Algodon!</h4>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };

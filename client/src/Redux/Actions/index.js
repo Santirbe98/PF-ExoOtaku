@@ -1,218 +1,133 @@
-import axios from "axios";
 import {
   GET_PRODUCTS,
   FILTER_ALL,
   GET_PRODUCT_DETAIL,
   ORDER_BY_PRICE,
   ORDER_DETAIL,
-  GET_USER_CREDENTIALS,
-  CUSTOMER_BY_EMAIL,
-  CUSTOMER_ORDERS,
-  GET_ALL_ORDERS,
-  DELETE_ORDER,
-  UPDATE_STATUS,
-  GET_USERS,
-  DELETE_USER,
   ORDER_RANK,
   ORDER_BY_DATE,
-} from "./actionsTypes";
+  GET_USER_CREDENTIALS,
+  CUSTOMER_BY_EMAIL,
+} from "../Actions/actionsTypes.js";
 
-// axios.defaults.baseURL = "http://localhost:3001";
-axios.defaults.baseURL = "https://exo-otaku.up.railway.app/";
+const initialState = {
+  products: [],
+  filterProducts: [],
+  orderByRank: [],
+  details: {},
+  orderdetail: {},
+  orderByDate:[],
+  colorSelected: [],
+  customer: {},
+  chk_customer: {},
+};
 
-export function getProducts() {
-  return async function (dispatch) {
-    let json = await axios.get(`/products`);
+function rootReducer(state = initialState, action) {
+  switch (action.type) {
+    case ORDER_DETAIL:
+      return {
+        ...state,
+        orderdetail: action.payload,
+      };
 
-    return dispatch({
-      type: GET_PRODUCTS,
-      payload: json.data,
-    });
-  };
-}
-export function filterAll(payload) {
-  return {
-    type: FILTER_ALL,
-    payload: payload,
-  };
-}
+    case GET_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
+        filterProducts: action.payload,
+      };
 
-export function getProductDetail(id) {
-  return async function (dispatch) {
-    let json = await axios.get(`/products/${id}`);
-    return dispatch({
-      type: GET_PRODUCT_DETAIL,
-      payload: json.data,
-    });
-  };
-}
+    case ORDER_RANK:
+      const productsRank = state.filterProducts;
+      const orderProductRank = productsRank.sort((a, b) => a.price - b.price);
+      return {
+        ...state,
+        orderByRank: orderProductRank,
+      };
 
-export function postProduct(body) {
-  return async function () {
-    try {
-      var json = await axios.post(`/products`, body);
+    case ORDER_BY_DATE:
+      const productsDate = state.filterProducts;
+      const orderProductDate = productsDate.sort((a, b) => new Date(b.date_added).getTime() - new Date(a.date_added).getTime())
+      // const orderProductDate = productsDate.sort(
+      //   (a, b) => Number(a.date_added) - Number(b.date_added));
+      return {
+        ...state,
+        orderByDate: orderProductDate,
+      };
 
-      return json;
-    } catch (error) {
-      console.error({ error: error.message });
-    }
-  };
-}
-export function orderByPrice(payload) {
-  return {
-    type: ORDER_BY_PRICE,
-    payload: payload,
-  };
-}
-export function orderByRank() {
-  return {
-    type: ORDER_RANK,
-  };
-}
-export function orderByDate() {
-  return {
-    type: ORDER_BY_DATE,
-  };
-}
+    case FILTER_ALL:
+      const allProducts = state.products;
+      const { color, type, category } = action.payload;
 
-export function payment({ cartItems, userId, name, email }) {
-  axios
-    .post(`/payment/create-checkout-session`, {
-      cartItems,
-      userId,
-      name,
-      email,
-    })
-    .then((res) => {
-      if (res.data.url) {
-        window.location.href = res.data.url;
-      }
-    })
-    .catch((err) => console.log(err));
-}
+      const filterProducts =
+        category === "All"
+          ? allProducts
+          : allProducts.filter((p) => p.category === category);
 
-export function getCheckout(session_id) {
-  return async function (dispatch) {
-    try {
-      var json = await axios.get(
-        `/payment/checkout-success?session_id=${session_id}`
-      );
-      return dispatch({
-        type: ORDER_DETAIL,
-        payload: json.data,
+      const filterProducts2 =
+        type === "All"
+          ? filterProducts
+          : filterProducts.filter((p) => p.type.find((t) => t === type));
+      let colorSelectedArr = [];
+      const filterProducts3 =
+        color === "All"
+          ? filterProducts2
+          : // : filterProducts2.filter((p) => p.color.find((c) => c === color));
+            filterProducts2.filter((p) =>
+              p.imagesDb.find((c, index) => {
+                if (c.color === color) {
+                  colorSelectedArr.push(index);
+                  return c;
+                }
+              })
+            );
+      const filterProducts4 = filterProducts3.map((p, index, arr) => {
+        if (colorSelectedArr.length > 0) {
+          let newImage = colorSelectedArr[index];
+          return { ...p, images: p.imagesDb[newImage].images };
+        } else return p;
       });
-    } catch (error) {
-      console.error({ error: error.message });
-    }
-  };
+      console.log(filterProducts4);
+      console.log(colorSelectedArr);
+      return {
+        ...state,
+        filterProducts: filterProducts4,
+        colorSelected: colorSelectedArr,
+      };
+
+    case GET_PRODUCT_DETAIL:
+      return {
+        ...state,
+        details: action.payload,
+      };
+    case ORDER_BY_PRICE:
+      const products = state.filterProducts;
+      const orderProduct =
+        action.payload === "Asc"
+          ? products.sort((a, b) => a.price - b.price)
+          : products.sort((a, b) => b.price - a.price);
+      return {
+        ...state,
+        filterProducts: orderProduct,
+      };
+
+    case GET_USER_CREDENTIALS:
+      return {
+        ...state,
+        user_credential: action.payload,
+      };
+
+    case CUSTOMER_BY_EMAIL:
+      return {
+        ...state,
+        chk_customer: action.payload,
+      };
+
+    default:
+      return {
+        ...state,
+      };
+  }
 }
 
-export function postCustomer(payload) {
-  return async function (dispatch) {
-    console.log(payload);
-    var response;
-    try {
-      response = await axios.post("/customer", payload);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export function userCredential(payload) {
-  return {
-    type: GET_USER_CREDENTIALS,
-    payload: payload,
-  };
-}
-
-export function chkcustomer(email) {
-  return async function (dispatch) {
-    let json = await axios.get(`/customer/${email}`);
-    return dispatch({
-      type: CUSTOMER_BY_EMAIL,
-      payload: json.data,
-    });
-  };
-}
-
-export function customerOrders(id) {
-  return async function (dispatch) {
-    let json = await axios.get(`/orders/${id}`);
-    return dispatch({
-      type: CUSTOMER_ORDERS,
-      payload: json.data,
-    });
-  };
-}
-
-export function getAllOrders(status) {
-  return async function (dispatch) {
-    let json;
-    if (status) {
-      json = await axios.get(`/orders?status=${status}`);
-    } else {
-      json = await axios.get(`/orders/`);
-    }
-    return dispatch({
-      type: GET_ALL_ORDERS,
-      payload: json.data,
-    });
-  };
-}
-
-export function deleteOrder(id) {
-  return async function (dispatch) {
-    let json = await axios.delete(`/orders?id=${id}`);
-    return dispatch({
-      type: DELETE_ORDER,
-      payload: json.data,
-    });
-  };
-}
-
-export function modifyStatusORder({ id, state }) {
-  return async function (dispatch) {
-    let json = await axios.put(`/orders?id=${id}`, {
-      status: state,
-    });
-    return dispatch({
-      type: UPDATE_STATUS,
-      payload: json.data,
-    });
-  };
-}
-
-export function getAllUsers() {
-  return async function (dispatch) {
-    let json = await axios.get("/customer");
-    return dispatch({
-      type: GET_USERS,
-      payload: json.data,
-    });
-  };
-}
-
-export function updateAdmin({ id, isadmin }) {
-  return async function (dispatch) {
-    let json = await axios.put("/customer", {
-      id,
-      isadmin,
-    });
-    return dispatch({
-      type: UPDATE_STATUS,
-      payload: json.data,
-    });
-  };
-}
-
-export function deleteUser(id) {
-  return async function (dispatch) {
-    let json = await axios.delete(`/customer/${id}`);
-    return dispatch({
-      type: DELETE_USER,
-      payload: json.data,
-    });
-  };
-}
+export default rootReducer;

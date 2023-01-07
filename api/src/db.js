@@ -57,6 +57,7 @@ const {
   ShoppingCart,
   ShoppingList,
   Customer,
+  RankProduct,
 } = sequelize.models;
 
 Product.belongsToMany(Category, {
@@ -107,6 +108,9 @@ PurchaseOrder.belongsTo(Payment);
 
 Customer.hasMany(PurchaseOrder);
 PurchaseOrder.belongsTo(Customer);
+
+Product.hasMany(RankProduct);
+RankProduct.belongsTo(Product);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

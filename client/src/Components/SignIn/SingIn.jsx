@@ -1,9 +1,9 @@
 import React from "react";
 import { validate } from "./Validate";
 import { useHistory } from "react-router-dom";
-import { useState} from 'react'
+import { useState } from 'react'
 import { postCustomer } from  "../../Redux/Actions";
-import { useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useAuth0} from "@auth0/auth0-react";
@@ -13,7 +13,6 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import { FormHelperText,Select,MenuItem } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
-
 
 //MWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWWMWWMWMWMW
 // USER CREATION
