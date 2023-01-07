@@ -15,26 +15,44 @@ import Swal from "sweetalert2";
 
 export const MediaCard = ({ name, price, image, id, category }) => {
 
-
-  const handleAlert = () => {
-    Swal.fire({
-      /*  title: "Estas seguro que desea agregar este item?", */
-      text: "Estas seguro que deseas agregar este item a Favoritos?",
-      width: "30%",
-      padding: "10px",
-      allowEnterKey: true,
-      allowEscapeKey: true,
-      icon: "question",
-      background: "black",
-      showCancelButton: true,
-      confirmButtonColor: "#00711a",
-      cancelButtonColor: "#b50707",
-      confirmButtonText: "Si, agregalo!",
-    }).then((response) => {
-      if (response.isConfirmed) {
-
-      }
-    })
+  const handleAlert = (input) => {
+    if (document.getElementById(`${input}`).style.color === "white") {
+      Swal.fire({
+        text: "Estas seguro que deseas agregar este item a Favoritos?",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        allowEscapeKey: true,
+        icon: "question",
+        background: "black",
+        showCancelButton: true,
+        confirmButtonColor: "#00711a",
+        cancelButtonColor: "#b50707",
+        confirmButtonText: "Si, agregalo!",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          document.getElementById(`${input}`).style.color = "red";
+        }
+      })
+    } else {
+      Swal.fire({
+        text: "Estas seguro que deseas quitar este item de Favoritos?",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        allowEscapeKey: true,
+        icon: "warning",
+        background: "black",
+        showCancelButton: true,
+        confirmButtonColor: "#00711a",
+        cancelButtonColor: "#b50707",
+        confirmButtonText: "Si, quitalo!",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          document.getElementById(`${input}`).style.color = "white";
+        }
+      })
+    }
   }
 
   return (
@@ -52,9 +70,10 @@ export const MediaCard = ({ name, price, image, id, category }) => {
     >
       <CardActionArea>
         <FavoriteIcon
-          id="favorite"
-          onClick={() => handleAlert()}
-          style={{ color: "white", position: "absolute", right: "1" }} ></FavoriteIcon>
+          id={id}
+          style={{ color: "white", position: "absolute", right: 1 }}
+          onClick={() => handleAlert(id)}
+        ></FavoriteIcon>
         <Link
           style={{
             textDecoration: "none",
@@ -92,6 +111,6 @@ export const MediaCard = ({ name, price, image, id, category }) => {
           <LocalGroceryStoreRoundedIcon />
         </Button>
       </Link>
-    </Card>
+    </Card >
   );
 };
