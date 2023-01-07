@@ -87,7 +87,7 @@ module.exports = {
     shipping_address,
     billing_address,
     isadmin,
-    whishList
+    wishList
   ) {
     const updtCustomer = await Customer.findByPk(id, {});
     await updtCustomer.update({
@@ -101,7 +101,7 @@ module.exports = {
       shipping_address,
       billing_address,
       isadmin,
-      whishList,
+      wishList,
     });
     return "The Information was successfully Updated";
   },

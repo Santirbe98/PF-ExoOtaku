@@ -74,7 +74,7 @@ router.put("/", async (req, res) => {
     billing_address,
     isadmin,
     phone,
-    whishList,
+    wishList,
   } = req.body;
   try {
     return res
@@ -92,7 +92,7 @@ router.put("/", async (req, res) => {
           shipping_address,
           billing_address,
           isadmin,
-          whishList,
+          wishList,
           phone
         )
       );
