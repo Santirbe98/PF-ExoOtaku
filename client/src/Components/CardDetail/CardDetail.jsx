@@ -39,25 +39,44 @@ export const CardDetail = ({ match }) => {
     handleColor1(e);
   };
 
-  const handleFavorite = () => {
-    Swal.fire({
-      /*  title: "Estas seguro que desea agregar este item?", */
-      text: "Estas seguro que deseas agregar este item a Favoritos?",
-      width: "30%",
-      padding: "10px",
-      allowEnterKey: true,
-      allowEscapeKey: true,
-      icon: "question",
-      background: "black",
-      showCancelButton: true,
-      confirmButtonColor: "#00711a",
-      cancelButtonColor: "#b50707",
-      confirmButtonText: "Si, agregalo!",
-    }).then((response) => {
-      if (response.isConfirmed) {
-
-      }
-    })
+  const handleFavorite = (input) => {
+    if (document.getElementById(`${product.id}`).style.color === "white") {
+      Swal.fire({
+        text: "Estas seguro que deseas agregar este item a Favoritos?",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        allowEscapeKey: true,
+        icon: "question",
+        background: "black",
+        showCancelButton: true,
+        confirmButtonColor: "#00711a",
+        cancelButtonColor: "#b50707",
+        confirmButtonText: "Si, agregalo!",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          document.getElementById(`${product.id}`).style.color = "red";
+        }
+      })
+    } else {
+      Swal.fire({
+        text: "Estas seguro que deseas quitar este item de Favoritos?",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        allowEscapeKey: true,
+        icon: "warning",
+        background: "black",
+        showCancelButton: true,
+        confirmButtonColor: "#00711a",
+        cancelButtonColor: "#b50707",
+        confirmButtonText: "Si, agregalo!",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          document.getElementById(`${input}`).style.color = "white";
+        }
+      })
+    }
   }
 
   useEffect(() => {
@@ -188,13 +207,14 @@ export const CardDetail = ({ match }) => {
                     Agregar al carrito
                   </Button>
                   <Button
-                    sx={{ margin: 2 }}
+
+                    style={{ marginLeft: 20 }}
                     variant="contained"
                     color="success"
                     size="large"
-                    onClick={() => handleFavorite()}
+                    onClick={() => handleFavorite(product.id)}
                   >
-                    Agregar a Favoritos   <FavoriteIcon></FavoriteIcon>
+                    <FavoriteIcon id={product.id} style={{ color: "white" }} ></FavoriteIcon>
                   </Button>
                 </Box>
               </Grid>
