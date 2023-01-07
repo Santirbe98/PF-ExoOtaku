@@ -65,7 +65,7 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      whishList: {
+      wishList: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
       },
     },
