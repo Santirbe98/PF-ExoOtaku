@@ -9,7 +9,7 @@ import PagedSearch from "../PagedSearch/PagedSearch";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import { LinearProgress, Typography } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 //--------------------------------------------------------------//
 
 export const Cards = () => {
@@ -110,6 +110,7 @@ export const Cards = () => {
         <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
           <Filter setPage={setPage} setOrder={setOrder} />
         </Grid>
+
         <Grid
           item
           xs={12}
@@ -128,7 +129,9 @@ export const Cards = () => {
           }`}
         >
           {!productSearch.length ? (
-            <></>
+            <Box width={500} padding={15} display="inline-block">
+              <CircularProgress color="warning" />
+            </Box>
           ) : search.length > 2 ? (
             productsList2.map((c) => {
               return (
@@ -171,15 +174,9 @@ export const Cards = () => {
               </Box>
             ))
           )}
-          <Grid item xs={12}>
-            {!productSearch.length && (
-              <Box>
-                <LinearProgress color="warning" />
-              </Box>
-            )}
-          </Grid>
         </Grid>
       </Grid>
+
       <Box>
         {search.length >= 3 ? (
           <PagedSearch
