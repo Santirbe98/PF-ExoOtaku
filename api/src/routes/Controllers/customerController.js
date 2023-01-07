@@ -38,6 +38,8 @@ module.exports = {
         "phone",
         "isadmin",
         "deleted",
+        "comuna",
+        "provincia",
       ],
       where: {
         deleted: false,
@@ -48,11 +50,11 @@ module.exports = {
 
   createNewCustomer: async function (
     name,
+    phone,
     token,
     email,
     country,
     provincia,
-    phone,
     comuna,
     shipping_address,
     billing_address,
@@ -60,17 +62,18 @@ module.exports = {
   ) {
     const new_Customer = await Customer.create({
       name: name,
+      phone: phone,
       token: token,
       email: email,
       country: country,
       provincia: provincia,
-      phone: phone,
       comuna: comuna,
       shipping_address: shipping_address,
       billing_address: billing_address,
       isadmin: isadmin,
       deleted: false,
     });
+    /*     console.log(new_Customer); */
     return new_Customer;
   },
 

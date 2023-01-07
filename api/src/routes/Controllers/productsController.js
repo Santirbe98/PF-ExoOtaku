@@ -16,6 +16,10 @@ function compare_lname(a, b) {
 const getAllProducts = async function () {
   try {
     let products = await Product.findAll({
+      required: true,
+      where: {
+        deleted: false,
+      },
       include: [
         {
           model: Color,
@@ -38,14 +42,14 @@ const getAllProducts = async function () {
             attributes: [],
           },
         },
-        {
+        /*         {
           model: Category,
           attributes: ["category"],
           through: {
             attributes: [],
           },
         },
-
+ */
         {
           model: Image,
           attributes: ["url"],
@@ -80,7 +84,7 @@ const getAllProducts = async function () {
           color: colorArray,
           type: typeArray,
           size: sizeArray,
-          category: field.categories[0].category,
+          /* category: field.categories[0].category, */
           imagesDb: imageArray,
         };
         return dataProduct;
@@ -198,13 +202,13 @@ const modifyProd = async ({ id, name, price, descriptions, images, stock }) => {
         },
         {
           where: {
-            product_id: id,
+            id: id,
           },
         }
       );
       let producMod = Product.findOne({
         where: {
-          product_id: id,
+          id: id,
         },
       });
 
@@ -227,7 +231,7 @@ const deleteProd = async (id) => {
         },
         {
           where: {
-            product_id: id,
+            id: id,
           },
         }
       );

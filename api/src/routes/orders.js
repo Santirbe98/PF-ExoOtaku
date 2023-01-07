@@ -16,7 +16,9 @@ router.get("/", async (req, res) => {
       result = await getOrderDetail(id);
     }
     if (status) {
-      result = result.filter((order) => order.status.includes(status));
+      result = result.filter((order) =>
+        order.status.toLowerCase().includes(status.toLowerCase())
+      );
     }
     typeof result === "string"
       ? res.status(404).send(result)
