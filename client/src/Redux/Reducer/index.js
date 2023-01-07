@@ -16,7 +16,7 @@ const initialState = {
   orderByRank: [],
   details: {},
   orderdetail: {},
-  orderByDate:[],
+  orderByDate: [],
   colorSelected: [],
   customer: {},
   chk_customer: {},
@@ -31,10 +31,11 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_PRODUCTS:
+      const productos = action.payload.filter(productos => productos.deleted === false);
       return {
         ...state,
-        products: action.payload,
-        filterProducts: action.payload,
+        products: productos,
+        filterProducts: productos,
       };
 
     case ORDER_RANK:
@@ -73,14 +74,14 @@ function rootReducer(state = initialState, action) {
         color === "All"
           ? filterProducts2
           : // : filterProducts2.filter((p) => p.color.find((c) => c === color));
-            filterProducts2.filter((p) =>
-              p.imagesDb.find((c, index) => {
-                if (c.color === color) {
-                  colorSelectedArr.push(index);
-                  return c;
-                }
-              })
-            );
+          filterProducts2.filter((p) =>
+            p.imagesDb.find((c, index) => {
+              if (c.color === color) {
+                colorSelectedArr.push(index);
+                return c;
+              }
+            })
+          );
       const filterProducts4 = filterProducts3.map((p, index, arr) => {
         if (colorSelectedArr.length > 0) {
           let newImage = colorSelectedArr[index];
@@ -96,10 +97,15 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_PRODUCT_DETAIL:
+      const productos1 = [];
+      if (action.payload.deleted === false) {
+        productos1.push(action.payload)
+      }
       return {
         ...state,
-        details: action.payload,
+        details: productos1,
       };
+
     case ORDER_BY_PRICE:
       const products = state.filterProducts;
       const orderProduct =
