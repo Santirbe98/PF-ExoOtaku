@@ -116,7 +116,7 @@ function Row(props) {
           <Box sx={{ minWidth: 150 }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">
-                {rows.estado}
+                {rows.estado === "paid" ? "Pago" : rows.estado}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -125,13 +125,13 @@ function Row(props) {
                 label="Estado"
                 onChange={(e) => {
                   handleChange2(e);
-                  /* if (e.target.value === "Completada") {
-                    sendEmailOrder({
+                  if (e.target.value === "Completada") {
+                    /* sendEmailOrder({
                       email: rows.email,
                       name: rows.usuario,
                       paymentId: rows.orden,
-                    });
-                  } */
+                    }) */
+                  }
                 }}
               >
                 <MenuItem value={"paid"} sx={{ width: "100%" }}>
@@ -140,7 +140,7 @@ function Row(props) {
                 <MenuItem value={"Procesando"} sx={{ width: "100%" }}>
                   Procesando
                 </MenuItem>
-                <MenuItem value={"Completada"} sx={{ width: "100%" }}>
+                <MenuItem value={"completada"} sx={{ width: "100%" }}>
                   Completada
                 </MenuItem>
                 <MenuItem value={"Cancelada"} sx={{ width: "100%" }}>
@@ -154,7 +154,7 @@ function Row(props) {
         <StyledTableCell align="center">{rows.email}</StyledTableCell>
         <StyledTableCell align="center">{rows.fecha}</StyledTableCell>
         <StyledTableCell align="center">{rows.articulos}</StyledTableCell>
-        <StyledTableCell align="center">{rows.costo}</StyledTableCell>
+        <StyledTableCell align="center">{rows.costo / 100}</StyledTableCell>
         <StyledTableCell align="center">{rows.delivery}</StyledTableCell>
         <StyledTableCell align="center">{rows.total}</StyledTableCell>
         <StyledTableCell align="center">
@@ -242,31 +242,6 @@ function Row(props) {
   );
 }
 
-/* Row.propTypes = {
-  row: PropTypes.shape({
-    orden: PropTypes.string.isRequired,
-    usuario: PropTypes.string.isRequired,
-    fecha: PropTypes.string.isRequired,
-    articulos: PropTypes.number.isRequired,
-    costo: PropTypes.number.isRequired,
-    delivery: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired,
-    products: PropTypes.arrayOf(
-      PropTypes.shape({
-        imagen: PropTypes.string.isRequired,
-        producto: PropTypes.string.isRequired,
-        categoria: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired,
-        talla: PropTypes.string.isRequired,
-        cantidad: PropTypes.number.isRequired,
-        precio: PropTypes.number.isRequired,
-      })
-    ).isRequired,
-    producto: PropTypes.string.isRequired,
-    precio: PropTypes.number.isRequired,
-  }).isRequired,
-}; */
-
 export default function CollapsibleTable({ Products, handleClick }) {
   let rows = [];
   for (let i = 0; i < Products.length; i++) {
@@ -309,7 +284,10 @@ export default function CollapsibleTable({ Products, handleClick }) {
             <StyledTableCell />
 
             <StyledTableCell align="center">ID</StyledTableCell>
-            <StyledTableCell align="center">Orden de Compra</StyledTableCell>
+            <StyledTableCell align="center">
+              {" "}
+              Payment Id (Stripe){" "}
+            </StyledTableCell>
             <StyledTableCell align="center"> Estado </StyledTableCell>
             <StyledTableCell align="center"> Usuario </StyledTableCell>
             <StyledTableCell align="center"> Email </StyledTableCell>

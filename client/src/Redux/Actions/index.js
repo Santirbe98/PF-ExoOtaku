@@ -15,6 +15,8 @@ import {
   DELETE_USER,
   ORDER_RANK,
   ORDER_BY_DATE,
+  DELETE_PRODUCT,
+  UPDATE_PRICE,
 } from "./actionsTypes";
 
 axios.defaults.baseURL = "http://localhost:3001";
@@ -151,7 +153,12 @@ export function getAllOrders(status) {
   return async function (dispatch) {
     let json;
     if (status) {
-      json = await axios.get(`/orders?status=${status}`);
+      json = await axios.get(
+        `http://localhost:3001/orders?status=${status.toLowerCase()}`
+      );
+      if (status.toLowerCase() === "pago") {
+        json = await axios.get(`/orders?status=${"paid"}`);
+      }
     } else {
       json = await axios.get(`/orders/`);
     }
@@ -212,6 +219,29 @@ export function deleteUser(id) {
     let json = await axios.delete(`/customer/${id}`);
     return dispatch({
       type: DELETE_USER,
+      payload: json.data,
+    });
+  };
+}
+
+export function deleteProduct(id) {
+  return async function (dispatch) {
+    let json = await axios.delete(`/products/${id}`);
+    return dispatch({
+      type: DELETE_PRODUCT,
+      payload: json.data,
+    });
+  };
+}
+
+export function updatePrice({ id, newPrice, newStock }) {
+  return async function (dispatch) {
+    let json = await axios.put(`/products/${id}`, {
+      price: newPrice,
+      stock: newStock,
+    });
+    return dispatch({
+      type: UPDATE_PRICE,
       payload: json.data,
     });
   };
