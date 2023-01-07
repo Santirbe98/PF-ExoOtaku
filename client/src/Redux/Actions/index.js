@@ -157,7 +157,7 @@ export function getAllOrders(status) {
         `http://localhost:3001/orders?status=${status.toLowerCase()}`
       );
       if (status.toLowerCase() === "pago") {
-        json = await axios.get(`http://localhost:3001/orders?status=${"paid"}`);
+        json = await axios.get(`/orders?status=${"paid"}`);
       }
     } else {
       json = await axios.get(`/orders/`);
@@ -226,7 +226,7 @@ export function deleteUser(id) {
 
 export function deleteProduct(id) {
   return async function (dispatch) {
-    let json = await axios.delete(`http://localhost:3001/products/${id}`);
+    let json = await axios.delete(`/products/${id}`);
     return dispatch({
       type: DELETE_PRODUCT,
       payload: json.data,
@@ -236,7 +236,7 @@ export function deleteProduct(id) {
 
 export function updatePrice({ id, newPrice, newStock }) {
   return async function (dispatch) {
-    let json = await axios.put(`http://localhost:3001/products/${id}`, {
+    let json = await axios.put(`/products/${id}`, {
       price: newPrice,
       stock: newStock,
     });
