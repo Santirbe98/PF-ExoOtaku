@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { CardRanked } from "../CardRanked/CardRanked";
 import s from "./TopRanked.module.css";
@@ -20,6 +20,14 @@ export const TopRanked = () => {
 
   return (
     <Box>
+      {!topFiveProducts.length ? (
+        <Box width={500} padding={15}>
+          <CircularProgress color="warning" />
+        </Box>
+      ) : (
+        <></>
+      )}
+
       <Grid container pt={5}>
         <Grid
           xs={12}
@@ -37,25 +45,26 @@ export const TopRanked = () => {
               : null
           }`}
         >
-          {topFiveProducts.map((c) => {
-            return (
-              <Box
-                key={c.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <CardRanked
+          {topFiveProducts.length !== 0 &&
+            topFiveProducts.map((c) => {
+              return (
+                <Box
                   key={c.id}
-                  id={c.id}
-                  image={c.images}
-                  name={c.name}
-                />
-              </Box>
-            );
-          })}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CardRanked
+                    key={c.id}
+                    id={c.id}
+                    image={c.images}
+                    name={c.name}
+                  />
+                </Box>
+              );
+            })}
         </Grid>
       </Grid>
     </Box>

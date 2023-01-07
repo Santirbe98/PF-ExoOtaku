@@ -53,8 +53,8 @@ export const LandingPage = () => {
               Queres saber de nuestras nuevas ofertas?
             </Typography>
             <Typography variant="subtitle2">
-              Dejanos tu email para robar todos tus datos y los de tus seres
-              queridos
+              Dejanos tu email para enterarte de los productos nuevos y ofertas
+              de tus productos favoritos
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
