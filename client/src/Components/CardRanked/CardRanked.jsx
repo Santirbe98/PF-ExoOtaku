@@ -16,6 +16,10 @@ export const CardRanked = ({ name, image, id }) => {
         height: 300,
         margin: 2,
         backgroundColor: "rgb(33, 33, 33)",
+        padding: 1,
+        border: "1px solid black",
+        borderRadius: "5px",
+        opacity: 0.8,
       }}
     >
       <CardActionArea>
@@ -27,6 +31,9 @@ export const CardRanked = ({ name, image, id }) => {
           to={`/detail/${id}`}
         >
           <CardMedia
+            style={{
+              borderRadius: "5px",
+            }}
             component="img"
             height="180"
             image={image.toString()}
