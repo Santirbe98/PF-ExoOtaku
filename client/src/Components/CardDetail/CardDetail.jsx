@@ -9,6 +9,8 @@ import Carousel from "react-material-ui-carousel";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { white, black, blue, pink, yellow } from "@mui/material/colors";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Swal from "sweetalert2";
 
 export const CardDetail = ({ match }) => {
   const { addItemToCart, redirectHome } = useContext(CartContext);
@@ -36,6 +38,28 @@ export const CardDetail = ({ match }) => {
     setSelectedValue(e);
     handleColor1(e);
   };
+
+  const handleFavorite = () => {
+    Swal.fire({
+      /*  title: "Estas seguro que desea agregar este item?", */
+      text: "Estas seguro que deseas agregar este item a Favoritos?",
+      width: "30%",
+      padding: "10px",
+      allowEnterKey: true,
+      allowEscapeKey: true,
+      icon: "question",
+      background: "black",
+      showCancelButton: true,
+      confirmButtonColor: "#00711a",
+      cancelButtonColor: "#b50707",
+      confirmButtonText: "Si, agregalo!",
+    }).then((response) => {
+      if (response.isConfirmed) {
+
+      }
+    })
+  }
+
   useEffect(() => {
     dispatch(getProductDetail(id)).then((res) => {
       setProduct(res.payload);
@@ -162,6 +186,15 @@ export const CardDetail = ({ match }) => {
                     }}
                   >
                     Agregar al carrito
+                  </Button>
+                  <Button
+                    sx={{ margin: 2 }}
+                    variant="contained"
+                    color="success"
+                    size="large"
+                    onClick={() => handleFavorite()}
+                  >
+                    Agregar a Favoritos   <FavoriteIcon></FavoriteIcon>
                   </Button>
                 </Box>
               </Grid>

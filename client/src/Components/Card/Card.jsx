@@ -8,8 +8,35 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import LocalGroceryStoreRoundedIcon from "@mui/icons-material/LocalGroceryStoreRounded";
 import s from "./Card.module.css";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Swal from "sweetalert2";
+
+
 
 export const MediaCard = ({ name, price, image, id, category }) => {
+
+
+  const handleAlert = () => {
+    Swal.fire({
+      /*  title: "Estas seguro que desea agregar este item?", */
+      text: "Estas seguro que deseas agregar este item a Favoritos?",
+      width: "30%",
+      padding: "10px",
+      allowEnterKey: true,
+      allowEscapeKey: true,
+      icon: "question",
+      background: "black",
+      showCancelButton: true,
+      confirmButtonColor: "#00711a",
+      cancelButtonColor: "#b50707",
+      confirmButtonText: "Si, agregalo!",
+    }).then((response) => {
+      if (response.isConfirmed) {
+
+      }
+    })
+  }
+
   return (
     <Card
       className={s.container}
@@ -21,10 +48,13 @@ export const MediaCard = ({ name, price, image, id, category }) => {
         padding: 1,
         border: "1px solid black",
         borderRadius: "5px",
-        opacity: 0.8,
       }}
     >
       <CardActionArea>
+        <FavoriteIcon
+          id="favorite"
+          onClick={() => handleAlert()}
+          style={{ color: "white", position: "absolute", right: "1" }} ></FavoriteIcon>
         <Link
           style={{
             textDecoration: "none",
