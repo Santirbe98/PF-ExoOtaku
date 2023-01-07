@@ -44,9 +44,7 @@ export const CardDetail = ({ match }) => {
     });
   }, [dispatch, id]);
   return (
-    <div>
-      <Cart />
-
+    <Box minHeight="100vh">
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         {Object.entries(product).length ? (
           <Box
@@ -206,6 +204,6 @@ export const CardDetail = ({ match }) => {
           ))}
         </Box>
       </Grid>
-    </div>
+    </Box>
   );
 };

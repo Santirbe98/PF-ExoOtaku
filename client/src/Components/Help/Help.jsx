@@ -1,10 +1,10 @@
 import React from "react";
-import { Container, Paper, Typography } from "@mui/material";
+import { Box, Container, Paper, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 
 export const Help = () => {
   return (
-    <div>
+    <Box minHeight="100vh">
       <Grid container spacing={2}>
         <Container maxWidth="sm" sx={{ m: 6, mx: "auto", width: 800 }}>
           <Grid xs={12} md={12} lg={12} xl={12}>
@@ -45,6 +45,6 @@ export const Help = () => {
           </Grid>
         </Container>
       </Grid>
-    </div>
+    </Box>
   );
 };

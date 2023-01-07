@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { TopRanked } from "../TopRanked/TopRanked";
 import { Link } from "react-router-dom";
-import { TopDate } from "../TopDate/TopDate"
+import { TopDate } from "../TopDate/TopDate";
 export const LandingPage = () => {
   let dispatch = useDispatch();
 
@@ -19,11 +19,10 @@ export const LandingPage = () => {
     dispatch(getProducts())
       .then(() => dispatch(orderByRank()))
       .then(() => dispatch(orderByDate()));
-
   }, [dispatch]);
 
   return (
-    <Box>
+    <Box minHeight="100vh">
       <Typography variant="h3">ExoOtaku anime top 5</Typography>
       <Box
         sx={{
@@ -94,14 +93,14 @@ export const LandingPage = () => {
           Nuevos Productos y Ofertas
         </Typography>
         <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TopDate />
-      </Box>
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TopDate />
+        </Box>
       </Box>
     </Box>
   );
