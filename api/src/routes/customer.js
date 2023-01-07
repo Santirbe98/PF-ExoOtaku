@@ -29,7 +29,6 @@ router.post("/", async (req, res) => {
     email,
     country,
     provincia,
-    departamento,
     comuna,
     shipping_address,
     billing_address,
@@ -42,19 +41,19 @@ router.post("/", async (req, res) => {
       .json(
         await RoutFunc.createNewCustomer(
           name,
+          phone,
           token,
           email,
           country,
           provincia,
-          departamento,
           comuna,
           shipping_address,
           billing_address,
-          isadmin,
-          phone
+          isadmin
         )
       );
   } catch (error) {
+    console.error(error);
     return res.status(400).send("Sorry the information couldn't be save");
   }
 });
