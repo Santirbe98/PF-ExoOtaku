@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addWishList, deleteWishlist } from "../../Redux/Actions";
 
 export const MediaCard = ({ name, price, image, id, category }) => {
-  const customerId = useSelector((state) => state.chk_customer.id);
+  const customer = useSelector((state) => state.chk_customer);
   const dispatch = useDispatch();
 
   const handleAlert = (input) => {
@@ -34,7 +34,7 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${input}`).style.color = "red";
-          dispatch(addWishList({ id: customerId, wishList: id }));
+          dispatch(addWishList({ id: customer.id, wishList: id }));
         }
       });
     } else {
@@ -53,7 +53,7 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${input}`).style.color = "white";
-          dispatch(deleteWishlist({ id: customerId, productId: id }));
+          dispatch(deleteWishlist({ id: customer.id, productId: id }));
         }
       });
     }
@@ -73,11 +73,11 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }}
     >
       <CardActionArea>
-        {customerId ? (
+        {customer.wishList ? (
           <FavoriteIcon
             id={id}
             style={{
-              color: "white",
+              color: customer.wishList.includes(id) ? "red" : "white",
               position: "absolute",
               right: 1,
             }}
