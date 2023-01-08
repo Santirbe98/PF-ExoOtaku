@@ -11,11 +11,16 @@ import s from "./Card.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { addWishList, deleteWishlist } from "../../Redux/Actions";
+import { addWishList, chkcustomer, deleteWishlist } from "../../Redux/Actions";
+import { useEffect } from "react";
 
 export const MediaCard = ({ name, price, image, id, category }) => {
-  const customer = useSelector((state) => state.chk_customer);
   const dispatch = useDispatch();
+  const customer = useSelector((state) => state.chk_customer);
+
+  useEffect(() => {
+    if (customer.id) dispatch(chkcustomer(customer.email));
+  }, [dispatch]);
 
   const handleAlert = (input) => {
     if (document.getElementById(`${input}`).style.color === "white") {
@@ -73,11 +78,11 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }}
     >
       <CardActionArea>
-        {customer.wishList ? (
+        {customer.id ? (
           <FavoriteIcon
             id={id}
             style={{
-              color: customer.wishList.includes(id) ? "red" : "white",
+              color: customer.wishList?.includes(id) ? "red" : "white",
               position: "absolute",
               right: 1,
             }}
