@@ -20,7 +20,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Profile from "../Authenticate/Profile2";
 import { Error } from "../Error/Error";
 import CollapsibleTableUsers from "./listUsers2";
 import CollapsibleTableProducts from "./listproducts";
@@ -146,7 +145,12 @@ const Orders = () => {
             </Box>
 
             <Box sx={{ translate: "0vw 1.5vw" }}>
-              <Button onClick={handleClean} variant="outlined" size="large">
+              <Button
+                onClick={handleClean}
+                variant="contained"
+                color="primary"
+                size="large"
+              >
                 Limpiar filtro
               </Button>
             </Box>
@@ -202,7 +206,12 @@ const Orders = () => {
 
             <Box sx={{ paddingTop: "2%" }}>
               <Link to="/form">
-                <Button onClick={handleClean} variant="outlined" size="large">
+                <Button
+                  onClick={handleClean}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                >
                   Crear producto
                 </Button>
               </Link>

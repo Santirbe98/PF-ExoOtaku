@@ -31,12 +31,16 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_PRODUCTS:
-      const productos = action.payload.filter(productos => productos.deleted === false);
-      return {
-        ...state,
-        products: productos,
-        filterProducts: productos,
-      };
+      if (action.payload.length) {
+        const productos = action.payload.filter(
+          (productos) => productos.deleted === false
+        );
+        return {
+          ...state,
+          products: productos,
+          filterProducts: productos,
+        };
+      } else return { ...state };
 
     case ORDER_RANK:
       const productsRank = state.filterProducts;
@@ -48,9 +52,11 @@ function rootReducer(state = initialState, action) {
 
     case ORDER_BY_DATE:
       const productsDate = state.filterProducts;
-      const orderProductDate = productsDate.sort((a, b) => new Date(b.date_added).getTime() - new Date(a.date_added).getTime())
-      // const orderProductDate = productsDate.sort(
-      //   (a, b) => Number(a.date_added) - Number(b.date_added));
+      const orderProductDate = productsDate.sort(
+        (a, b) =>
+          new Date(b.date_added).getTime() - new Date(a.date_added).getTime()
+      );
+
       return {
         ...state,
         orderByDate: orderProductDate,
@@ -73,15 +79,14 @@ function rootReducer(state = initialState, action) {
       const filterProducts3 =
         color === "All"
           ? filterProducts2
-          : // : filterProducts2.filter((p) => p.color.find((c) => c === color));
-          filterProducts2.filter((p) =>
-            p.imagesDb.find((c, index) => {
-              if (c.color === color) {
-                colorSelectedArr.push(index);
-                return c;
-              }
-            })
-          );
+          : filterProducts2.filter((p) =>
+              p.imagesDb.find((c, index) => {
+                if (c.color === color) {
+                  colorSelectedArr.push(index);
+                  return c;
+                }
+              })
+            );
       const filterProducts4 = filterProducts3.map((p, index, arr) => {
         if (colorSelectedArr.length > 0) {
           let newImage = colorSelectedArr[index];
@@ -99,7 +104,7 @@ function rootReducer(state = initialState, action) {
     case GET_PRODUCT_DETAIL:
       const productos1 = [];
       if (action.payload.deleted === false) {
-        productos1.push(action.payload)
+        productos1.push(action.payload);
       }
       return {
         ...state,
