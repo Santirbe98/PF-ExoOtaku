@@ -153,9 +153,7 @@ export function getAllOrders(status) {
   return async function (dispatch) {
     let json;
     if (status) {
-      json = await axios.get(
-        `http://localhost:3001/orders?status=${status.toLowerCase()}`
-      );
+      json = await axios.get(`/orders?status=${status.toLowerCase()}`);
       if (status.toLowerCase() === "pago") {
         json = await axios.get(`/orders?status=${"paid"}`);
       }
@@ -244,5 +242,17 @@ export function updatePrice({ id, newPrice, newStock }) {
       type: UPDATE_PRICE,
       payload: json.data,
     });
+  };
+}
+
+export function addWishList(body) {
+  return async function () {
+    try {
+      var json = await axios.put(`/customer/wishList`, body);
+
+      return json;
+    } catch (error) {
+      console.error({ error: error.message });
+    }
   };
 }

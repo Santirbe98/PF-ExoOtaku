@@ -8,13 +8,14 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import LocalGroceryStoreRoundedIcon from "@mui/icons-material/LocalGroceryStoreRounded";
 import s from "./Card.module.css";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { addWishList } from "../../Redux/Actions";
 
 export const MediaCard = ({ name, price, image, id, category }) => {
-
+  const customerId = useSelector((state) => state.chk_customer.id);
+  const dispatch = useDispatch();
   const handleAlert = (input) => {
     if (document.getElementById(`${input}`).style.color === "white") {
       Swal.fire({
@@ -32,8 +33,9 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${input}`).style.color = "red";
+          dispatch(addWishList({ id: customerId, wishList: id }));
         }
-      })
+      });
     } else {
       Swal.fire({
         text: "Estas seguro que deseas quitar este item de Favoritos?",
@@ -51,9 +53,9 @@ export const MediaCard = ({ name, price, image, id, category }) => {
         if (response.isConfirmed) {
           document.getElementById(`${input}`).style.color = "white";
         }
-      })
+      });
     }
-  }
+  };
 
   return (
     <Card
@@ -111,6 +113,6 @@ export const MediaCard = ({ name, price, image, id, category }) => {
           <LocalGroceryStoreRoundedIcon />
         </Button>
       </Link>
-    </Card >
+    </Card>
   );
 };

@@ -115,7 +115,6 @@ router.delete("/wishList", async (req, res) => {
   try {
     return res.status(200).json(await RoutFunc.DeleteWishList(id, productId));
   } catch (error) {
-    console.log(error.message);
     return res.status(400).send("Sorry the wishList couldn't be deleted");
   }
 });
