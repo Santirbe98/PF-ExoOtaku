@@ -248,8 +248,19 @@ export function updatePrice({ id, newPrice, newStock }) {
 export function addWishList(body) {
   return async function () {
     try {
-      var json = await axios.put(`/customer/wishList`, body);
+      var json = await axios.put(`/customer/wishlist`, body);
 
+      return json;
+    } catch (error) {
+      console.error({ error: error.message });
+    }
+  };
+}
+
+export function deleteWishlist(body) {
+  return async function () {
+    try {
+      var json = await axios.delete(`/customer/wishlist`, { data: body });
       return json;
     } catch (error) {
       console.error({ error: error.message });

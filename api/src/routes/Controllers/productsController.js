@@ -42,14 +42,13 @@ const getAllProducts = async function () {
             attributes: [],
           },
         },
-        /*         {
+        {
           model: Category,
           attributes: ["category"],
           through: {
             attributes: [],
           },
         },
- */
         {
           model: Image,
           attributes: ["url"],
@@ -69,7 +68,6 @@ const getAllProducts = async function () {
           images: t.url,
           color: t.color.color,
         }));
-        // const categoryArray = d.categorys.map((t) => t.category);
         field = d.dataValues;
 
         dataProduct = {
@@ -84,7 +82,7 @@ const getAllProducts = async function () {
           color: colorArray,
           type: typeArray,
           size: sizeArray,
-          /* category: field.categories[0].category, */
+          category: field.categories[0].category,
           imagesDb: imageArray,
         };
         return dataProduct;
@@ -154,7 +152,6 @@ const createNewProduct = async ({
     newProduct.addTypes(typeName[0]);
     size.map(async (t) => {
       let sizeName = await Size.findOrCreate({
-        // attributes: ["id"],
         where: { size: t },
       });
 

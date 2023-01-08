@@ -11,11 +11,12 @@ import s from "./Card.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { addWishList } from "../../Redux/Actions";
+import { addWishList, deleteWishlist } from "../../Redux/Actions";
 
 export const MediaCard = ({ name, price, image, id, category }) => {
   const customerId = useSelector((state) => state.chk_customer.id);
   const dispatch = useDispatch();
+
   const handleAlert = (input) => {
     if (document.getElementById(`${input}`).style.color === "white") {
       Swal.fire({
@@ -52,6 +53,7 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${input}`).style.color = "white";
+          dispatch(deleteWishlist({ id: customerId, productId: id }));
         }
       });
     }
@@ -71,11 +73,20 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }}
     >
       <CardActionArea>
-        <FavoriteIcon
-          id={id}
-          style={{ color: "white", position: "absolute", right: 1 }}
-          onClick={() => handleAlert(id)}
-        ></FavoriteIcon>
+        {customerId ? (
+          <FavoriteIcon
+            id={id}
+            style={{
+              color: "white",
+              position: "absolute",
+              right: 1,
+            }}
+            onClick={() => handleAlert(id)}
+          ></FavoriteIcon>
+        ) : (
+          false
+        )}
+
         <Link
           style={{
             textDecoration: "none",

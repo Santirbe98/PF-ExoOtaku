@@ -74,7 +74,6 @@ module.exports = {
       isadmin: isadmin,
       deleted: false,
     });
-    /*     console.log(new_Customer); */
     return new_Customer;
   },
 

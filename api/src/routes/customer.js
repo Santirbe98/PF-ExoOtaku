@@ -110,7 +110,7 @@ router.put("/wishlist", async (req, res) => {
 
 //DELETE WISHLIST
 
-router.delete("/wishList", async (req, res) => {
+router.delete("/wishlist", async (req, res) => {
   let { id, productId } = req.body;
   try {
     return res.status(200).json(await RoutFunc.DeleteWishList(id, productId));
