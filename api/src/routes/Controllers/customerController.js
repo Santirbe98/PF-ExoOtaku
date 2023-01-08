@@ -89,8 +89,7 @@ module.exports = {
     comuna,
     shipping_address,
     billing_address,
-    isadmin,
-    wishList
+    isadmin
   ) {
     const updtCustomer = await Customer.findByPk(id, {});
     await updtCustomer.update({
@@ -104,14 +103,37 @@ module.exports = {
       shipping_address,
       billing_address,
       isadmin,
-      wishList,
     });
     return "The Information was successfully Updated";
+  },
+
+  ModifyWishList: async function (id, wishList) {
+    if (!id || !wishList) return "Information incomplete";
+    const updtCustomer = await Customer.findByPk(id, {});
+    let newWishList;
+    if (!updtCustomer.wishList) {
+      newWishList = [wishList];
+    } else {
+      newWishList = [...updtCustomer.wishList];
+      if (!Array.from(newWishList).includes(wishList))
+        newWishList.push(wishList);
+    }
+    await updtCustomer.update({ wishList: newWishList });
+    return "The information was successfully updated";
   },
 
   DeleteCustomer: async function (id) {
     const dellCustomer = await Customer.findByPk(id, {});
     await dellCustomer.update({ deleted: true });
     return "The Information was successfully Deleted";
+  },
+
+  DeleteWishList: async function (id, productId) {
+    if (!id || !productId) return "Information incomplete";
+    const userWishListDeleted = await Customer.findByPk(id, {});
+    const deletedWishList = [...userWishListDeleted.wishList];
+    const newWishList = deletedWishList.filter((e) => e !== productId);
+    await userWishListDeleted.update({ wishList: newWishList });
+    return "The information was successfully updated";
   },
 };
