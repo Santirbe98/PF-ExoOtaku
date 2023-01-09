@@ -16,11 +16,11 @@ import Paper from "@mui/material/Paper";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import { useSelector } from "react-redux";
-import Profile2 from "../Authenticate/Profile2"
-
+import Profile2 from "../Authenticate/Profile2";
 
 export default function CartBanner({ userId }) {
   const UserValidate = useSelector((state) => state.chk_customer);
+  console.log(UserValidate);
   const { loginWithRedirect, isAuthenticated } = useAuth0();
   const { cartItems, addItemToCart, deleteItemToCart, cleanCart } =
     useContext(CartContext);
@@ -127,20 +127,25 @@ export default function CartBanner({ userId }) {
                 <TableCell colSpan={2}>
                   {isAuthenticated ? (
                     UserValidate !== null ? (
-                      <PayButton cartItems={cartItems} userId={userId} />
+                      <PayButton
+                        cartItems={cartItems}
+                        userId={UserValidate.id}
+                        name={UserValidate.name}
+                        email={UserValidate.email}
+                        priceSent={parseInt(UserValidate.address.valorEntrega)}
+                      />
                     ) : (
                       <Profile2 />
                     )
-                  )
-                    : (
-                      <Button
-                        variant="contained"
-                        color="success"
-                        onClick={() => loginWithRedirect()}
-                      >
-                        Iniciar sesion
-                      </Button>
-                    )}
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="success"
+                      onClick={() => loginWithRedirect()}
+                    >
+                      Iniciar sesion
+                    </Button>
+                  )}
                 </TableCell>
                 <Button variant="contained" color="success" onClick={cleanCart}>
                   Borrar historial

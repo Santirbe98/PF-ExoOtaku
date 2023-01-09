@@ -23,8 +23,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: "white",
     "&:hover": {
       backgroundColor: "#f29d12 !important",
-    },  
-  }
+    },
+  },
 }));
 
 function createData(orden, fecha, articulos, costo, delivery, total, products) {
@@ -61,9 +61,9 @@ function Row(props) {
         </StyledTableCell>
         <StyledTableCell align="center">{row.fecha}</StyledTableCell>
         <StyledTableCell align="center">{row.articulos}</StyledTableCell>
-        <StyledTableCell align="center">{row.costo}</StyledTableCell>
+        <StyledTableCell align="center">{row.costo / 100}</StyledTableCell>
         <StyledTableCell align="center">{row.delivery}</StyledTableCell>
-        <StyledTableCell align="center">{row.total}</StyledTableCell>
+        <StyledTableCell align="center">{row.total / 100}</StyledTableCell>
       </TableRow>
 
       <TableRow>
@@ -110,7 +110,6 @@ function Row(props) {
                       </TableCell>
                       <TableCell align="center">{productsRow.precio}</TableCell>
                     </TableRow>
-
                   ))}
                 </TableBody>
               </Table>

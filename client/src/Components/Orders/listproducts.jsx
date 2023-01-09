@@ -76,7 +76,7 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <StyledTableCell>
+        {/*         <StyledTableCell>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -84,8 +84,10 @@ function Row(props) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
+        </StyledTableCell> */}
+        <StyledTableCell align="center" sx={{ paddingLeft: "4%" }}>
+          {row.id}
         </StyledTableCell>
-        <StyledTableCell align="center">{row.id}</StyledTableCell>
         <StyledTableCell align="center">{row.nombre}</StyledTableCell>
         <StyledTableCell align="center">{row.descripcion}</StyledTableCell>
         <StyledTableCell align="center">
@@ -244,29 +246,6 @@ function Row(props) {
           </Button>
         </StyledTableCell>
       </TableRow>
-
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Adicionales
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Imagen</TableCell>
-                    <TableCell align="center">Categoria</TableCell>
-                    <TableCell align="center">Color</TableCell>
-                    <TableCell align="center">Talla</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody></TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
     </React.Fragment>
   );
 }
@@ -316,9 +295,9 @@ export default function CollapsibleTableProducts({
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <StyledTableCell />
-
-            <StyledTableCell align="center">ID</StyledTableCell>
+            <StyledTableCell align="center" sx={{ paddingLeft: "4%" }}>
+              ID
+            </StyledTableCell>
             <StyledTableCell align="center">Nombre</StyledTableCell>
             <StyledTableCell align="center">Descripción</StyledTableCell>
             <StyledTableCell align="center">Precio</StyledTableCell>
