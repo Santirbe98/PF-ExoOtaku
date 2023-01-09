@@ -4,14 +4,14 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { useAuth0 } from "@auth0/auth0-react";
-import { InputLabel, Button } from "@material-ui/core";
+import { InputLabel } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { CircularProgress } from "@mui/material";
-
+import { Button } from "@mui/material";
 import Rated from "./Rated";
 import WishList from "./WishList";
 
