@@ -77,13 +77,14 @@ export function orderByDate() {
   };
 }
 
-export function payment({ cartItems, userId, name, email }) {
+export function payment({ cartItems, userId, name, email, priceSent }) {
   axios
     .post(`/payment/create-checkout-session`, {
       cartItems,
       userId,
       name,
       email,
+      priceSent,
     })
     .then((res) => {
       if (res.data.url) {
@@ -264,6 +265,20 @@ export function deleteWishlist(body) {
       return json;
     } catch (error) {
       console.error({ error: error.message });
+    }
+  };
+}
+
+export function filterNeighborhoods() {
+  return async function (dispatch) {
+    try {
+      var json = await axios.get(`/direcciones`);
+      return dispatch({
+        type: "GET_COMUNAS",
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log({ error: error.message });
     }
   };
 }

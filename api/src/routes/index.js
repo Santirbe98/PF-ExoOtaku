@@ -11,6 +11,7 @@ const Payment = require("./payment.js");
 const customerRouter = require("./customer.js");
 const ordersRouter = require("./orders");
 const rankproductRouter = require("./rankproduct");
+const direcciones = require("./direcciones");
 // Ejemplo: const authRouter = require('./auth.js');
 const router = Router();
 // Configurar los routers
@@ -25,4 +26,5 @@ router.use("/mock", mockRouter);
 router.use("/orders", ordersRouter);
 router.use("/customer", customerRouter);
 router.use("/rank", rankproductRouter);
+router.use("/direcciones", direcciones);
 module.exports = router;

@@ -13,18 +13,27 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import { FormHelperText, Select, MenuItem } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
+import sendEmailUserRegisted from "./registerEmail";
+import { filterNeighborhoods } from "../../Redux/Actions";
+import { useEffect } from "react";
 
 //MWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWWMWWMWMWMW
 // USER CREATION
 //MWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWWMWWMWMWMW
 
 export default function SingIn({ closedialog }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [states, setStates] = useState([]);
+  useEffect(() => {
+    dispatch(filterNeighborhoods()).then((data) => setStates(data.payload));
+  }, [dispatch]);
+
   console.log(closedialog);
   const { user } = useAuth0();
   const [errors, setErrors] = useState({});
   let okMsg;
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   let paquete;
   let name,
@@ -94,7 +103,7 @@ export default function SingIn({ closedialog }) {
 
   //FORM ON SUBMIT ACTION
   let submitRegistration = (event) => {
-    event.preventDefault();
+    /* event.preventDefault(); */
     let PAC;
     PAC = {
       name: input.name,
@@ -108,7 +117,10 @@ export default function SingIn({ closedialog }) {
       token: input.token,
       phone: input.phone,
     };
-    dispatch(postCustomer(PAC));
+    dispatch(postCustomer(PAC)).then(() =>
+      /* sendEmailUserRegisted({ email: PAC.email, name: PAC.name }) */
+      console.log(PAC)
+    );
     setInput({
       name: "",
       email: "",
@@ -118,7 +130,7 @@ export default function SingIn({ closedialog }) {
       shipping_address: "",
       billing_address: "",
       isadmin: false,
-      departamento: "x",
+      /* departamento: "x", */
       token: "",
       phone: "",
     });
@@ -130,141 +142,10 @@ export default function SingIn({ closedialog }) {
   //ARRAY OF COMUNAS
   let listacomuna = [""];
   if (input.provincia !== undefined) {
-    switch (input.provincia) {
-      case "Buenos Aires":
-        listacomuna = [
-          "Almirante Brown",
-          "Avellaneda",
-          "Bahía Blanca",
-          "Berazategui",
-          "Berisso",
-          "Campana",
-          "Escobar",
-          "Esteban Echeverría",
-          "Ezeiza",
-          "Florencio Varela",
-          "General Rodríguez",
-          "General San Martín",
-          "Hurlingham",
-          "Ituzaingó",
-          "José C. Paz",
-          "Junín",
-          "La Matanza",
-          "La Plata",
-          "Lanús",
-          "Lomas de Zamora",
-          "Luján",
-          "Malvinas Argentinas",
-          "Mar del Plata",
-          "Merlo",
-          "Moreno",
-          "Morón",
-          "Necochea",
-          "Olavarría",
-          "Pergamino",
-          "Pilar",
-          "Quilmes",
-          "San Fernando",
-          "San Isidro",
-          "San Miguel",
-          "San Nicolás de Los Arroyos",
-          "Tandil",
-          "Tigre",
-          "Tres de Febrero",
-          "Vicente López",
-          "Zárate",
-        ];
-        break;
-      case "Entre Ríos":
-        listacomuna = [
-          "Basavilbaso",
-          "Bovril",
-          "Cerrito",
-          "Chajarí",
-          "Colón",
-          "Concepción del Uruguay",
-          "Concordia",
-          "Crespo",
-          "Diamante",
-          "Federación",
-          "Federal",
-          "General Galarza",
-          "General Ramírez",
-          "Gualeguay",
-          "Gualeguaychú",
-          "Hasenkamp",
-          "La Paz",
-          "Larroque",
-          "Libertador San Martín",
-          "Lucas González",
-          "Maciá",
-          "María Grande",
-          "Nogoyá",
-          "Oro Verde",
-          "Paraná",
-          "Puerto Ibicuy",
-          "Rosario del Tala",
-          "San Benito",
-          "San Jaime de la Frontera",
-          "San José",
-          "San José de Feliciano",
-          "San Salvador",
-          "Santa Elena",
-          "Urdinarrain",
-          "Viale",
-          "Victoria",
-          "Villa Elisa",
-          "Villa Hernandarias",
-          "Villa Paranacito",
-          "Villaguay",
-        ];
-        break;
-      default:
-        listacomuna = [
-          "Arroyo Seco",
-          "Avellaneda",
-          "Cañada de Gómez",
-          "Capitán Bermúdez",
-          "Carcarañá",
-          "Casilda",
-          "Ceres",
-          "Coronda",
-          "Esperanza",
-          "Firmat",
-          "Fray Luis Beltrán",
-          "Funes",
-          "Gálvez",
-          "Granadero Baigorria",
-          "Laguna Paiva",
-          "Las Parejas",
-          "Las Rosas",
-          "Las Toscas",
-          "Monte Vera",
-          "Pérez",
-          "Puerto General San Martín",
-          "Rafaela",
-          "Reconquista",
-          "Recreo",
-          "Roldán",
-          "Rosario",
-          "Rufino",
-          "San Cristóbal",
-          "San Javier",
-          "San Jorge",
-          "San Justo",
-          "San Lorenzo",
-          "Santa Fe",
-          "Santo Tomé",
-          "Sunchales",
-          "Tostado",
-          "Venado Tuerto",
-          "Vera",
-          "Villa Constitución",
-          "Villa Gobernador Gálvez",
-          "Villa Ocampo",
-        ];
-        break;
-    }
+    let listacomuna1 = states.filter(
+      (com) => com.provincia === input.provincia
+    );
+    listacomuna = listacomuna1.map((el) => el.comuna);
   }
 
   //FORMULARY
@@ -272,6 +153,7 @@ export default function SingIn({ closedialog }) {
     <div
       style={{
         display: "flex",
+        flexDirection: "column",
         justifycontent: "center",
       }}
     >
@@ -406,7 +288,7 @@ export default function SingIn({ closedialog }) {
               autoWidth={false}
             >
               {listacomuna.map((comuna, i) => (
-                <MenuItem sx={{ width: "50%" }} value={i}>
+                <MenuItem sx={{ width: "50%" }} value={comuna}>
                   {comuna}
                 </MenuItem>
               ))}
