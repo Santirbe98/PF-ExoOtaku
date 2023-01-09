@@ -93,17 +93,7 @@ const Cart = () => {
           )}
           <h2 className={styles.total}>Total: ${total}</h2>
           <Box pb={3}>
-            {isAuthenticated ? (
-              UserValidate !== null ? (
-                <PayButton
-                  cartItems={cartItems}
-                  userId={UserValidate.id}
-                  name={UserValidate.name}
-                  email={UserValidate.email}
-                />
-              ) : (
-                <Profile2 />
-              )) : (
+            {!isAuthenticated ? (
               <Button
                 variant="contained"
                 color="success"
@@ -111,6 +101,8 @@ const Cart = () => {
               >
                 Iniciar sesion
               </Button>
+            ) : (
+              UserValidate === null && <Profile2 />
             )}
           </Box>
           <Box pb={3}>

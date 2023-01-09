@@ -3,10 +3,10 @@ import { payment } from "../../Redux/Actions";
 import { useDispatch } from "react-redux";
 import { Button, Box } from "@mui/material";
 
-export const PayButton = ({ cartItems, userId, name, email }) => {
+export const PayButton = ({ cartItems, userId, name, email, priceSent }) => {
   const dispatch = useDispatch();
   const handleCheckOut = async () => {
-    dispatch(payment({ cartItems, userId, name, email }));
+    dispatch(payment({ cartItems, userId, name, email, priceSent }));
   };
 
   return (
