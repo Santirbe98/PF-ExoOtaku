@@ -111,7 +111,6 @@ export function getCheckout(session_id) {
 
 export function postCustomer(payload) {
   return async function (dispatch) {
-    console.log(payload);
     var response;
     try {
       response = await axios.post("/customer/", payload);
@@ -258,8 +257,9 @@ export function addWishList(body) {
 }
 
 export function deleteWishlist(body) {
-  return async function () {
+  return async function (dispatch) {
     try {
+      // console.log(body);
       var json = await axios.delete(`/customer/wishlist`, { data: body });
       return json;
     } catch (error) {

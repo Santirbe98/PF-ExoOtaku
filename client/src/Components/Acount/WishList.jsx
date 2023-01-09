@@ -25,8 +25,14 @@ import { visuallyHidden } from "@mui/utils";
 import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
 import { useDispatch, useSelector } from "react-redux";
-import { chkcustomer, getProducts } from "../../Redux/Actions/index.js";
+import {
+  chkcustomer,
+  deleteWishlist,
+  getProducts,
+} from "../../Redux/Actions/index.js";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -174,39 +180,20 @@ const EnhancedTableToolbar = (props) => {
         }),
       }}
     >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Mi Lista de Deseados
-        </Typography>
-      )}
+      <Typography
+        sx={{ flex: "1 1 100%" }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        Mi Lista de Deseados
+      </Typography>
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+      <Tooltip title="Filter list">
+        <IconButton>
+          <FilterListIcon />
+        </IconButton>
+      </Tooltip>
     </Toolbar>
   );
 };
@@ -230,7 +217,8 @@ export default function EnhancedTable(props) {
 
   const userFavourites = useSelector((state) => state.chk_customer.wishList);
   const allProducts = useSelector((state) => state.products);
-  const email = useSelector((state) => state.chk_customer.email);
+  const idCustomer = useSelector((state) => state.chk_customer.id);
+  const emailUser = useSelector((state) => state.chk_customer.email);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -249,6 +237,7 @@ export default function EnhancedTable(props) {
   let rows;
   if (productsFavourite.length) {
     rows = productsFavourite?.map((e) => ({
+      id: e.id,
       producto: e.name,
       imagen: e.images[0],
       precio: e.price,
@@ -297,6 +286,31 @@ export default function EnhancedTable(props) {
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
+  };
+
+  const handleDelete = (id, name) => {
+    Swal.fire({
+      text: `Estas seguro que deseas quitar el producto ${name}? `,
+      width: "30%",
+      padding: "10px",
+      background: "black",
+      allowEnterKey: true,
+      allowEscapeKey: true,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3a3c3b",
+      cancelButtonColor: "#b50707",
+      confirmButtonText: "Si, quitalo!",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        dispatch(
+          deleteWishlist({
+            id: Number(idCustomer),
+            productId: Number(id),
+          })
+        );
+      }
+    });
   };
 
   const isSelected = (producto) => selected.indexOf(producto) !== -1;
@@ -373,8 +387,22 @@ export default function EnhancedTable(props) {
                       <TableCell align="right">{row.precio}, $</TableCell>
 
                       <TableCell align="center">
-                        <Button variant="contained" href="#contained-buttons">
-                          Pasar al Carrito
+                        <Link
+                          to={`/detail/${row.id}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <Button variant="contained" href="#contained-buttons">
+                            Ir al producto
+                          </Button>
+                        </Link>
+                        <Button
+                          variant="contained"
+                          color="warning"
+                          sx={{ marginLeft: 4 }}
+                        >
+                          <DeleteIcon
+                            onClick={() => handleDelete(row.id, row.producto)}
+                          />
                         </Button>
                       </TableCell>
                     </TableRow>

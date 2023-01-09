@@ -28,7 +28,6 @@ export const CardDetail = ({ match }) => {
     setSize(e.target.value);
   };
   const handleColor1 = (e) => {
-    console.log(productColor);
     setProductColor(product.imagesDb[e]);
   };
   const [selectedValue, setSelectedValue] = React.useState(0);
@@ -36,8 +35,6 @@ export const CardDetail = ({ match }) => {
     var f = Number(e.target.value);
     setSelectedValue(f);
     setProductColor(product.imagesDb[f]);
-    console.log(selectedValue);
-    console.log(productColor);
   };
   const handleColor = (e) => {
     setSelectedValue(e);
@@ -48,6 +45,7 @@ export const CardDetail = ({ match }) => {
   useEffect(() => {
     if (customer.id) dispatch(chkcustomer(customer.email));
   }, [dispatch]);
+
   const handleFavorite = (input) => {
     if (document.getElementById(`${product.id}`).style.color === "white") {
       Swal.fire({
@@ -80,11 +78,11 @@ export const CardDetail = ({ match }) => {
         showCancelButton: true,
         confirmButtonColor: "#00711a",
         cancelButtonColor: "#b50707",
-        confirmButtonText: "Si, agregalo!",
+        confirmButtonText: "Si, quitalo!",
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${input}`).style.color = "white";
-          dispatch(deleteWishlist({ id: customer.id, productId: id }));
+          dispatch(deleteWishlist({ id: customer.id, productId: Number(id) }));
         }
       });
     }
@@ -270,7 +268,6 @@ export const CardDetail = ({ match }) => {
               }}
               onClick={() => {
                 handleColor(index);
-                console.log(productColor);
               }}
               image={i.images}
               alt={i.color}
