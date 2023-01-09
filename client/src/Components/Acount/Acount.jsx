@@ -102,7 +102,8 @@ export const Acount = () => {
 
                     <InputLabel htmlFor="dir1">
                       <Typography variant="h7" gutterBottom component="div">
-                        {UserValidate.provincia},{UserValidate.comuna}
+                        {UserValidate.address.provincia},
+                        {UserValidate.address.comuna}
                       </Typography>
                     </InputLabel>
 

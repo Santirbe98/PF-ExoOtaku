@@ -30,20 +30,20 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      provincia: {
+      /* provincia: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
+      }, */
 
       phone: {
         type: DataTypes.STRING,
         allowNull: true,
       },
 
-      comuna: {
+      /* comuna: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
+      }, */
 
       shipping_address: {
         type: DataTypes.TEXT,

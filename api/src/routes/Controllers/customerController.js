@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { Customer } = require("../../db");
+const { Address } = require("../../db");
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -11,9 +12,9 @@ module.exports = {
         "token",
         "email",
         "country",
-        "provincia",
+        /* "provincia", */
         "phone",
-        "comuna",
+        /*  "comuna", */
         "shipping_address",
         "billing_address",
         "isadmin",
@@ -22,6 +23,10 @@ module.exports = {
       ],
       where: {
         email: email,
+      },
+
+      include: {
+        model: Address,
       },
     });
     return Customer_detail;
@@ -39,11 +44,13 @@ module.exports = {
         "phone",
         "isadmin",
         "deleted",
-        "comuna",
-        "provincia",
       ],
       where: {
         deleted: false,
+      },
+      include: {
+        model: Address,
+        attributes: ["provincia", "comuna"],
       },
     });
     return Customer_list;
@@ -74,6 +81,19 @@ module.exports = {
       isadmin: isadmin,
       deleted: false,
     });
+    let direction = await Address.findAll({
+      where: {
+        provincia: {
+          [Op.eq]: provincia,
+        },
+        comuna: {
+          [Op.eq]: comuna,
+        },
+      },
+    });
+    console.log(direction[0].dataValues);
+    await new_Customer.setAddress(direction[0].dataValues.id);
+
     return new_Customer;
   },
 

@@ -44,7 +44,8 @@ function createData(
   administrador,
   comuna,
   direccionCompra,
-  direccionPago
+  direccionPago,
+  direccion
 ) {
   return {
     id,
@@ -56,6 +57,7 @@ function createData(
     comuna,
     direccionCompra,
     direccionPago,
+    direccion,
   };
 }
 
@@ -83,8 +85,11 @@ function Row(props) {
         <StyledTableCell align="center">{rows.id}</StyledTableCell>
         <StyledTableCell align="center">{rows.nombre}</StyledTableCell>
         <StyledTableCell align="center">{rows.email}</StyledTableCell>
-        <StyledTableCell align="center">{rows.provincia}</StyledTableCell>
+        <StyledTableCell align="center">
+          {rows.direccion.provincia}
+        </StyledTableCell>
         <StyledTableCell align="center">{rows.telefono}</StyledTableCell>
+
         <StyledTableCell align="center">
           <Checkbox
             {...label}
@@ -127,6 +132,7 @@ function Row(props) {
           <Button
             value={rows.id}
             variant="outlined"
+            disabled={rows.email === user.email ? true : false}
             size="small"
             onClick={(e) => {
               e.preventDefault();
@@ -180,7 +186,9 @@ function Row(props) {
                   <TableRow
                     /* key={productsRow.producto} */ key={Math.random()}
                   >
-                    <TableCell align="center">{rows.comuna}</TableCell>
+                    <TableCell align="center">
+                      {rows.direccion.comuna}
+                    </TableCell>
                     <TableCell align="center">{rows.direccionCompra}</TableCell>
                     <TableCell align="center">{rows.direccionPago}</TableCell>
                   </TableRow>
@@ -204,12 +212,13 @@ export default function CollapsibleTableUsers({ users, handleDeleteUser }) {
         users[i].id,
         users[i].name,
         users[i].email,
-        "Provincia",
+        users[i].provincia,
         users[i].phone,
         users[i].isadmin,
         users[i].comuna,
         users[i].shipping_address,
-        users[i].billing_address
+        users[i].billing_address,
+        users[i].address
       )
     );
     let A = {};
