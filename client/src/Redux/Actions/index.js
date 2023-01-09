@@ -17,6 +17,7 @@ import {
   ORDER_BY_DATE,
   DELETE_PRODUCT,
   UPDATE_PRICE,
+  GET_USER_RANKED,
 } from "./actionsTypes";
 
 axios.defaults.baseURL = "http://localhost:3001";
@@ -49,11 +50,31 @@ export function getProductDetail(id) {
   };
 }
 
+export function getUserRanked(id) {
+  return async function (dispatch) {
+    let json = await axios.get(`/rank/${id}`);
+    return dispatch({
+      type: GET_USER_RANKED,
+      payload: json.data,
+    });
+  };
+}
+
 export function postProduct(body) {
   return async function () {
     try {
       var json = await axios.post(`/products`, body);
 
+      return json;
+    } catch (error) {
+      console.error({ error: error.message });
+    }
+  };
+}
+export function postComment(body) {
+  return async function () {
+    try {
+      var json = await axios.post(`/rank`, body);
       return json;
     } catch (error) {
       console.error({ error: error.message });

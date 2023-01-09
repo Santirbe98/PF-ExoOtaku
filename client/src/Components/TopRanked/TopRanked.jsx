@@ -61,6 +61,7 @@ export const TopRanked = () => {
                     id={c.id}
                     image={c.images}
                     name={c.name}
+                    r={c.r}
                   />
                 </Box>
               );

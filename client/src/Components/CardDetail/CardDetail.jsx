@@ -11,6 +11,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { white, black, blue, pink, yellow } from "@mui/material/colors";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Swal from "sweetalert2";
+import  BasicRating from "./RatingList"
+
 
 export const CardDetail = ({ match }) => {
   const { addItemToCart, redirectHome } = useContext(CartContext);
@@ -23,7 +25,7 @@ export const CardDetail = ({ match }) => {
     setSize(e.target.value);
   };
   const handleColor1 = (e) => {
-    console.log(productColor);
+    console.log(product);
     setProductColor(product.imagesDb[e]);
   };
   const [selectedValue, setSelectedValue] = React.useState(0);
@@ -79,6 +81,7 @@ export const CardDetail = ({ match }) => {
     }
   }
 
+
   useEffect(() => {
     dispatch(getProductDetail(id)).then((res) => {
       setProduct(res.payload);
@@ -92,13 +95,13 @@ export const CardDetail = ({ match }) => {
         {Object.entries(product).length ? (
           <Box
             sx={{
-              width: 1000,
-              height: 600,
+              width: 1300,
+              height: 800,
               display: "flex",
               alignItems: "center",
             }}
           >
-            <Grid container spacing={30}>
+            <Grid container spacing={40}>
               <Grid item xs={12} sm={12} md={6}>
                 <Carousel
                   index={selectedValue}
@@ -135,6 +138,11 @@ export const CardDetail = ({ match }) => {
                   >
                     {product.name}
                   </Typography>
+                  {/* <Typography
+                    variant="h3"
+                    sx={{ lineHeight: 2, letterSpacing: 6 }}
+                  >
+                  </Typography> */}
                   <Typography variant="h4" sx={{ lineHeight: 2 }}>
                     Seleccionar color
                   </Typography>
@@ -219,6 +227,11 @@ export const CardDetail = ({ match }) => {
                 </Box>
               </Grid>
             </Grid>
+            <Grid  item xs={12} sm={12} md={6}> 
+            <Typography variant="h6" sx={{ lineHeight: 2 }}>
+                    Opiniones:
+                  </Typography>
+                  <BasicRating props={product}/> </Grid>
           </Box>
         ) : (
           <Grid container>
@@ -257,6 +270,11 @@ export const CardDetail = ({ match }) => {
           ))}
         </Box>
       </Grid>
-    </Box>
+      {/* <Grid  item xs={12} sm={12} md={6}> 
+            <Typography variant="h6" sx={{ lineHeight: 2 }}>
+                    Opiniones:
+                  </Typography>
+                  <BasicRating props={product}/> </Grid>*/}
+    </Box> 
   );
 };

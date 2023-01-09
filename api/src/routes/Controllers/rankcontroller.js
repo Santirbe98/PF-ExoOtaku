@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { RankProduct } = require("../../db");
+const { RankProduct, Product } = require("../../db");
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -29,6 +29,7 @@ module.exports = {
     return Rank_ByProduct;
   },
 
+
   createNewRank: async function (
     customer_id,
     product_id,
@@ -42,6 +43,8 @@ module.exports = {
       comment: comment,
       deleted: false,
     });
+    const selprod = await Product.findByPk(product_id,{})
+    selprod.addRankProduct(new_Rank);
     return new_Rank;
   },
 

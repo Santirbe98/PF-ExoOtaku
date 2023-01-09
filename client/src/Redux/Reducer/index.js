@@ -8,6 +8,7 @@ import {
   ORDER_BY_DATE,
   GET_USER_CREDENTIALS,
   CUSTOMER_BY_EMAIL,
+  GET_USER_RANKED,
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
   colorSelected: [],
   customer: {},
   chk_customer: {},
+  customer_rank: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -43,23 +45,24 @@ function rootReducer(state = initialState, action) {
       } else return { ...state };
 
     case ORDER_RANK:
-      const productsRank = state.filterProducts;
-      const orderProductRank = productsRank.sort((a, b) => a.price - b.price);
+      const productsRank = state.products;
+      const orderProductRank = productsRank.sort((a, b) => a.r - b.r);
+      console.log(orderProductRank);
       return {
         ...state,
-        orderByRank: orderProductRank,
+        orderByRank: orderProductRank.reverse(),
       };
 
     case ORDER_BY_DATE:
       const productsDate = state.filterProducts;
       const orderProductDate = productsDate.sort(
-        (a, b) =>
-          new Date(b.date_added).getTime() - new Date(a.date_added).getTime()
+        (a, b) => a.id - b.id
+        // new Date(b.date_added).getTime() - new Date(a.date_added).getTime()
       );
 
       return {
         ...state,
-        orderByDate: orderProductDate,
+        orderByDate: orderProductDate.reverse(),
       };
 
     case FILTER_ALL:
@@ -133,7 +136,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         chk_customer: action.payload,
       };
-
+    case GET_USER_RANKED:
+      return {
+        ...state,
+        customer_rank: action.payload,
+      };
     default:
       return {
         ...state,

@@ -1,4 +1,4 @@
-const { Product, Category, Size, Color, Type, Image } = require("../../db");
+const { Product, Category, Size, Color, Type, Image, RankProduct } = require("../../db");
 // const { Op } = require("sequelize");
 require("dotenv").config();
 const { cloudinary } = require("../Utils/CludinarySettings.js");
@@ -42,14 +42,13 @@ const getAllProducts = async function () {
             attributes: [],
           },
         },
-        /*         {
+        {
           model: Category,
           attributes: ["category"],
           through: {
             attributes: [],
           },
         },
- */
         {
           model: Image,
           attributes: ["url"],
@@ -58,6 +57,10 @@ const getAllProducts = async function () {
             attributes: ["color"],
           },
         },
+        {
+          model: RankProduct,
+             attributes: [ "rank","comment","customer_id"],
+        },
       ],
     });
     if (products.length) {
@@ -65,11 +68,15 @@ const getAllProducts = async function () {
         const colorArray = d.colors.map((t) => t.color);
         const typeArray = d.types.map((t) => t.type);
         const sizeArray = d.sizes.map((t) => t.size);
+        const RankArray = d.RankProducts.map((r) => r.rank);
+        console.log(RankArray)
+        const rankV = RankArray.length;
+        console.log(rankV)
+        const averageT = (RankArray.reduce((a,b)=>(a+b),0))/rankV;
         const imageArray = d.images.map((t) => ({
           images: t.url,
           color: t.color.color,
         }));
-        // const categoryArray = d.categorys.map((t) => t.category);
         field = d.dataValues;
 
         dataProduct = {
@@ -84,8 +91,11 @@ const getAllProducts = async function () {
           color: colorArray,
           type: typeArray,
           size: sizeArray,
-          /* category: field.categories[0].category, */
+          category: field.categories[0].category,
           imagesDb: imageArray,
+          rank: field.RankProducts,
+          rankeado:[ averageT,rankV],
+          r: averageT? averageT:0,
         };
         return dataProduct;
       });
@@ -160,10 +170,14 @@ const createNewProduct = async ({
 
       newProduct.addSizes(sizeName[0]);
     });
+
     const categoryName = await Category.findOrCreate({
       where: { category },
     });
     newProduct.addCategory(categoryName[0]);
+
+
+console.log(newProduct);
     return newProduct;
   } catch (error) {
     console.log(error);
