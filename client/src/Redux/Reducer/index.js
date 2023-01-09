@@ -93,8 +93,8 @@ function rootReducer(state = initialState, action) {
           return { ...p, images: p.imagesDb[newImage].images };
         } else return p;
       });
-      console.log(filterProducts4);
-      console.log(colorSelectedArr);
+      // console.log(filterProducts4);
+      // console.log(colorSelectedArr);
       return {
         ...state,
         filterProducts: filterProducts4,
