@@ -36,7 +36,6 @@ export const Acount = () => {
   const { user, isAuthenticated } = useAuth0();
   const [orders, setOrders] = useState([]);
   const UserValidate = useSelector((state) => state.chk_customer);
-  console.log(UserValidate);
 
   useEffect(() => {
     dispatch(customerOrders(UserValidate.id)).then((data) => {
