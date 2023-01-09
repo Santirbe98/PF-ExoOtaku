@@ -8,12 +8,19 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import LocalGroceryStoreRoundedIcon from "@mui/icons-material/LocalGroceryStoreRounded";
 import s from "./Card.module.css";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { addWishList, chkcustomer, deleteWishlist } from "../../Redux/Actions";
+import { useEffect } from "react";
 
 export const MediaCard = ({ name, price, image, id, category }) => {
+  const dispatch = useDispatch();
+  const customer = useSelector((state) => state.chk_customer);
+
+  useEffect(() => {
+    if (customer.id) dispatch(chkcustomer(customer.email));
+  }, [dispatch]);
 
   const handleAlert = (input) => {
     if (document.getElementById(`${input}`).style.color === "white") {
@@ -32,8 +39,9 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${input}`).style.color = "red";
+          dispatch(addWishList({ id: customer.id, wishList: id }));
         }
-      })
+      });
     } else {
       Swal.fire({
         text: "Estas seguro que deseas quitar este item de Favoritos?",
@@ -50,10 +58,11 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${input}`).style.color = "white";
+          dispatch(deleteWishlist({ id: customer.id, productId: id }));
         }
-      })
+      });
     }
-  }
+  };
 
   return (
     <Card
@@ -69,11 +78,20 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }}
     >
       <CardActionArea>
-        <FavoriteIcon
-          id={id}
-          style={{ color: "white", position: "absolute", right: 1 }}
-          onClick={() => handleAlert(id)}
-        ></FavoriteIcon>
+        {customer.id ? (
+          <FavoriteIcon
+            id={id}
+            style={{
+              color: customer.wishList?.includes(id) ? "red" : "white",
+              position: "absolute",
+              right: 1,
+            }}
+            onClick={() => handleAlert(id)}
+          ></FavoriteIcon>
+        ) : (
+          false
+        )}
+
         <Link
           style={{
             textDecoration: "none",
@@ -111,6 +129,6 @@ export const MediaCard = ({ name, price, image, id, category }) => {
           <LocalGroceryStoreRoundedIcon />
         </Button>
       </Link>
-    </Card >
+    </Card>
   );
 };

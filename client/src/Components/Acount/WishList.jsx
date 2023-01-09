@@ -1,67 +1,43 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
+import * as React from "react";
+import PropTypes from "prop-types";
+import { alpha } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
 import { Button } from "@material-ui/core";
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { visuallyHidden } from '@mui/utils';
-import { styled } from '@mui/material/styles';
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import { visuallyHidden } from "@mui/utils";
+import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
-
-function createData(imagen, producto, precio) {
-  return {
-    imagen,
-    producto,
-    precio,
-  };
-}
-
-const rows = [
-  createData(
-    'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/products/buzo11-483ac84fbd0bfd134a16560222693507-240-0.png',
-    'BUZO GENOS DEMON CYBORG', 
-    5
-  ),
-  createData(
-    'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/products/blanco1-5fef1b82114a39bab016481572822495-240-0.png',
-    'REMERA MAGO OSCURO', 
-    3
-  ),
-  createData(
-    'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/products/remera-web11-002c1c5fbee6fcd43516671706672010-240-0.webp',
-    'REMERA YUGI VS KAIBA', 
-    1
-  ),
-];
-
+import { useDispatch, useSelector } from "react-redux";
+import { chkcustomer, getProducts } from "../../Redux/Actions/index.js";
+import { useEffect } from "react";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#464543",
     color: "white",
     "&:hover": {
       backgroundColor: "#f29d12 !important",
-    },  
-  }
+    },
+  },
 }));
 
-function descendingComparator(a, b, orderBy) {
+const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -69,17 +45,17 @@ function descendingComparator(a, b, orderBy) {
     return 1;
   }
   return 0;
-}
+};
 
-function getComparator(order, orderBy) {
-  return order === 'desc'
+const getComparator = (order, orderBy) => {
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
-}
+};
 
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
+const stableSort = (array, comparator) => {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -89,38 +65,44 @@ function stableSort(array, comparator) {
     return a[1] - b[1];
   });
   return stabilizedThis.map((el) => el[0]);
-}
+};
 
 const headCells = [
   {
-    id: 'producto',
+    id: "producto",
     numeric: false,
     disablePadding: false,
-    label: 'Producto',
-  },  
+    label: "Producto",
+  },
   {
-    id: 'imagen',
+    id: "imagen",
     numeric: false,
     disablePadding: true,
-    label: 'Imagen',
+    label: "Imagen",
   },
   {
-    id: 'precio',
+    id: "precio",
     numeric: true,
     disablePadding: false,
-    label: 'Precio',
+    label: "Precio",
   },
   {
-    id: 'opt',
+    id: "opt",
     numeric: false,
     disablePadding: false,
-    label: 'Opciones',
+    label: "Opciones",
   },
 ];
 
-function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+const EnhancedTableHead = (props) => {
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -135,26 +117,26 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'Seleccione todos los Productos',
+              "aria-label": "Seleccione todos los Productos",
             }}
           />
         </StyledTableCell>
         {headCells.map((headCell) => (
           <StyledTableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'center'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            align={headCell.numeric ? "right" : "center"}
+            padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
               ) : null}
             </TableSortLabel>
@@ -163,18 +145,18 @@ function EnhancedTableHead(props) {
       </TableRow>
     </TableHead>
   );
-}
+};
 
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
+const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
 
   return (
@@ -184,13 +166,16 @@ function EnhancedTableToolbar(props) {
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+            alpha(
+              theme.palette.primary.main,
+              theme.palette.action.activatedOpacity
+            ),
         }),
       }}
     >
       {numSelected > 0 ? (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           color="inherit"
           variant="subtitle1"
           component="div"
@@ -199,12 +184,12 @@ function EnhancedTableToolbar(props) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           variant="h6"
           id="tableTitle"
           component="div"
         >
-          Mi Lista de Deseos
+          Mi Lista de Deseados
         </Typography>
       )}
 
@@ -223,29 +208,57 @@ function EnhancedTableToolbar(props) {
       )}
     </Toolbar>
   );
-}
+};
 
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+export default function EnhancedTable(props) {
+  const [order, setOrder] = React.useState("asc");
+  const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(chkcustomer(props.email)).then(() => dispatch(getProducts()));
+  }, [dispatch]);
+
+  const userFavourites = useSelector((state) => state.chk_customer.wishList);
+  const allProducts = useSelector((state) => state.products);
+  const email = useSelector((state) => state.chk_customer.email);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
+  // Favourite Products
+  const productsFavourite = [];
+
+  userFavourites?.forEach((p) => {
+    const validateProduct = allProducts?.find((f) => f.id === p);
+    if (validateProduct) productsFavourite.push(validateProduct);
+  });
+
+  let rows;
+  if (productsFavourite.length) {
+    rows = productsFavourite?.map((e) => ({
+      producto: e.name,
+      imagen: e.images[0],
+      precio: e.price,
+    }));
+  } else {
+    rows = [];
+  }
+
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.producto);
+      const newSelected = rows?.map((n) => n.producto);
       setSelected(newSelected);
       return;
     }
@@ -265,7 +278,7 @@ export default function EnhancedTable() {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
@@ -292,14 +305,14 @@ export default function EnhancedTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <Box sx={{ width: "100%" }}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+            size={dense ? "small" : "medium"}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -307,7 +320,7 @@ export default function EnhancedTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={rows?.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -333,34 +346,36 @@ export default function EnhancedTable() {
                           color="primary"
                           checked={isItemSelected}
                           inputProps={{
-                            'aria-labelledby': labelId,
+                            "aria-labelledby": labelId,
                           }}
                         />
-                      </TableCell>   
+                      </TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
-                        padding="none"                       
+                        padding="none"
                         align="left"
                       >
                         {row.producto}
-                      </TableCell> 
+                      </TableCell>
 
                       <TableCell align="left">
-                        <CardMedia component="img" height="50" image={row.imagen} alt={row.producto} />
-                      </TableCell> 
-                      
-                      <TableCell align="right">
-                        {row.precio}, $
+                        <CardMedia
+                          component="img"
+                          height="50"
+                          image={row.imagen}
+                          alt={row.producto}
+                        />
                       </TableCell>
+
+                      <TableCell align="right">{row.precio}, $</TableCell>
 
                       <TableCell align="center">
                         <Button variant="contained" href="#contained-buttons">
                           Pasar al Carrito
                         </Button>
                       </TableCell>
-
                     </TableRow>
                   );
                 })}
@@ -379,7 +394,7 @@ export default function EnhancedTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={rows?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

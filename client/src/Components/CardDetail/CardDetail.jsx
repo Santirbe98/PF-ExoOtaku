@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getProductDetail } from "../../Redux/Actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addWishList,
+  chkcustomer,
+  deleteWishlist,
+  getProductDetail,
+} from "../../Redux/Actions";
 import s from "./CardDetail.module.css";
 import { CartContext } from "../Cart/CartContext";
 import Cart from "../Cart/Cart";
@@ -9,7 +14,7 @@ import Carousel from "react-material-ui-carousel";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { white, black, blue, pink, yellow } from "@mui/material/colors";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
 
 export const CardDetail = ({ match }) => {
@@ -38,7 +43,11 @@ export const CardDetail = ({ match }) => {
     setSelectedValue(e);
     handleColor1(e);
   };
+  const customer = useSelector((state) => state.chk_customer);
 
+  useEffect(() => {
+    if (customer.id) dispatch(chkcustomer(customer.email));
+  }, [dispatch]);
   const handleFavorite = (input) => {
     if (document.getElementById(`${product.id}`).style.color === "white") {
       Swal.fire({
@@ -56,8 +65,9 @@ export const CardDetail = ({ match }) => {
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${product.id}`).style.color = "red";
+          dispatch(addWishList({ id: customer.id, wishList: id }));
         }
-      })
+      });
     } else {
       Swal.fire({
         text: "Estas seguro que deseas quitar este item de Favoritos?",
@@ -74,10 +84,11 @@ export const CardDetail = ({ match }) => {
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${input}`).style.color = "white";
+          dispatch(deleteWishlist({ id: customer.id, productId: id }));
         }
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
     dispatch(getProductDetail(id)).then((res) => {
@@ -206,16 +217,26 @@ export const CardDetail = ({ match }) => {
                   >
                     Agregar al carrito
                   </Button>
-                  <Button
-
-                    style={{ marginLeft: 20 }}
-                    variant="contained"
-                    color="success"
-                    size="large"
-                    onClick={() => handleFavorite(product.id)}
-                  >
-                    <FavoriteIcon id={product.id} style={{ color: "white" }} ></FavoriteIcon>
-                  </Button>
+                  {customer.id ? (
+                    <Button
+                      style={{ marginLeft: 20 }}
+                      variant="contained"
+                      color="success"
+                      size="large"
+                      onClick={() => handleFavorite(product.id)}
+                    >
+                      <FavoriteIcon
+                        id={product.id}
+                        style={{
+                          color: customer.wishList.includes(product.id)
+                            ? "red"
+                            : "white",
+                        }}
+                      ></FavoriteIcon>
+                    </Button>
+                  ) : (
+                    false
+                  )}
                 </Box>
               </Grid>
             </Grid>
