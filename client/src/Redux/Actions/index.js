@@ -257,9 +257,9 @@ export function addWishList(body) {
 }
 
 export function deleteWishlist(body) {
-  return async function () {
+  return async function (dispatch) {
     try {
-      console.log(body);
+      // console.log(body);
       var json = await axios.delete(`/customer/wishlist`, { data: body });
       return json;
     } catch (error) {
