@@ -117,7 +117,8 @@ router.get("/checkout-success", async (req, res) => {
   });
 
   let newOrder = await PurchaseOrder.create({
-    cart_ammount: session.amount_subtotal,
+    delivery_ammount: session.shipping_cost.amount_total / 100,
+    cart_ammount: session.amount_subtotal / 100,
     total_ammount: session.amount_total / 100,
     status: session.payment_status,
   });

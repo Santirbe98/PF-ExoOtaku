@@ -50,7 +50,7 @@ module.exports = {
       },
       include: {
         model: Address,
-        attributes: ["provincia", "comuna"],
+        attributes: ["provincia", "ciudad"],
       },
     });
     return Customer_list;
@@ -63,7 +63,7 @@ module.exports = {
     email,
     country,
     provincia,
-    comuna,
+    ciudad,
     shipping_address,
     billing_address,
     isadmin
@@ -75,23 +75,23 @@ module.exports = {
       email: email,
       country: country,
       provincia: provincia,
-      comuna: comuna,
+      ciudad: ciudad,
       shipping_address: shipping_address,
       billing_address: billing_address,
       isadmin: isadmin,
       deleted: false,
     });
+
     let direction = await Address.findAll({
       where: {
         provincia: {
           [Op.eq]: provincia,
         },
-        comuna: {
-          [Op.eq]: comuna,
+        ciudad: {
+          [Op.eq]: ciudad,
         },
       },
     });
-    console.log(direction[0].dataValues);
     await new_Customer.setAddress(direction[0].dataValues.id);
 
     return new_Customer;
@@ -105,7 +105,7 @@ module.exports = {
     country,
     provincia,
     phone,
-    comuna,
+    ciudad,
     shipping_address,
     billing_address,
     isadmin
@@ -118,7 +118,7 @@ module.exports = {
       country,
       provincia,
       phone,
-      comuna,
+      ciudad,
       shipping_address,
       billing_address,
       isadmin,

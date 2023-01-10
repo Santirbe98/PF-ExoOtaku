@@ -288,7 +288,9 @@ export function deleteWishlist(body) {
 export function filterNeighborhoods() {
   return async function (dispatch) {
     try {
-      var json = await axios.get(`/direcciones`);
+      await axios.post("/direcciones");
+      let json = await axios.get(`/direcciones`);
+
       return dispatch({
         type: "GET_COMUNAS",
         payload: json.data,

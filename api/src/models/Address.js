@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      comuna: {
+      ciudad: {
         type: DataTypes.STRING,
         allowNull: false,
       },

@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
       },
 
       cart_ammount: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.REAL,
       },
 
       delivery_ammount: {
@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
       },
 
       total_ammount: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.REAL,
       },
 
       shipping_address: {

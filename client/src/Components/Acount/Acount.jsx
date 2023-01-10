@@ -106,9 +106,8 @@ export const Acount = () => {
                         {UserValidate === null
                           ? UserValidate.address.provincia
                           : false}
-                        ,
                         {UserValidate === null
-                          ? UserValidate.address.comuna
+                          ? UserValidate.address.ciudad
                           : false}
                       </Typography>
                     </InputLabel>
@@ -164,7 +163,11 @@ export const Acount = () => {
 
                 <Grid item xs={10}>
                   {loading === false ? (
-                    <CollapsibleTable Products={orders} loading={loading} />
+                    <CollapsibleTable
+                      Products={orders}
+                      loading={loading}
+                      user={UserValidate}
+                    />
                   ) : (
                     <>
                       <Typography> Cargando ordenes </Typography>

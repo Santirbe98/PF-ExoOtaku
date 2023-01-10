@@ -40,7 +40,7 @@ export default function SingIn({ closedialog }) {
     email,
     country,
     provincia,
-    comuna,
+    ciudad,
     shipping_address,
     billing_address,
     isadmin,
@@ -51,7 +51,7 @@ export default function SingIn({ closedialog }) {
   email = user?.email;
   country = "";
   provincia = "";
-  comuna = "";
+  ciudad = "";
   shipping_address = "";
   billing_address = "";
   isadmin = false;
@@ -62,7 +62,7 @@ export default function SingIn({ closedialog }) {
     email: email,
     country: country,
     provincia: provincia,
-    comuna: comuna,
+    ciudad: ciudad,
     shipping_address: shipping_address,
     billing_address: billing_address,
     isadmin: isadmin,
@@ -77,6 +77,7 @@ export default function SingIn({ closedialog }) {
       ...input,
       [e.target.name]: e.target.value,
     });
+    console.log(input);
     setErrors(
       validate({
         ...input,
@@ -93,7 +94,7 @@ export default function SingIn({ closedialog }) {
       errors.phone === undefined &&
       errors.country === undefined &&
       errors.provincia === undefined &&
-      errors.comuna === undefined
+      errors.ciudad === undefined
     ) {
       return false;
     } else {
@@ -110,7 +111,7 @@ export default function SingIn({ closedialog }) {
       email: input.email,
       country: input.country,
       provincia: input.provincia,
-      comuna: input.comuna,
+      ciudad: input.ciudad,
       shipping_address: input.shipping_address,
       billing_address: input.billing_address,
       isadmin: input.isadmin,
@@ -126,7 +127,7 @@ export default function SingIn({ closedialog }) {
       email: "",
       country: "",
       provincia: "",
-      comuna: "",
+      ciudad: "",
       shipping_address: "",
       billing_address: "",
       isadmin: false,
@@ -145,7 +146,7 @@ export default function SingIn({ closedialog }) {
     let listacomuna1 = states.filter(
       (com) => com.provincia === input.provincia
     );
-    listacomuna = listacomuna1.map((el) => el.comuna);
+    listacomuna = listacomuna1.map((el) => el.ciudad);
   }
 
   //FORMULARY
@@ -196,7 +197,7 @@ export default function SingIn({ closedialog }) {
           </Grid>
           <Grid item xs={9}>
             <Typography variant="h5" maxwidth gutterBottom component="div">
-              Bienvenido a Exo Otacu
+              Bienvenido a Exo-Otaku
             </Typography>
 
             <Typography variant="h7" maxwidth gutterBottom component="div">
@@ -278,24 +279,24 @@ export default function SingIn({ closedialog }) {
           </FormControl>
 
           <FormControl required fullWidth margin="dense">
-            {input.comuna ? "" : <InputLabel shrink={true}>Comuna</InputLabel>}
+            {input.ciudad ? "" : <InputLabel shrink={true}>Ciudad</InputLabel>}
             <Select
-              name="comuna"
-              id="comuna"
-              value={input.comuna}
+              name="ciudad"
+              id="ciudad"
+              value={input.ciudad}
               onChange={handleChange}
               notched={true}
               autoWidth={false}
             >
-              {listacomuna.map((comuna, i) => (
-                <MenuItem sx={{ width: "50%" }} value={comuna}>
-                  {comuna}
+              {listacomuna.map((ciudad, i) => (
+                <MenuItem sx={{ width: "50%" }} value={ciudad}>
+                  {ciudad}
                 </MenuItem>
               ))}
             </Select>
-            {errors.comuna ? (
-              <FormHelperText id="comuna" style={{ color: "red" }}>
-                {errors.comuna}{" "}
+            {errors.ciudad ? (
+              <FormHelperText id="ciudad" style={{ color: "red" }}>
+                {errors.ciudad}{" "}
               </FormHelperText>
             ) : (
               false
