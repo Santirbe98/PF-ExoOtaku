@@ -18,49 +18,104 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("CartProducts", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addItemToCart = (product) => {
-    Swal.fire({
-      /*  title: "Estas seguro que desea agregar este item?", */
-      text: "Estas seguro que deseas agregar este item?",
-      width: "30%",
-      padding: "10px",
-      allowEnterKey: true,
-      allowEscapeKey: true,
-      icon: "question",
-      background: "black",
-      imageUrl: `${product.images[0]}`,
-      imageHeight: 200,
-      imageWidth: 200,
-      showCancelButton: true,
-      confirmButtonColor: "#00711a",
-      cancelButtonColor: "#b50707",
-      confirmButtonText: "Si, agregalo!",
-    }).then((response) => {
-      if (response.isConfirmed) {
-        const inCart = cartItems.find(
-          (p) =>
-            p.id === product.id &&
-            p.size === product.size &&
-            p.color[0] === product.color[0]
-        );
-        if (inCart) {
-          setCartItems(
-            cartItems.map((p) => {
-              if (
-                p.id === product.id &&
-                p.size === product.size &&
-                p.color[0] === product.color[0]
-              ) {
-                return { ...inCart, amount: inCart.amount + 1 };
-              } else return p;
-            })
-          );
-        } else {
-          setCartItems([...cartItems, { ...product, amount: 1 }]);
-        }
-      }
-    })
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
 
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
+  const addItemToCart = (product) => {
+    {
+      width > 800
+        ? Swal.fire({
+            /*  title: "Estas seguro que desea agregar este item?", */
+            text: "Estas seguro que deseas agregar este item?",
+            width: "30%",
+            padding: "10px",
+            allowEnterKey: true,
+            allowEscapeKey: true,
+            icon: "question",
+            background: "black",
+            imageUrl: `${product.images[0]}`,
+            imageHeight: 200,
+            imageWidth: 200,
+            showCancelButton: true,
+            confirmButtonColor: "#00711a",
+            cancelButtonColor: "#b50707",
+            confirmButtonText: "Si, agregalo!",
+          }).then((response) => {
+            if (response.isConfirmed) {
+              const inCart = cartItems.find(
+                (p) =>
+                  p.id === product.id &&
+                  p.size === product.size &&
+                  p.color[0] === product.color[0]
+              );
+              if (inCart) {
+                setCartItems(
+                  cartItems.map((p) => {
+                    if (
+                      p.id === product.id &&
+                      p.size === product.size &&
+                      p.color[0] === product.color[0]
+                    ) {
+                      return { ...inCart, amount: inCart.amount + 1 };
+                    } else return p;
+                  })
+                );
+              } else {
+                setCartItems([...cartItems, { ...product, amount: 1 }]);
+              }
+            }
+          })
+        : Swal.fire({
+            /*  title: "Estas seguro que desea agregar este item?", */
+            text: "Estas seguro que deseas agregar este item?",
+            width: "80%",
+            padding: "10px",
+            allowEnterKey: true,
+            allowEscapeKey: true,
+            icon: "question",
+            background: "black",
+            imageUrl: `${product.images[0]}`,
+            imageHeight: 200,
+            imageWidth: 200,
+            showCancelButton: true,
+            confirmButtonColor: "#00711a",
+            cancelButtonColor: "#b50707",
+            confirmButtonText: "Si, agregalo!",
+          }).then((response) => {
+            if (response.isConfirmed) {
+              const inCart = cartItems.find(
+                (p) =>
+                  p.id === product.id &&
+                  p.size === product.size &&
+                  p.color[0] === product.color[0]
+              );
+              if (inCart) {
+                setCartItems(
+                  cartItems.map((p) => {
+                    if (
+                      p.id === product.id &&
+                      p.size === product.size &&
+                      p.color[0] === product.color[0]
+                    ) {
+                      return { ...inCart, amount: inCart.amount + 1 };
+                    } else return p;
+                  })
+                );
+              } else {
+                setCartItems([...cartItems, { ...product, amount: 1 }]);
+              }
+            }
+          });
+    }
   };
 
   const cleanCart = () => {
@@ -84,7 +139,7 @@ export const CartProvider = ({ children }) => {
       showCancelButton: true,
       confirmButtonColor: "#3a3c3b",
       cancelButtonColor: "#b50707",
-      confirmButtonText: "Si, quitalo!"
+      confirmButtonText: "Si, quitalo!",
     }).then((response) => {
       if (response.isConfirmed) {
         const inCart = cartItems.find(
@@ -102,7 +157,7 @@ export const CartProvider = ({ children }) => {
           );
         }
       }
-    })
+    });
   };
 
   let history = useHistory();
