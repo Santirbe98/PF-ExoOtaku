@@ -14,6 +14,8 @@ import Carousel from "react-material-ui-carousel";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { white, black, blue, pink, yellow } from "@mui/material/colors";
+import  BasicRating from "./RatingList"
+
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
 
@@ -251,6 +253,11 @@ export const CardDetail = ({ match }) => {
                 </Grid>
               </Grid>
             </Grid>
+            <Grid  item xs={12} sm={12} md={6}> 
+            <Typography variant="h6" sx={{ lineHeight: 2 }}>
+                    Opiniones:
+                  </Typography>
+                  <BasicRating props={product}/> </Grid>
           </Box>
         ) : (
           <Grid container>
