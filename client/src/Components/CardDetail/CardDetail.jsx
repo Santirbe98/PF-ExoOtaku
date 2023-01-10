@@ -120,11 +120,16 @@ export const CardDetail = ({ match }) => {
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                 <Typography
                   variant="h4"
-                  sx={{ lineHeight: 2, letterSpacing: 5 }}
+                  sx={{
+                    lineHeight: 2,
+                    letterSpacing: 5,
+                  }}
                 >
                   {product.name.toUpperCase()}
                 </Typography>
               </Grid>
+            </Grid>
+            <Grid container sx={width > 1000 ? { minWidth: "1000px" } : {}}>
               <Grid item xs={12} sm={5} md={5} lg={5} xl={5}>
                 <Box>
                   <Carousel
@@ -156,7 +161,7 @@ export const CardDetail = ({ match }) => {
                               /* key={i.color} */
                               component="img"
                               sx={{
-                                maxWidth: 400,
+                                maxWidth: 500,
                                 margin: 0,
                                 borderRadius: 3,
                                 backgroundColor: "rgb(33, 33, 33)",
