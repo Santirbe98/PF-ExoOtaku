@@ -60,6 +60,16 @@ export function postProduct(body) {
     }
   };
 }
+export function postComment(body) {
+  return async function () {
+    try {
+      var json = await axios.post(`/rank`, body);
+      return json;
+    } catch (error) {
+      console.error({ error: error.message });
+    }
+  };
+}
 export function orderByPrice(payload) {
   return {
     type: ORDER_BY_PRICE,
