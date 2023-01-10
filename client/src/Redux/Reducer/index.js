@@ -8,6 +8,7 @@ import {
   ORDER_BY_DATE,
   GET_USER_CREDENTIALS,
   CUSTOMER_BY_EMAIL,
+
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -43,23 +44,24 @@ function rootReducer(state = initialState, action) {
       } else return { ...state };
 
     case ORDER_RANK:
-      const productsRank = state.filterProducts;
-      const orderProductRank = productsRank.sort((a, b) => a.price - b.price);
+      const productsRank = state.products;
+      const orderProductRank = productsRank.sort((a, b) => a.r - b.r);
+      console.log(orderProductRank);
       return {
         ...state,
-        orderByRank: orderProductRank,
+        orderByRank: orderProductRank.reverse(),
       };
 
     case ORDER_BY_DATE:
       const productsDate = state.filterProducts;
       const orderProductDate = productsDate.sort(
         (a, b) =>
-          new Date(b.date_added).getTime() - new Date(a.date_added).getTime()
+        a.id - b.id
       );
 
       return {
         ...state,
-        orderByDate: orderProductDate,
+        orderByDate: orderProductDate.reverse(),
       };
 
     case FILTER_ALL:
