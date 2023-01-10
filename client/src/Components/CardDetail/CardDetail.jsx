@@ -88,6 +88,18 @@ export const CardDetail = ({ match }) => {
     }
   };
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     dispatch(getProductDetail(id)).then((res) => {
       setProduct(res.payload);
@@ -96,146 +108,147 @@ export const CardDetail = ({ match }) => {
     });
   }, [dispatch, id]);
   return (
-    <Box minHeight="100vh">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         {Object.entries(product).length ? (
-          <Box
-            sx={{
-              width: 1000,
-              height: 600,
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Grid container spacing={30}>
-              <Grid item xs={12} sm={12} md={6}>
-                <Carousel
-                  index={selectedValue}
-                  fullHeightHover={false}
-                  autoPlay={false}
-                  navButtonsAlwaysVisible={true}
-                  navButtonsWrapperProps={{ margin: "20" }}
-                  next={(prev, active) => handleColor(prev)}
-                  prev={(prev, active) => handleColor(prev)}
+          <Box>
+            <Grid container>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Typography
+                  variant="h4"
+                  sx={{ lineHeight: 2, letterSpacing: 5 }}
                 >
-                  {product.imagesDb?.map((i, index) => (
-                    <CardMedia
-                      key={Math.random()}
-                      /* key={i.color} */
-                      component="img"
-                      sx={{
-                        maxWidth: 400,
-                        margin: 0,
-                        borderRadius: 3,
-                        backgroundColor: "rgb(33, 33, 33)",
-                      }}
-                      image={i.images}
-                      alt={i.color}
-                    />
-                  ))}
-                </Carousel>
+                  {product.name.toUpperCase()}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
+                <Box>
+                  <Carousel
+                    index={selectedValue}
+                    next={(prev, active) => handleColor(prev)}
+                    prev={(prev, active) => handleColor(prev)}
+                    indicators={true}
+                  >
+                    {product.imagesDb?.map((i, index) => (
+                      <Box
+                        sx={
+                          width > 1200
+                            ? {
+                                display: "flex",
+                                justifyContent: "flex-end",
+                              }
+                            : { display: "flex", justifyContent: "center" }
+                        }
+                      >
+                        <CardMedia
+                          key={Math.random()}
+                          /* key={i.color} */
+                          component="img"
+                          sx={{
+                            maxWidth: 400,
+                            margin: 0,
+                            borderRadius: 3,
+                            backgroundColor: "rgb(33, 33, 33)",
+                          }}
+                          image={i.images}
+                          alt={i.color}
+                        />
+                      </Box>
+                    ))}
+                  </Carousel>
+                </Box>
               </Grid>
 
-              <Grid item xs={12} sm={12} md={6}>
-                <Box>
-                  <Typography
-                    variant="h3"
-                    sx={{ lineHeight: 2, letterSpacing: 6 }}
-                  >
-                    {product.name}
-                  </Typography>
-                  <Typography variant="h4" sx={{ lineHeight: 2 }}>
-                    Seleccionar color
-                  </Typography>
-                  <div>
-                    {product.imagesDb?.map((i, index) => (
-                      <FormControlLabel
-                        key={index}
-                        value={index}
-                        label={i.color}
-                        control={
-                          <Radio
-                            checked={selectedValue == index}
-                            onChange={handleChange1}
-                            value={index}
-                            name="radio-buttons"
-                            inputProps={{ "aria-label": "A" }}
-                            sx={{
-                              "& .MuiSvgIcon-root": {
-                                fontSize: 58,
-                              },
-                              color: pink[800],
-                              "&.Mui-checked": {
-                                color: i.color.toLowerCase()[600],
-                              },
-                            }}
-                          />
-                        }
-                      />
-                    ))}
-                  </div>
-                  {/* <select className={s.filterSelect}>
-                    {product.imagesDb.map((c, index) => (
-                      <option key={index}>{c.color}</option>
-                    ))}
-                  </select> */}
-                  <Typography variant="h4" sx={{ lineHeight: 2 }}>
-                    Seleccionar talle
-                  </Typography>
-                  <select
-                    className={s.filterSelect}
-                    onChange={(e) => handleSize(e)}
-                  >
-                    {!product.size?.length ? (
-                      <option key={id}>No hay tallas disponibles</option>
-                    ) : (
-                      product.size.map((c) => (
-                        <option value={c} key={c}>
-                          {c}
-                        </option>
-                      ))
-                    )}
-                  </select>
-                  <Typography variant="h6" sx={{ lineHeight: 2 }}>
-                    {product.description}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    color="success"
-                    size="large"
-                    onClick={() => {
-                      addItemToCart({
-                        ...product,
-                        size: size,
-                        images: [productColor.images],
-                        color: [productColor.color],
-                      });
-                      /*  redirectHome(); */
-                    }}
-                  >
-                    Agregar al carrito
-                  </Button>
-                  {customer.id ? (
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={7}>
+                <Grid container>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {product.imagesDb?.map((i, index) => (
+                        <CardMedia
+                          key={index}
+                          component="img"
+                          sx={{
+                            maxWidth: 150,
+                            margin: 2,
+                            borderRadius: 3,
+                            backgroundColor: "rgb(33, 33, 33)",
+                          }}
+                          onClick={() => {
+                            handleColor(index);
+                          }}
+                          image={i.images}
+                          alt={i.color}
+                        />
+                      ))}
+                    </Box>
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <Box mb={10}>
+                    <Typography variant="h4" sx={{ lineHeight: 2 }}>
+                      Seleccionar talle
+                    </Typography>
+                    <select
+                      className={s.filterSelect}
+                      onChange={(e) => handleSize(e)}
+                    >
+                      {!product.size?.length ? (
+                        <option key={id}>No hay tallas disponibles</option>
+                      ) : (
+                        product.size.map((c) => (
+                          <option value={c} key={c}>
+                            {c}
+                          </option>
+                        ))
+                      )}
+                    </select>
+                    <Typography variant="h6" sx={{ lineHeight: 2 }}>
+                      {product.description}
+                    </Typography>
                     <Button
-                      style={{ marginLeft: 20 }}
                       variant="contained"
                       color="success"
                       size="large"
-                      onClick={() => handleFavorite(product.id)}
+                      onClick={() => {
+                        addItemToCart({
+                          ...product,
+                          size: size,
+                          images: [productColor.images],
+                          color: [productColor.color],
+                        });
+                      }}
                     >
-                      <FavoriteIcon
-                        id={product.id}
-                        style={{
-                          color: customer.wishList.includes(product.id)
-                            ? "red"
-                            : "white",
-                        }}
-                      ></FavoriteIcon>
+                      Agregar al carrito
                     </Button>
-                  ) : (
-                    false
-                  )}
-                </Box>
+                    {customer.id ? (
+                      <Button
+                        style={{ marginLeft: 20 }}
+                        variant="contained"
+                        color="success"
+                        size="large"
+                        onClick={() => handleFavorite(product.id)}
+                      >
+                        <FavoriteIcon
+                          id={product.id}
+                          style={{
+                            color: customer.wishList?.includes(product.id)
+                              ? "red"
+                              : "white",
+                          }}
+                        ></FavoriteIcon>
+                      </Button>
+                    ) : (
+                      false
+                    )}
+                  </Box>
+                </Grid>
               </Grid>
             </Grid>
           </Box>
@@ -247,34 +260,6 @@ export const CardDetail = ({ match }) => {
           </Grid>
         )}
       </Box>
-      <Grid item xs={12} sm={12} md={6}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingBottom: "25px",
-          }}
-        >
-          {product.imagesDb?.map((i, index) => (
-            <CardMedia
-              key={index}
-              component="img"
-              sx={{
-                maxWidth: 150,
-                margin: 2,
-                borderRadius: 3,
-                backgroundColor: "rgb(33, 33, 33)",
-              }}
-              onClick={() => {
-                handleColor(index);
-              }}
-              image={i.images}
-              alt={i.color}
-            />
-          ))}
-        </Box>
-      </Grid>
     </Box>
   );
 };
