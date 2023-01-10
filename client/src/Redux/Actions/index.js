@@ -17,6 +17,7 @@ import {
   ORDER_BY_DATE,
   DELETE_PRODUCT,
   UPDATE_PRICE,
+  UPDATE_WISH_LIST,
 } from "./actionsTypes";
 
 axios.defaults.baseURL = "http://localhost:3001";
@@ -256,11 +257,13 @@ export function updatePrice({ id, newPrice, newStock }) {
 }
 
 export function addWishList(body) {
-  return async function () {
+  return async function (dispatch) {
     try {
       var json = await axios.put(`/customer/wishlist`, body);
-
-      return json;
+      return dispatch({
+        type: UPDATE_WISH_LIST,
+        payload: { id: body.wishList, add: true },
+      });
     } catch (error) {
       console.error({ error: error.message });
     }
@@ -270,9 +273,12 @@ export function addWishList(body) {
 export function deleteWishlist(body) {
   return async function (dispatch) {
     try {
-      // console.log(body);
       var json = await axios.delete(`/customer/wishlist`, { data: body });
-      return json;
+
+      return dispatch({
+        type: UPDATE_WISH_LIST,
+        payload: { id: body.productId, add: false },
+      });
     } catch (error) {
       console.error({ error: error.message });
     }

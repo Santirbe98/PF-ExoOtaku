@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { chkcustomer, getProducts } from "../../Redux/Actions";
+import { getProducts } from "../../Redux/Actions";
 import { MediaCard } from "../Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import Paged from "../Paged/Paged";
@@ -24,11 +24,6 @@ export const Cards = () => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
   };
-  const customer = useSelector((state) => state.chk_customer);
-
-  useEffect(() => {
-    if (customer.id) dispatch(chkcustomer(customer.email));
-  }, [dispatch]);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);

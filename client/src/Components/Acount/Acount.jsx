@@ -14,7 +14,6 @@ import { CircularProgress } from "@mui/material";
 import { Button } from "@mui/material";
 import Rated from "./Rated";
 import WishList from "./WishList";
-
 import { customerOrders } from "../../Redux/Actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -38,17 +37,19 @@ export const Acount = () => {
   const UserValidate = useSelector((state) => state.chk_customer);
 
   useEffect(() => {
-    dispatch(customerOrders(UserValidate.id)).then((data) => {
-      setOrders(data.payload);
-      setTimeout(() => {
-        setLoading(false);
-      }, 3000);
-    });
-  }, [dispatch, UserValidate.id]);
+    if (UserValidate !== null) {
+      dispatch(customerOrders(UserValidate.id)).then((data) => {
+        setOrders(data.payload);
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
+      });
+    }
+  }, [dispatch]);
 
   return (
     <Box minHeight="100vh">
-      {isAuthenticated && (
+      {isAuthenticated && UserValidate !== null ? (
         <Box>
           <>
             <Box sx={{ flexGrow: 1 }}>
@@ -102,8 +103,13 @@ export const Acount = () => {
 
                     <InputLabel htmlFor="dir1">
                       <Typography variant="h7" gutterBottom component="div">
-                        {UserValidate.address.provincia},
-                        {UserValidate.address.comuna}
+                        {UserValidate === null
+                          ? UserValidate.address.provincia
+                          : false}
+                        ,
+                        {UserValidate === null
+                          ? UserValidate.address.comuna
+                          : false}
                       </Typography>
                     </InputLabel>
 
@@ -182,6 +188,16 @@ export const Acount = () => {
               </Grid>
             </Box>
           </>
+        </Box>
+      ) : (
+        <Box minHeight="100vh">
+          <Grid container pt={20}>
+            <Grid item xs={12}>
+              <Typography variant="h3">
+                Para acceder al panel de usuario debe registrarse primero
+              </Typography>
+            </Grid>
+          </Grid>
         </Box>
       )}
     </Box>

@@ -13,14 +13,21 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { addWishList, chkcustomer, deleteWishlist } from "../../Redux/Actions";
 import { useEffect } from "react";
+import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const MediaCard = ({ name, price, image, id, category }) => {
   const dispatch = useDispatch();
   const customer = useSelector((state) => state.chk_customer);
 
+  const { user, isAuthenticated } = useAuth0();
+  const [isLogued, setIsLogued] = useState(false);
+
   useEffect(() => {
-    if (customer.id) dispatch(chkcustomer(customer.email));
-  }, [dispatch]);
+    if (isAuthenticated && customer) {
+      setIsLogued(true);
+    }
+  });
 
   const handleAlert = (input) => {
     if (document.getElementById(`${input}`).style.color === "white") {
@@ -78,7 +85,7 @@ export const MediaCard = ({ name, price, image, id, category }) => {
       }}
     >
       <CardActionArea>
-        {customer.id ? (
+        {isLogued && customer !== null ? (
           <FavoriteIcon
             id={id}
             style={{

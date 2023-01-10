@@ -71,7 +71,6 @@ const getAllProducts = async function () {
         },
       ],
     });
-    console.log(products);
     if (products.length) {
       const dbData = await products.map((d) => {
         const colorArray = d.colors.map((t) => t.color);
@@ -185,7 +184,6 @@ const createNewProduct = async ({
     });
     newProduct.addCategory(categoryName[0]);
 
-    console.log(newProduct);
     return newProduct;
   } catch (error) {
     console.log(error);
