@@ -36,7 +36,7 @@ export const LandingPage = () => {
   return (
     <Box>
       <Grid container>
-        <Grid xs={12} sm={12} md={12} lg={12} xl={12} margin={1}>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} margin={1}>
           <Typography variant="h3">ExoOtaku anime top 5</Typography>
         </Grid>
       </Grid>
@@ -60,7 +60,7 @@ export const LandingPage = () => {
       />
       {/* ------------------------------------------------------------- */}
       <Grid container>
-        <Grid xs={12} sm={12} md={12} lg={12} xl={12} mb={3} mt={3}>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} mb={3} mt={3}>
           <Typography variant="h5">
             Queres saber de nuestras nuevas ofertas?
           </Typography>
@@ -69,7 +69,7 @@ export const LandingPage = () => {
             queridos
           </Typography>
         </Grid>
-        <Grid xs={12} sm={12} md={12} lg={6} xl={7}>
+        <Grid item xs={12} sm={12} md={12} lg={6} xl={7}>
           <Box
             sx={
               width > 1200
@@ -100,7 +100,7 @@ export const LandingPage = () => {
             />
           </Box>
         </Grid>
-        <Grid xs={12} sm={12} md={12} lg={6} xl={5}>
+        <Grid item xs={12} sm={12} md={12} lg={6} xl={5}>
           <Box
             sx={
               width > 1200
