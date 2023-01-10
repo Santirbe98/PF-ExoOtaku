@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
     email,
     country,
     provincia,
-    comuna,
+    ciudad,
     shipping_address,
     billing_address,
     isadmin,
@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
           email,
           country,
           provincia,
-          comuna,
+          ciudad,
           shipping_address,
           billing_address,
           isadmin

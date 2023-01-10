@@ -103,13 +103,8 @@ export const Acount = () => {
 
                     <InputLabel htmlFor="dir1">
                       <Typography variant="h7" gutterBottom component="div">
-                        {UserValidate === null
-                          ? UserValidate.address.provincia
-                          : false}
-                        ,
-                        {UserValidate === null
-                          ? UserValidate.address.comuna
-                          : false}
+                        {UserValidate.address.provincia},
+                        {UserValidate.address.ciudad}
                       </Typography>
                     </InputLabel>
 
@@ -164,7 +159,11 @@ export const Acount = () => {
 
                 <Grid item xs={10}>
                   {loading === false ? (
-                    <CollapsibleTable Products={orders} loading={loading} />
+                    <CollapsibleTable
+                      Products={orders}
+                      loading={loading}
+                      user={UserValidate}
+                    />
                   ) : (
                     <>
                       <Typography> Cargando ordenes </Typography>

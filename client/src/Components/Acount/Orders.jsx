@@ -61,9 +61,9 @@ function Row(props) {
         </StyledTableCell>
         <StyledTableCell align="center">{row.fecha}</StyledTableCell>
         <StyledTableCell align="center">{row.articulos}</StyledTableCell>
-        <StyledTableCell align="center">{row.costo / 100}</StyledTableCell>
+        <StyledTableCell align="center">{row.costo}</StyledTableCell>
         <StyledTableCell align="center">{row.delivery}</StyledTableCell>
-        <StyledTableCell align="center">{row.total / 100}</StyledTableCell>
+        <StyledTableCell align="center">{row.total}</StyledTableCell>
       </TableRow>
 
       <TableRow>
@@ -145,7 +145,7 @@ Row.propTypes = {
   }).isRequired,
 };
 
-export default function CollapsibleTable({ Products }) {
+export default function CollapsibleTable({ Products, user }) {
   let rows = [];
   for (let i = 0; i < Products.length; i++) {
     rows.push(
@@ -154,7 +154,7 @@ export default function CollapsibleTable({ Products }) {
         Products[i].date,
         Products[i].articles,
         Products[i].cost,
-        20,
+        user.address.valorEntrega,
         Products[i].total,
         Products[i].products
       )
