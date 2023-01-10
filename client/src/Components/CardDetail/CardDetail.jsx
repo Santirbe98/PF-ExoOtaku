@@ -13,6 +13,7 @@ import Carousel from "react-material-ui-carousel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
 import BasicRating from "./RatingList";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const CardDetail = ({ match }) => {
   const { addItemToCart, redirectHome } = useContext(CartContext);
@@ -37,11 +38,16 @@ export const CardDetail = ({ match }) => {
     setSelectedValue(e);
     handleColor1(e);
   };
+
   const customer = useSelector((state) => state.chk_customer);
+  const { user, isAuthenticated } = useAuth0();
+  const [isLogued, setIsLogued] = useState(false);
 
   useEffect(() => {
-    if (customer.id) dispatch(chkcustomer(customer.email));
-  }, [dispatch]);
+    if (isAuthenticated && customer) {
+      setIsLogued(true);
+    }
+  });
 
   const handleFavorite = (input) => {
     if (document.getElementById(`${product.id}`).style.color === "white") {
@@ -60,7 +66,7 @@ export const CardDetail = ({ match }) => {
       }).then((response) => {
         if (response.isConfirmed) {
           document.getElementById(`${product.id}`).style.color = "red";
-          dispatch(addWishList({ id: customer.id, wishList: id }));
+          dispatch(addWishList({ id: customer.id, wishList: Number(id) }));
         }
       });
     } else {
@@ -92,6 +98,7 @@ export const CardDetail = ({ match }) => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
   };
+
   useEffect(() => {
     dispatch(getProductDetail(id)).then((res) => {
       setProduct(res.payload);
@@ -238,7 +245,7 @@ export const CardDetail = ({ match }) => {
                     >
                       Agregar al carrito
                     </Button>
-                    {customer.id ? (
+                    {isLogued && customer !== null ? (
                       <Button
                         style={{ marginLeft: 20 }}
                         variant="contained"

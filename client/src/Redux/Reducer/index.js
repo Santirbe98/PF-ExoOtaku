@@ -8,7 +8,7 @@ import {
   ORDER_BY_DATE,
   GET_USER_CREDENTIALS,
   CUSTOMER_BY_EMAIL,
-
+  UPDATE_WISH_LIST,
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -54,10 +54,7 @@ function rootReducer(state = initialState, action) {
 
     case ORDER_BY_DATE:
       const productsDate = state.filterProducts;
-      const orderProductDate = productsDate.sort(
-        (a, b) =>
-        a.id - b.id
-      );
+      const orderProductDate = productsDate.sort((a, b) => a.id - b.id);
 
       return {
         ...state,
@@ -136,6 +133,26 @@ function rootReducer(state = initialState, action) {
         chk_customer: action.payload,
       };
 
+    case UPDATE_WISH_LIST:
+      if (action.payload.add) {
+        let customerWish = state.chk_customer;
+
+        customerWish.wishList.push(action.payload.id);
+
+        return {
+          ...state,
+          chk_customer: customerWish,
+        };
+      } else {
+        const customerWish = state.chk_customer;
+
+        let algo = customerWish.wishList.filter((e) => e !== action.payload.id);
+        customerWish.wishList = algo;
+        return {
+          ...state,
+          chk_customer: customerWish,
+        };
+      }
     default:
       return {
         ...state,
