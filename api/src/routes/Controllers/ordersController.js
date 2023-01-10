@@ -267,7 +267,7 @@ const getOrdersByUser = async (userId) => {
 
     return customerOrders;
   } catch (error) {
-    console.log(error);
+    console.error(error.message);
   }
 };
 
