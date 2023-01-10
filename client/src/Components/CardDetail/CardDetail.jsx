@@ -105,7 +105,7 @@ export const CardDetail = ({ match }) => {
   }, []);
 
   return (
-    <Box>
+    <Box minHeight="100vh">
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         {Object.entries(product).length ? (
           <Box>
@@ -118,23 +118,28 @@ export const CardDetail = ({ match }) => {
                   {product.name.toUpperCase()}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
+              <Grid item xs={12} sm={5} md={5} lg={5} xl={5}>
                 <Box>
                   <Carousel
                     index={selectedValue}
                     next={(prev, active) => handleColor(prev)}
                     prev={(prev, active) => handleColor(prev)}
                     indicators={true}
+                    navButtonsAlwaysInvisible={true}
                   >
                     {product.imagesDb?.map((i, index) => (
                       <Box
                         sx={
-                          width > 1200
+                          width > 1000
                             ? {
                                 display: "flex",
                                 justifyContent: "flex-end",
                               }
-                            : { display: "flex", justifyContent: "center" }
+                            : {
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }
                         }
                       >
                         <Grid container>
@@ -160,7 +165,7 @@ export const CardDetail = ({ match }) => {
                 </Box>
               </Grid>
 
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={7}>
+              <Grid item xs={12} sm={7} md={7} lg={7} xl={7}>
                 <Grid container>
                   <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Typography variant="h4" sx={{ lineHeight: 2 }}>
@@ -257,14 +262,12 @@ export const CardDetail = ({ match }) => {
                 </Grid>
               </Grid>
             </Grid>
-            {/* {product.imagesDb?.map((i, index) => ( */}
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <Typography variant="h6" sx={{ lineHeight: 2 }}>
                 Opiniones:
               </Typography>
               <BasicRating props={product} />
             </Grid>
-            {/* ))} */}
           </Box>
         ) : (
           <Grid container>
