@@ -1,4 +1,12 @@
-const { Product, Category, Size, Color, Type, Image, RankProduct } = require("../../db");
+const {
+  Product,
+  Category,
+  Size,
+  Color,
+  Type,
+  Image,
+  RankProduct,
+} = require("../../db");
 // const { Op } = require("sequelize");
 require("dotenv").config();
 const { cloudinary } = require("../Utils/CludinarySettings.js");
@@ -59,7 +67,7 @@ const getAllProducts = async function () {
         },
         {
           model: RankProduct,
-             attributes: ["productId", "rank","comment"],
+          attributes: ["productId", "rank", "comment"],
         },
       ],
     });
@@ -71,7 +79,8 @@ const getAllProducts = async function () {
         const sizeArray = d.sizes.map((t) => t.size);
         const RankArray = d.RankProducts.map((r) => r.rank);
         const rankV = RankArray.length;
-        const averageT = RankArray? [RankArray.reduce((a,b)=>(a+b)/rankV), rankV]:[];
+        // const averageT = RankArray? [RankArray.reduce((a,b)=>(a+b)/rankV), rankV]:[];
+        const averageT = RankArray.reduce((a, b) => a + b, 0) / rankV;
         const imageArray = d.images.map((t) => ({
           images: t.url,
           color: t.color.color,
@@ -92,8 +101,11 @@ const getAllProducts = async function () {
           size: sizeArray,
           category: field.categories[0].category,
           imagesDb: imageArray,
+          // rank: field.RankProducts,
+          // rankeado: averageT,
           rank: field.RankProducts,
-          rankeado: averageT
+          rankeado: [averageT, rankV],
+          r: averageT ? averageT : 0,
         };
         return dataProduct;
       });
@@ -173,8 +185,7 @@ const createNewProduct = async ({
     });
     newProduct.addCategory(categoryName[0]);
 
-
-console.log(newProduct);
+    console.log(newProduct);
     return newProduct;
   } catch (error) {
     console.log(error);

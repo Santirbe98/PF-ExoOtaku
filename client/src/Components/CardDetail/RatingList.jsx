@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 
 export default function BasicRating(average) {
   const initial = average.props.rankeado[0];
-  const starts = average.props.rank.map(r=>r.rank);
+  const starts = average.props.rank.map((r) => r.rank);
 
   const [value, setValue] = React.useState(initial);
   const [valueStar, setValueStar] = React.useState(starts);
@@ -24,6 +24,9 @@ export default function BasicRating(average) {
     <Box
       sx={{
         "& > legend": { mt: 2 },
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       <Typography component="legend">
@@ -31,13 +34,13 @@ export default function BasicRating(average) {
       </Typography>
       <Rating name="read-only" value={value} precision={0.5} readOnly />
       <Typography component="legend"></Typography>
-      {average.props.rank?.map((c,index) => (
+      {average.props.rank?.map((c, index) => (
         <List
-          sx={{ width: "100%", maxWidth: 760, bgcolor: "background.paper"}}
+          sx={{ width: "100%", maxWidth: 760, bgcolor: "background.paper" }}
         >
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-            <Avatar src="/broken-image.jpg" />
+              <Avatar src="/broken-image.jpg" />
             </ListItemAvatar>
             <ListItemText
               secondary={
@@ -50,12 +53,12 @@ export default function BasicRating(average) {
                   >
                     {/*nombre del usuario que comenta TODO */}
                   </Typography>
-                    <Rating
-                      name="read"
-                      defaultValue={c.rank}
-                      size="small" 
-                      readOnly
-                    />
+                  <Rating
+                    name="read"
+                    defaultValue={c.rank}
+                    size="small"
+                    readOnly
+                  />
                   {` — ${c.comment}"`}
                 </React.Fragment>
               }

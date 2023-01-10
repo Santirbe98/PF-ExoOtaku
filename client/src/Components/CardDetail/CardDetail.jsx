@@ -12,6 +12,7 @@ import { Box, Grid, Typography, CardMedia, Button } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
+import BasicRating from "./RatingList";
 
 export const CardDetail = ({ match }) => {
   const { addItemToCart, redirectHome } = useContext(CartContext);
@@ -91,11 +92,6 @@ export const CardDetail = ({ match }) => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
   };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-  }, []);
-
   useEffect(() => {
     dispatch(getProductDetail(id)).then((res) => {
       setProduct(res.payload);
@@ -103,6 +99,11 @@ export const CardDetail = ({ match }) => {
       setProductColor(res.payload.imagesDb[0]);
     });
   }, [dispatch, id]);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -136,19 +137,23 @@ export const CardDetail = ({ match }) => {
                             : { display: "flex", justifyContent: "center" }
                         }
                       >
-                        <CardMedia
-                          key={Math.random()}
-                          /* key={i.color} */
-                          component="img"
-                          sx={{
-                            maxWidth: 400,
-                            margin: 0,
-                            borderRadius: 3,
-                            backgroundColor: "rgb(33, 33, 33)",
-                          }}
-                          image={i.images}
-                          alt={i.color}
-                        />
+                        <Grid container>
+                          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <CardMedia
+                              key={Math.random()}
+                              /* key={i.color} */
+                              component="img"
+                              sx={{
+                                maxWidth: 400,
+                                margin: 0,
+                                borderRadius: 3,
+                                backgroundColor: "rgb(33, 33, 33)",
+                              }}
+                              image={i.images}
+                              alt={i.color}
+                            />
+                          </Grid>
+                        </Grid>
                       </Box>
                     ))}
                   </Carousel>
@@ -157,6 +162,11 @@ export const CardDetail = ({ match }) => {
 
               <Grid item xs={12} sm={12} md={12} lg={12} xl={7}>
                 <Grid container>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Typography variant="h4" sx={{ lineHeight: 2 }}>
+                      Seleccionar color
+                    </Typography>
+                  </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Box
                       sx={{
@@ -170,7 +180,7 @@ export const CardDetail = ({ match }) => {
                           key={index}
                           component="img"
                           sx={{
-                            maxWidth: 150,
+                            maxWidth: 110,
                             margin: 2,
                             borderRadius: 3,
                             backgroundColor: "rgb(33, 33, 33)",
@@ -247,6 +257,14 @@ export const CardDetail = ({ match }) => {
                 </Grid>
               </Grid>
             </Grid>
+            {/* {product.imagesDb?.map((i, index) => ( */}
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Typography variant="h6" sx={{ lineHeight: 2 }}>
+                Opiniones:
+              </Typography>
+              <BasicRating props={product} />
+            </Grid>
+            {/* ))} */}
           </Box>
         ) : (
           <Grid container>
