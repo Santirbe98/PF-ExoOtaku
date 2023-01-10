@@ -132,7 +132,7 @@ export default function CartBanner({ userId }) {
                         userId={UserValidate.id}
                         name={UserValidate.name}
                         email={UserValidate.email}
-                        priceSent={parseInt(UserValidate.address.valorEntrega)}
+                        priceSent={parseInt(UserValidate !== null ? false : UserValidate.address.valorEntrega)}
                       />
                     ) : (
                       <Profile2 />
