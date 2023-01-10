@@ -103,8 +103,12 @@ export const Acount = () => {
 
                     <InputLabel htmlFor="dir1">
                       <Typography variant="h7" gutterBottom component="div">
-                        {UserValidate.address.provincia},
-                        {UserValidate.address.ciudad}
+                        {UserValidate === null
+                          ? UserValidate.address.provincia
+                          : false}
+                        {UserValidate === null
+                          ? UserValidate.address.ciudad
+                          : false}
                       </Typography>
                     </InputLabel>
 
