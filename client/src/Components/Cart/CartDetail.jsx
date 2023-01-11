@@ -43,8 +43,14 @@ export default function CartBanner({ userId }) {
   const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
   return (
-    <>
-      <Box sx={{ display: "flex", justifyContent: "center", maxWidth: "95%" }}>
+    <Box minHeight="100vh">
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          maxWidth: "95%",
+        }}
+      >
         <TableContainer sx={{ marginLeft: 40 }} component={Paper}>
           <Table sx={{ minWidth: 800 }} aria-label="spanning table">
             <TableHead>
@@ -126,13 +132,14 @@ export default function CartBanner({ userId }) {
                 </TableCell>
                 <TableCell colSpan={2}>
                   {isAuthenticated ? (
-                   Object.keys(UserValidate).length > 0 ? (
+                    UserValidate !== null &&
+                    Object.keys(UserValidate).length > 0 ? (
                       <PayButton
                         cartItems={cartItems}
                         userId={UserValidate.id}
                         name={UserValidate.name}
                         email={UserValidate.email}
-                        priceSent={ Math.ceil(UserValidate.address.valorEntrega) }
+                        priceSent={Math.ceil(UserValidate.address.valorEntrega)}
                       />
                     ) : (
                       <Profile2 />
@@ -155,6 +162,6 @@ export default function CartBanner({ userId }) {
           </Table>
         </TableContainer>
       </Box>
-    </>
+    </Box>
   );
 }
