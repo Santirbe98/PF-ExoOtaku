@@ -308,7 +308,7 @@ export default function CollapsibleTable({ Products, Ranklist, user }) {
                 key={row.name}
                 row={row}
                 ranklist={Ranklist}
-                idcustomer={user}
+                idcustomer={user.id}
               />
             ))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
