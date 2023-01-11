@@ -103,6 +103,7 @@ export const Acount = () => {
       text: "Ahora puede modificar sus datos!",
       width: "30%",
       padding: "10px",
+      position: "top",
       allowEnterKey: true,
       imageUrl:
         "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
@@ -171,8 +172,8 @@ export const Acount = () => {
                   width={
                     width < 1000
                       ? {
-                          width: width - 50,
-                        }
+                        width: width - 50,
+                      }
                       : {}
                   }
                 >

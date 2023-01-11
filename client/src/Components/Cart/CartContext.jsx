@@ -34,94 +34,117 @@ export const CartProvider = ({ children }) => {
     {
       width > 800
         ? Swal.fire({
-            /*  title: "Estas seguro que desea agregar este item?", */
-            text: "Estas seguro que deseas agregar este item?",
-            width: "30%",
-            padding: "10px",
-            allowEnterKey: true,
-            allowEscapeKey: true,
-            icon: "question",
-            background: "black",
-            imageUrl: `${product.images[0]}`,
-            imageHeight: 200,
-            imageWidth: 200,
-            showCancelButton: true,
-            confirmButtonColor: "#00711a",
-            cancelButtonColor: "#b50707",
-            confirmButtonText: "Si, agregalo!",
-          }).then((response) => {
-            if (response.isConfirmed) {
-              const inCart = cartItems.find(
-                (p) =>
-                  p.id === product.id &&
-                  p.size === product.size &&
-                  p.color[0] === product.color[0]
+          /*  title: "Estas seguro que desea agregar este item?", */
+          text: "Estas seguro que deseas agregar este item?",
+          width: "30%",
+          padding: "10px",
+          /* grow: "fullscreen", */
+          allowEnterKey: true,
+          allowEscapeKey: true,
+          icon: "question",
+          position: "top",
+          background: "black",
+          imageUrl: `${product.images[0]}`,
+          imageHeight: 200,
+          imageWidth: 200,
+          showCancelButton: true,
+          confirmButtonColor: "#00711a",
+          cancelButtonColor: "#b50707",
+          confirmButtonText: "Si, agregalo!",
+        }).then((response) => {
+          if (response.isConfirmed) {
+            const inCart = cartItems.find(
+              (p) =>
+                p.id === product.id &&
+                p.size === product.size &&
+                p.color[0] === product.color[0]
+            );
+            if (inCart) {
+              setCartItems(
+                cartItems.map((p) => {
+                  if (
+                    p.id === product.id &&
+                    p.size === product.size &&
+                    p.color[0] === product.color[0]
+                  ) {
+                    return { ...inCart, amount: inCart.amount + 1 };
+                  } else return p;
+                })
               );
-              if (inCart) {
-                setCartItems(
-                  cartItems.map((p) => {
-                    if (
-                      p.id === product.id &&
-                      p.size === product.size &&
-                      p.color[0] === product.color[0]
-                    ) {
-                      return { ...inCart, amount: inCart.amount + 1 };
-                    } else return p;
-                  })
-                );
-              } else {
-                setCartItems([...cartItems, { ...product, amount: 1 }]);
-              }
+            } else {
+              setCartItems([...cartItems, { ...product, amount: 1 }]);
             }
-          })
+          }
+        })
         : Swal.fire({
-            /*  title: "Estas seguro que desea agregar este item?", */
-            text: "Estas seguro que deseas agregar este item?",
-            width: "80%",
-            padding: "10px",
-            allowEnterKey: true,
-            allowEscapeKey: true,
-            icon: "question",
-            background: "black",
-            imageUrl: `${product.images[0]}`,
-            imageHeight: 200,
-            imageWidth: 200,
-            showCancelButton: true,
-            confirmButtonColor: "#00711a",
-            cancelButtonColor: "#b50707",
-            confirmButtonText: "Si, agregalo!",
-          }).then((response) => {
-            if (response.isConfirmed) {
-              const inCart = cartItems.find(
-                (p) =>
-                  p.id === product.id &&
-                  p.size === product.size &&
-                  p.color[0] === product.color[0]
+          /*  title: "Estas seguro que desea agregar este item?", */
+          text: "Estas seguro que deseas agregar este item?",
+          width: "80%",
+          padding: "10px",
+          allowEnterKey: true,
+          allowEscapeKey: true,
+          icon: "question",
+          position: "top",
+          background: "black",
+          imageUrl: `${product.images[0]}`,
+          imageHeight: 200,
+          imageWidth: 200,
+          showCancelButton: true,
+          confirmButtonColor: "#00711a",
+          cancelButtonColor: "#b50707",
+          confirmButtonText: "Si, agregalo!",
+        }).then((response) => {
+          if (response.isConfirmed) {
+            const inCart = cartItems.find(
+              (p) =>
+                p.id === product.id &&
+                p.size === product.size &&
+                p.color[0] === product.color[0]
+            );
+            if (inCart) {
+              setCartItems(
+                cartItems.map((p) => {
+                  if (
+                    p.id === product.id &&
+                    p.size === product.size &&
+                    p.color[0] === product.color[0]
+                  ) {
+                    return { ...inCart, amount: inCart.amount + 1 };
+                  } else return p;
+                })
               );
-              if (inCart) {
-                setCartItems(
-                  cartItems.map((p) => {
-                    if (
-                      p.id === product.id &&
-                      p.size === product.size &&
-                      p.color[0] === product.color[0]
-                    ) {
-                      return { ...inCart, amount: inCart.amount + 1 };
-                    } else return p;
-                  })
-                );
-              } else {
-                setCartItems([...cartItems, { ...product, amount: 1 }]);
-              }
+            } else {
+              setCartItems([...cartItems, { ...product, amount: 1 }]);
             }
-          });
+          }
+        });
     }
   };
 
   const cleanCart = () => {
-    localStorage.removeItem("CartProducts");
-    setCartItems([]);
-    /*     console.log(localStorage); */
+    Swal.fire({
+      text: "Estas seguro que deseas limpiar el carrito?",
+      width: "30%",
+      padding: "10px",
+      background: "black",
+      position: "top",
+      allowEnterKey: true,
+      allowEscapeKey: true,
+      imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+      imageHeight: 200,
+      imageWidth: 200,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#b50707",
+      cancelButtonColor: "#3a3c3b",
+      confirmButtonText: "Si, limpialo!",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        localStorage.removeItem("CartProducts");
+        setCartItems([]);
+        /*     console.log(localStorage); */
+      }
+    });
   };
   const deleteItemToCart = (product) => {
     Swal.fire({
@@ -130,6 +153,7 @@ export const CartProvider = ({ children }) => {
       width: "30%",
       padding: "10px",
       background: "black",
+      position: "top",
       allowEnterKey: true,
       allowEscapeKey: true,
       imageUrl: `${product.images[0]}`,
