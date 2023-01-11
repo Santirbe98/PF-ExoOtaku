@@ -1,6 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import { Button, Box } from "@mui/material";
+import { Button, Box, LinearProgress } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -13,10 +13,8 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { CircularProgress } from "@mui/material";
 import WishList from "./WishList";
-
 import { customerOrders } from "../../Redux/Actions";
 import { customerRank } from "../../Redux/Actions";
-
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
@@ -38,6 +36,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export const Acount = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [loadingProfile, setLoadingProfile] = useState(true);
   const { user, isAuthenticated } = useAuth0();
   const [orders, setOrders] = useState([]);
   const UserValidate = useSelector((state) => state.chk_customer);
@@ -50,8 +49,12 @@ export const Acount = () => {
         setOrders(data.payload);
         setTimeout(() => {
           setLoading(false);
-        }, 3000);
+        }, 2500);
       });
+    } else {
+      setTimeout(() => {
+        setLoadingProfile(false);
+      }, 4000);
     }
   }, [dispatch, UserValidate]);
 
@@ -61,7 +64,7 @@ export const Acount = () => {
         setRanks(data.payload);
         setTimeout(() => {
           setLoading(false);
-        }, 3000);
+        }, 2500);
       });
     }
   }, [dispatch, UserValidate]);
@@ -105,14 +108,15 @@ console.log( rankl)
       padding: "10px",
       position: "top",
       allowEnterKey: true,
-      imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+      imageUrl:
+        "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
       imageHeight: 200,
       imageWidth: 200,
       icon: "info",
       background: "black",
       color: "white",
       confirmButtonColor: "#00711a",
-    })
+    });
     let upt_customer = {
       id: UserValidate.id,
       name: UserValidate.name,
@@ -150,7 +154,7 @@ console.log( rankl)
         alignItems: "center",
       }}
     >
-      {isAuthenticated && UserValidate !== null ? (
+      {loading === false && isAuthenticated && UserValidate !== null ? (
         <Box>
           <Box>
             <Grid
@@ -300,13 +304,21 @@ console.log( rankl)
         </Box>
       ) : (
         <Box minHeight="100vh">
-          <Grid container pt={20}>
-            <Grid item xs={12}>
-              <Typography variant="h3">
-                Para acceder al panel de usuario debe registrarse primero
-              </Typography>
+          {loadingProfile === false ? (
+            <Grid container pt={20}>
+              <Grid item xs={12}>
+                <Typography variant="h3">
+                  Para acceder al panel de usuario debe registrarse primero
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <Grid container pt={20}>
+              <Grid item xs={12}>
+                <CircularProgress disableShrink color="secondary" />
+              </Grid>
+            </Grid>
+          )}
         </Box>
       )}
     </Box>
