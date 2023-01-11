@@ -116,9 +116,9 @@ function Row(props) {
         </StyledTableCell>
         <StyledTableCell align="center">{row.fecha}</StyledTableCell>
         <StyledTableCell align="center">{row.articulos}</StyledTableCell>
-        <StyledTableCell align="center">{row.costo / 100}</StyledTableCell>
+        <StyledTableCell align="center">{row.costo}</StyledTableCell>
         <StyledTableCell align="center">{row.delivery}</StyledTableCell>
-        <StyledTableCell align="center">{row.total / 100}</StyledTableCell>
+        <StyledTableCell align="center">{row.total}</StyledTableCell>
       </TableRow>
 
       <TableRow>
@@ -249,8 +249,9 @@ Row.propTypes = {
   }).isRequired,
 };
 
-export default function CollapsibleTable({ Products, Ranklist, Customer }) {
+export default function CollapsibleTable({ Products, Ranklist, user }) {
   let rows = [];
+  let delivery = user.address.valorEntrega;
   for (let i = 0; i < Products.length; i++) {
     rows.push(
       createData(
@@ -258,7 +259,7 @@ export default function CollapsibleTable({ Products, Ranklist, Customer }) {
         Products[i].date,
         Products[i].articles,
         Products[i].cost,
-        20,
+        delivery,
         Products[i].total,
         Products[i].products
       )
@@ -307,7 +308,7 @@ export default function CollapsibleTable({ Products, Ranklist, Customer }) {
                 key={row.name}
                 row={row}
                 ranklist={Ranklist}
-                idcustomer={Customer}
+                idcustomer={user}
               />
             ))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}

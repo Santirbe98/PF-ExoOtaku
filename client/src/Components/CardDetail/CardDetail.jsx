@@ -13,6 +13,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
 import BasicRating from "./RatingList";
 import { useAuth0 } from "@auth0/auth0-react";
+import { deleteRank } from "../../Redux/Actions";
 
 export const CardDetail = ({ match }) => {
   const { addItemToCart, redirectHome } = useContext(CartContext);
@@ -28,6 +29,15 @@ export const CardDetail = ({ match }) => {
     setProductColor(product.imagesDb[e]);
   };
   const [selectedValue, setSelectedValue] = React.useState(0);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    dispatch(deleteRank(e.target.value)).then(() => {
+      dispatch(getProductDetail(id)).then((data) => {
+        setProduct(data.payload);
+      });
+    });
+  };
   const handleChange1 = (e) => {
     var f = Number(e.target.value);
     setSelectedValue(f);
@@ -278,7 +288,7 @@ export const CardDetail = ({ match }) => {
               <Typography variant="h6" sx={{ lineHeight: 2 }}>
                 Opiniones:
               </Typography>
-              <BasicRating props={product} />
+              <BasicRating props={product} handleDelete={handleDelete} />
             </Grid>
           </Box>
         ) : (
