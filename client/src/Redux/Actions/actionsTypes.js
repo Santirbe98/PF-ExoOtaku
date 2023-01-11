@@ -18,3 +18,5 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const ORDER_BY_DATE = "ORDER_BY_DATE";
 export const UPDATE_PRICE = "UPDATE_PRICE";
 export const UPDATE_WISH_LIST = "UPDATE_WISH_LIST";
+export const CUSTOMER_RANKS = "CUSTOMER_RANKS";
+export const DELETE_RANK = "DELETE_RANK";
