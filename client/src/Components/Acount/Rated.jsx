@@ -182,6 +182,7 @@ function EnhancedTableToolbar(props) {
   //HANDLER DELETE REVIEW
   function handleDelRank(){
     for (let r = 0; r < itemSelected.length; r++) {
+      console.log(itemSelected[r])
       dispatch(deleteRank(itemSelected[r]))
     }
     alert("Calificacion eliminada con exito")    
@@ -222,7 +223,7 @@ function EnhancedTableToolbar(props) {
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           {/* onClick={handleDelRank()} */}
-          <IconButton onClick={handleDelRank()}>
+          <IconButton onClick={handleDelRank}>
             <DeleteIcon 
             />
           </IconButton>
@@ -240,6 +241,7 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable({Ratedproduct}) {
   const rows=Ratedproduct;
+  console.log(rows)
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);

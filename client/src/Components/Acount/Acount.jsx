@@ -72,6 +72,8 @@ export const Acount = () => {
   let orderl = [];
   orderl = orders;
 
+console.log( rankl)
+
   let RankedP = [];
   for (let z = 0; z < rankl.length; z++) {
     for (let w = 0; w < orderl.length; w++) {
@@ -80,7 +82,7 @@ export const Acount = () => {
           RankedP.push({
             id: rankl[z].id,
             imagen: orderl[w].products[x].imagen,
-            producto: orderl[w].products[x].producto,
+            product_id: orderl[w].products[x].id,
             calificacion: rankl[z].rank,
             fecha: rankl[z].createdAt,
             comentario: rankl[z].comment,
@@ -90,8 +92,9 @@ export const Acount = () => {
     }
   }
   const RankedProductList = [
-    ...new Map(RankedP.map((item) => [item.producto, item])).values(),
+    ...new Map(RankedP.map((item) => [item.product_id, item])).values(),
   ];
+
 
   //UPDATE CURTOMER DATA
   function handleMod(event) {
@@ -275,6 +278,7 @@ export const Acount = () => {
                       Products={orders}
                       loading={loading}
                       user={UserValidate}
+                      Ranklist={RankedProductList}
                     />
                   ) : (
                     <>
