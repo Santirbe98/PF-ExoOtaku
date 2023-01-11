@@ -9,7 +9,8 @@ module.exports = {
         "id",
         "product_id",
         "comment",
-        "rank"
+        "rank",
+        "createdAt"
       ],
       where: {
         [Op.and]: [{customer_id: customer_id}, {deleted: false}]
