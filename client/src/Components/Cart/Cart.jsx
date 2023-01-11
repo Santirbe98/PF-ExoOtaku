@@ -113,8 +113,8 @@ const Cart = () => {
                         textDecoration: "none",
                       }}
                     >
-                      <Button variant="contained" color="success" size="small">
-                        Detalle de Carrito
+                      <Button variant="contained" color="primary" size="small"  onClick={() => setCartOpen(!cartOpen)}>
+                        Comprar de Carrito
                       </Button>
                     </Link>
                   ) : (

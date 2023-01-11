@@ -60,7 +60,7 @@ export const TopRanked = () => {
                     key={c.id}
                     id={c.id}
                     image={c.images}
-                    name={c.name}
+                    name={c.name.length >=22 ?`${c.name.substring(0, 18)}...`:c.name}
                     r={c.r}
                   />
                 </Box>

@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
       },
 
       rank: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
 

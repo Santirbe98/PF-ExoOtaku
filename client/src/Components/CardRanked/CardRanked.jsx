@@ -52,7 +52,7 @@ export const CardRanked = ({ name, image, id, r }) => {
           name="disabled"
           defaultValue={r}
           readOnly
-          // size="large"
+          precision={0.5}
         />
       </CardActionArea>
       <Link
