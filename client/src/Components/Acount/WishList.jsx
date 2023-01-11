@@ -14,12 +14,9 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
@@ -101,14 +98,7 @@ const headCells = [
 ];
 
 const EnhancedTableHead = (props) => {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -188,11 +178,11 @@ const EnhancedTableToolbar = (props) => {
         Mi Lista de Deseados
       </Typography>
 
-      <Tooltip title="Filter list">
+      {/* <Tooltip title="Filter list">
         <IconButton>
           <FilterListIcon />
         </IconButton>
-      </Tooltip>
+      </Tooltip> */}
     </Toolbar>
   );
 };
@@ -244,35 +234,6 @@ export default function EnhancedTable(props) {
   } else {
     rows = [];
   }
-
-  // const handleSelectAllClick = (event) => {
-  //   if (event.target.checked) {
-  //     const newSelected = rows?.map((n) => n.producto);
-  //     setSelected(newSelected);
-  //     return;
-  //   }
-  //   setSelected([]);
-  // };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -398,10 +359,9 @@ export default function EnhancedTable(props) {
                           variant="contained"
                           color="warning"
                           sx={{ marginLeft: 4 }}
+                          onClick={() => handleDelete(row.id, row.producto)}
                         >
-                          <DeleteIcon
-                            onClick={() => handleDelete(row.id, row.producto)}
-                          />
+                          <DeleteIcon />
                         </Button>
                       </TableCell>
                     </TableRow>
