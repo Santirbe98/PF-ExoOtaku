@@ -128,7 +128,6 @@ module.exports = {
 
   ModifyWishList: async function (id, wishList) {
     if (!id || !wishList) return "Information incomplete";
-    console.log(id, wishList, "ControllerDB add");
     const updtCustomer = await Customer.findByPk(id, {});
     let newWishList;
     if (!updtCustomer.wishList) {
@@ -150,7 +149,6 @@ module.exports = {
 
   DeleteWishList: async function (id, productId) {
     if (!id || !productId) return "Information incomplete";
-    console.log(id, productId, "ControllerDB delete");
     const userWishListDeleted = await Customer.findByPk(id, {});
     const deletedWishList = [...userWishListDeleted.wishList];
     const newWishList = deletedWishList.filter((e) => e !== productId);
