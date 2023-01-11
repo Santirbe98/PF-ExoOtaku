@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addWishList,
-  chkcustomer,
   deleteWishlist,
   getProductDetail,
 } from "../../Redux/Actions";
@@ -133,10 +132,11 @@ export const CardDetail = ({ match }) => {
               <Grid item xs={12} sm={5} md={5} lg={5} xl={5}>
                 <Box>
                   <Carousel
+                    autoPlay={false}
                     index={selectedValue}
                     next={(prev, active) => handleColor(prev)}
                     prev={(prev, active) => handleColor(prev)}
-                    indicators={true}
+                    indicators={false}
                     navButtonsAlwaysInvisible={true}
                   >
                     {product.imagesDb?.map((i, index) => (
