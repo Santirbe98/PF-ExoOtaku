@@ -27,6 +27,8 @@ export default function BasicRating(average) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+
+        marginBottom: 10,
       }}
     >
       <Typography component="legend">
@@ -34,39 +36,53 @@ export default function BasicRating(average) {
       </Typography>
       <Rating name="read-only" value={value} precision={0.5} readOnly />
       <Typography component="legend"></Typography>
-      {average.props.rank?.map((c, index) => (
-        <List
-          sx={{ width: "100%", maxWidth: 760, bgcolor: "background.paper" }}
-        >
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar src="/broken-image.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  >
-                    {/*nombre del usuario que comenta TODO */}
-                  </Typography>
-                  <Rating
-                    name="read"
-                    defaultValue={c.rank}
-                    size="small"
-                    readOnly
-                  />
-                  {` — ${c.comment}"`}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <Divider variant="inset" component="li" />
-        </List>
-      ))}
+
+      <List
+        sx={{
+          width: "100%",
+          maxWidth: 560,
+          bgcolor: "background.paper",
+          position: "relative",
+          overflow: "auto",
+          maxHeight: 300,
+          "& ul": { padding: 0 },
+        }}
+      >
+        {" "}
+        {average.props.rank?.map((c, index) =>
+          c.comment.length > 0 ? (
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar src="/broken-image.jpg" />
+              </ListItemAvatar>
+              <ListItemText
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: "inline", lineHeight: 2 }}
+                      component="legend"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {c.createdAt.substring(0, 10)}
+                    </Typography>
+                    <Rating
+                      name="read"
+                      defaultValue={c.rank}
+                      size="small"
+                      readOnly
+                    />
+                    {` — ${c.comment}"`}
+                  </React.Fragment>
+                }
+              />{" "}
+              <Divider variant="inset" component="li" />
+            </ListItem>
+          ) : (
+            <></>
+          )
+        )}
+      </List>
     </Box>
   );
 }
