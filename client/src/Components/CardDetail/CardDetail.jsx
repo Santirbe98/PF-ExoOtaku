@@ -136,7 +136,7 @@ export const CardDetail = ({ match }) => {
                     index={selectedValue}
                     next={(prev, active) => handleColor(prev)}
                     prev={(prev, active) => handleColor(prev)}
-                    indicators={false}
+                    indicators={true}
                     navButtonsAlwaysInvisible={true}
                   >
                     {product.imagesDb?.map((i, index) => (
