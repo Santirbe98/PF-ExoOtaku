@@ -17,6 +17,7 @@ import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import { useSelector } from "react-redux";
 import Profile2 from "../Authenticate/Profile2";
+import Grid from "@mui/material/Unstable_Grid2";
 
 export default function CartBanner({ userId }) {
   const UserValidate = useSelector((state) => state.chk_customer);
@@ -51,116 +52,130 @@ export default function CartBanner({ userId }) {
           maxWidth: "95%",
         }}
       >
-        <TableContainer sx={{ marginLeft: 40 }} component={Paper}>
-          <Table sx={{ minWidth: 800 }} aria-label="spanning table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center" colSpan={6}>
-                  Detalles
-                </TableCell>
-                <TableCell align="right">Precio</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell align="left">Descripcion</TableCell>
-                <TableCell align="left">Talla</TableCell>
-                <TableCell align="center">Color</TableCell>
-                <TableCell align="right">Cantidad</TableCell>
-                <TableCell align="right">Unidad</TableCell>
-                <TableCell align="right">Suma</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {cartItems.map((row) => (
-                <TableRow key={row.desc}>
-                  <TableCell align="right">
-                    <img
-                      className={styles.imgs}
-                      src={row.images}
-                      alt={row.name}
-                    />
-                  </TableCell>
-                  <TableCell align="left">{row.description}</TableCell>
-                  <TableCell align="left">{row.size}</TableCell>
-                  <TableCell align="center">{row.color}</TableCell>
-                  <TableCell align="right">
-                    <ChevronLeftRoundedIcon
-                      onClick={() => deleteItemToCart(row)}
-                    />
-                    {row.amount}
-                    <ChevronRightRoundedIcon
-                      onClick={() => addItemToCart(row)}
-                    />
-                  </TableCell>
-                  <TableCell align="right">{row.price}</TableCell>
-                  <TableCell align="right">
-                    {ccyFormat(row.price * row.amount)}
-                  </TableCell>
-                </TableRow>
-              ))}
+        <Grid container>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 800 }} aria-label="spanning table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center" colSpan={6}>
+                      Detalles
+                    </TableCell>
+                    <TableCell align="right">Precio</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell align="left">Descripcion</TableCell>
+                    <TableCell align="left">Talla</TableCell>
+                    <TableCell align="center">Color</TableCell>
+                    <TableCell align="right">Cantidad</TableCell>
+                    <TableCell align="right">Unidad</TableCell>
+                    <TableCell align="right">Suma</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {cartItems.map((row) => (
+                    <TableRow key={row.desc}>
+                      <TableCell align="right">
+                        <img
+                          className={styles.imgs}
+                          src={row.images}
+                          alt={row.name}
+                        />
+                      </TableCell>
+                      <TableCell align="left">{row.description}</TableCell>
+                      <TableCell align="left">{row.size}</TableCell>
+                      <TableCell align="center">{row.color}</TableCell>
+                      <TableCell align="right">
+                        <ChevronLeftRoundedIcon
+                          onClick={() => deleteItemToCart(row)}
+                        />
+                        {row.amount}
+                        <ChevronRightRoundedIcon
+                          onClick={() => addItemToCart(row)}
+                        />
+                      </TableCell>
+                      <TableCell align="right">{row.price}</TableCell>
+                      <TableCell align="right">
+                        {ccyFormat(row.price * row.amount)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
 
-              <TableRow>
-                <TableCell rowSpan={3} />
-                <TableCell colSpan={2}>Subtotal</TableCell>
-                <TableCell align="right">
-                  {ccyFormat(invoiceSubtotal)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>I.V.A</TableCell>
-                <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-                  0
-                )} %`}</TableCell>
-                <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell colSpan={2}>Total</TableCell>
-                <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-                <TableCell align="right">
-                  <Box>
-                    <Link
-                      to="/home"
-                      style={{
-                        textDecoration: "none",
-                      }}
-                    >
-                      <Button variant="contained" color="success">
-                        Seguir comprando
-                      </Button>
-                    </Link>
-                  </Box>
-                </TableCell>
-                <TableCell colSpan={2}>
-                  {isAuthenticated ? (
-                    UserValidate !== null &&
-                    Object.keys(UserValidate).length > 0 ? (
-                      <PayButton
-                        cartItems={cartItems}
-                        userId={UserValidate.id}
-                        name={UserValidate.name}
-                        email={UserValidate.email}
-                        priceSent={Math.ceil(UserValidate.address.valorEntrega)}
-                      />
-                    ) : (
-                      <Profile2 />
-                    )
-                  ) : (
+                  <TableRow>
+                    <TableCell rowSpan={3} />
+                    <TableCell colSpan={2}>Subtotal</TableCell>
+                    <TableCell align="right">
+                      {ccyFormat(invoiceSubtotal)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>I.V.A</TableCell>
+                    <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
+                      0
+                    )} %`}</TableCell>
+                    <TableCell align="right">
+                      {ccyFormat(invoiceTaxes)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell colSpan={2}>Total</TableCell>
+                    <TableCell align="right">
+                      {ccyFormat(invoiceTotal)}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Box>
+                        <Link
+                          to="/home"
+                          style={{
+                            textDecoration: "none",
+                          }}
+                        >
+                          <Button variant="contained" color="success">
+                            Seguir comprando
+                          </Button>
+                        </Link>
+                      </Box>
+                    </TableCell>
+                    <TableCell colSpan={2}>
+                      {isAuthenticated ? (
+                        UserValidate !== null &&
+                        Object.keys(UserValidate).length > 0 ? (
+                          <PayButton
+                            cartItems={cartItems}
+                            userId={UserValidate.id}
+                            name={UserValidate.name}
+                            email={UserValidate.email}
+                            priceSent={Math.ceil(
+                              UserValidate.address.valorEntrega
+                            )}
+                          />
+                        ) : (
+                          <Profile2 />
+                        )
+                      ) : (
+                        <Button
+                          variant="contained"
+                          color="success"
+                          onClick={() => loginWithRedirect()}
+                        >
+                          Iniciar sesion
+                        </Button>
+                      )}
+                    </TableCell>
                     <Button
                       variant="contained"
                       color="success"
-                      onClick={() => loginWithRedirect()}
+                      onClick={cleanCart}
                     >
-                      Iniciar sesion
+                      Borrar historial
                     </Button>
-                  )}
-                </TableCell>
-                <Button variant="contained" color="success" onClick={cleanCart}>
-                  Borrar historial
-                </Button>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );

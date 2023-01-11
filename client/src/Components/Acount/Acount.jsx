@@ -2,7 +2,7 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { Button, Box } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Unstable_Grid2";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
 import { InputLabel } from "@material-ui/core";
@@ -125,25 +125,56 @@ export const Acount = () => {
     history.push(`/customer/`, upt_customer);
   }
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <Box minHeight="100vh">
+    <Box
+      minHeight="100vh"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       {isAuthenticated && UserValidate !== null ? (
         <Box>
-          <>
-            <Box sx={{ flexGrow: 1 }}>
-              <Grid container spacing={2}>
-                {/* ROW 1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
-
-                {/* LEFT =========================================== */}
-                <Grid item xs={1}></Grid>
-
-                {/* MIDLE =========================================== */}
-
-                {/* COL USER DATA */}
-                <Grid item xs={3}>
+          <Box>
+            <Grid
+              container
+              spacing={2}
+              ml={5}
+              mr={5}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              mt={5}
+            >
+              {/* COL USER DATA */}
+              <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
+                <Box
+                  width={
+                    width < 1000
+                      ? {
+                          width: width - 50,
+                        }
+                      : {}
+                  }
+                >
                   <Item>
                     <TableRow>
-                      <TableCell width="120">
+                      <TableCell>
                         {user?.picture && (
                           <CardMedia
                             component="img"
@@ -217,10 +248,12 @@ export const Acount = () => {
                       </Button>
                     </Item>
                   </Item>
-                </Grid>
+                </Box>
+              </Grid>
 
-                {/* COL WISHLIST */}
-                <Grid item xs={7}>
+              {/* COL WISHLIST */}
+              <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
+                <Box width={width < 1000 ? { width: width } : {}}>
                   {loading === false ? (
                     <WishList email={UserValidate.email} />
                   ) : (
@@ -231,16 +264,11 @@ export const Acount = () => {
                       </Box>
                     </>
                   )}
-                </Grid>
+                </Box>
+              </Grid>
 
-                {/* RIGTH =========================================== */}
-                <Grid item xs={1}></Grid>
-
-                {/* ROW 2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
-
-                <Grid item xs={1}></Grid>
-
-                <Grid item xs={10}>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Box width={width < 1000 ? { width: width } : {}}>
                   {loading === false ? (
                     <CollapsibleTable
                       Products={orders}
@@ -255,21 +283,15 @@ export const Acount = () => {
                       </Box>
                     </>
                   )}
-                </Grid>
-
-                <Grid item xs={1}></Grid>
-
-                {/* ROW 3 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
-                <Grid item xs={1}></Grid>
-
-                <Grid item xs={10}>
-                  <EnhancedTable Ratedproduct={RankedProductList} />
-                </Grid>
-
-                <Grid item xs={1}></Grid>
+                </Box>
               </Grid>
-            </Box>
-          </>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Box width={width < 1000 ? { width: width } : {}}>
+                  <EnhancedTable Ratedproduct={RankedProductList} />
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
         </Box>
       ) : (
         <Box minHeight="100vh">
