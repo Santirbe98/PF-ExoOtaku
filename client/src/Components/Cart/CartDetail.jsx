@@ -126,13 +126,13 @@ export default function CartBanner({ userId }) {
                 </TableCell>
                 <TableCell colSpan={2}>
                   {isAuthenticated ? (
-                    UserValidate !== null ? (
+                   Object.keys(UserValidate).length > 0 ? (
                       <PayButton
                         cartItems={cartItems}
                         userId={UserValidate.id}
                         name={UserValidate.name}
                         email={UserValidate.email}
-                        priceSent={parseInt(UserValidate !== null ? false : UserValidate.address.valorEntrega)}
+                        priceSent={ Math.ceil(UserValidate.address.valorEntrega) }
                       />
                     ) : (
                       <Profile2 />

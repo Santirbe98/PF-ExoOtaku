@@ -146,7 +146,7 @@ export const Cards = () => {
                     key={c.id}
                     id={c.id}
                     image={c.images}
-                    name={c.name.substring(0, 25)}
+                    name={c.name.length >=22 ?`${c.name.substring(0, 18)}...`:c.name}
                     category={c.category}
                     price={c.price}
                   />
