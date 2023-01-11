@@ -92,6 +92,7 @@ module.exports = {
         },
       },
     });
+
     await new_Customer.setAddress(direction[0].dataValues.id);
 
     return new_Customer;

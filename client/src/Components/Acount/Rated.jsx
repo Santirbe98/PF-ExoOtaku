@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -24,6 +26,7 @@ import { visuallyHidden } from '@mui/utils';
 import { styled } from '@mui/material/styles';
 import CardMedia from "@mui/material/CardMedia";
 import Rating from '@mui/material/Rating';
+import { deleteRank } from "../../Redux/Actions";
 
 function createData(imagen, producto, calificacion, fecha, comentario) {
   return {
@@ -34,31 +37,6 @@ function createData(imagen, producto, calificacion, fecha, comentario) {
     comentario,
   };
 }
-
-const rows = [
-  createData(
-    'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/products/buzo11-483ac84fbd0bfd134a16560222693507-240-0.png',
-    'BUZO GENOS DEMON CYBORG', 
-    5, 
-    '21/05/2022', 
-    'muy bueno', 
-  ),
-  createData(
-    'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/products/blanco1-5fef1b82114a39bab016481572822495-240-0.png',
-    'REMERA MAGO OSCURO', 
-    3, 
-    '21/05/2022', 
-    'medio falopo', 
-  ),
-  createData(
-    'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/products/remera-web11-002c1c5fbee6fcd43516671706672010-240-0.webp',
-    'REMERA YUGI VS KAIBA', 
-    1, 
-    '29/02/2022', 
-    'La concha de su madre, la impresion esta copada pero la puta remera se encogioooooooooooooooooooooooooooooooooooooooooo', 
-  ),
-];
-
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -132,8 +110,14 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const { 
+    onSelectAllClick, 
+    order, 
+    orderBy, 
+    numSelected, 
+    rowCount, 
+    onRequestSort 
+  } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -188,7 +172,21 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { 
+    numSelected,
+    itemSelected 
+  } = props;
+  const dispatch = useDispatch();
+  const history=useHistory()
+
+  //HANDLER DELETE REVIEW
+  function handleDelRank(){
+    for (let r = 0; r < itemSelected.length; r++) {
+      dispatch(deleteRank(itemSelected[r]))
+    }
+    alert("Calificacion eliminada con exito")    
+    history.go('/acount')
+  }
 
   return (
     <Toolbar
@@ -223,16 +221,14 @@ function EnhancedTableToolbar(props) {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
+          {/* onClick={handleDelRank()} */}
+          <IconButton onClick={handleDelRank()}>
+            <DeleteIcon 
+            />
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        null
       )}
     </Toolbar>
   );
@@ -242,7 +238,8 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable({Ratedproduct}) {
+  const rows=Ratedproduct;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -258,7 +255,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.producto);
+      const newSelected = rows.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -281,7 +278,6 @@ export default function EnhancedTable() {
         selected.slice(selectedIndex + 1),
       );
     }
-
     setSelected(newSelected);
   };
 
@@ -307,7 +303,7 @@ export default function EnhancedTable() {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} itemSelected={selected}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -326,17 +322,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.producto);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
+                  let rwid=row.id
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.producto)}
+                      onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.producto}
+                      key={rwid}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -359,7 +355,13 @@ export default function EnhancedTable() {
                       </TableCell> 
 
                       <TableCell>
-                        <CardMedia component="img" height="50" image={row.imagen} alt={row.producto} />
+                        <CardMedia 
+                          component="img" 
+                          height="50" 
+                          image={row.imagen} 
+                          alt={row.producto} 
+                          value={row.id}
+                        />
                       </TableCell> 
                       
                       <TableCell align="center">
@@ -367,7 +369,8 @@ export default function EnhancedTable() {
                           name="read-only" 
                           value={row.calificacion} 
                           readOnly 
-                          precision={0.5}/>
+                          precision={0.5}
+                        />
                       </TableCell>
                       <TableCell align="left">{row.fecha}</TableCell>
                       <TableCell align="left">{row.comentario}</TableCell>

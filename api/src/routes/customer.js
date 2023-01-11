@@ -53,7 +53,6 @@ router.post("/", async (req, res) => {
         )
       );
   } catch (error) {
-    console.error(error);
     return res.status(400).send("Sorry the information couldn't be save");
   }
 });
@@ -67,7 +66,7 @@ router.put("/", async (req, res) => {
     email,
     country,
     provincia,
-    comuna,
+    ciudad,
     shipping_address,
     billing_address,
     isadmin,
@@ -85,14 +84,13 @@ router.put("/", async (req, res) => {
           country,
           provincia,
           phone,
-          comuna,
+          ciudad,
           shipping_address,
           billing_address,
           isadmin
         )
       );
   } catch (error) {
-    console.error(error);
     return res.status(400).send("Sorry the information couldn't be update");
   }
 });
@@ -103,7 +101,6 @@ router.put("/wishlist", async (req, res) => {
   try {
     return res.status(200).json(await RoutFunc.ModifyWishList(id, wishList));
   } catch (error) {
-    console.error(error);
     return res.status(400).send("Sorry the wishList couldn't be update");
   }
 });
@@ -115,7 +112,6 @@ router.delete("/wishlist", async (req, res) => {
   try {
     return res.status(200).json(await RoutFunc.DeleteWishList(id, productId));
   } catch (error) {
-    console.log(error.message);
     return res.status(400).send("Sorry the wishList couldn't be deleted");
   }
 });

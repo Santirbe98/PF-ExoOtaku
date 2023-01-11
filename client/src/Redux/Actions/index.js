@@ -18,6 +18,8 @@ import {
   DELETE_PRODUCT,
   UPDATE_PRICE,
   UPDATE_WISH_LIST,
+  CUSTOMER_RANKS,
+  DELETE_RANK,
 } from "./actionsTypes";
 
 axios.defaults.baseURL = "http://localhost:3001";
@@ -121,11 +123,15 @@ export function getCheckout(session_id) {
   };
 }
 
-export function postCustomer(payload) {
+export function postCustomer(payload,createmode) {
   return async function (dispatch) {
     var response;
     try {
-      response = await axios.post("/customer/", payload);
+      if (createmode===true) {
+        response = await axios.post("/customer/", payload);
+      }else{
+        response = await axios.put("/customer/", payload);
+      }  
       return response;
     } catch (error) {
       console.log(error);
@@ -298,5 +304,37 @@ export function filterNeighborhoods() {
     } catch (error) {
       console.log({ error: error.message });
     }
+  };
+}
+
+export function customerRank(id) {
+  return async function (dispatch) {
+    let json = await axios.get(`/rank/${id}`);
+    return dispatch({
+      type: CUSTOMER_RANKS,
+      payload: json.data,
+    });
+  };
+}
+
+export function createRank(payload){
+  return async function(dispatch) {
+    var response
+    try {
+      response = await axios.post('/rank/', payload); 
+      return response;
+    } catch (error) {
+      console.log(error)
+    }
+  }        
+}
+
+export function deleteRank(id) {
+  return async function (dispatch) {
+    let json = await axios.delete(`/rank/${id}`);
+    return dispatch({
+      type: DELETE_RANK,
+      payload: json.data,
+    });
   };
 }
