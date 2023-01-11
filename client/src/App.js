@@ -14,7 +14,7 @@ import CartBanner from "./Components/Cart/CartDetail";
 import Orders from "./Components/Orders/Orders";
 import { NavBar } from "./Components/NavBar/NavBar";
 import { Footer } from "./Components/Footer/Footer";
-
+import Customer from "./Components/SignIn/SingIn";
 import { Acount } from "./Components/Acount/Acount";
 import Cart from "./Components/Cart/Cart";
 
@@ -34,6 +34,7 @@ export default function App() {
           <Route exact path="/about" component={About} />
           <Route exact path="/acount" component={Acount} />
           <Route exact path="/checkout-success" component={CheckOutSuccess} />
+          <Route exact path="/customer" component={Customer} />
           <Route
             exact
             path="/detail/:id"

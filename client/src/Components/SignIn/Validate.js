@@ -11,8 +11,8 @@ export function validate(input) {
     errors.country = "Por favor seleccione un pais";
   if (!input.provincia && input.provincia !== "None")
     errors.provincia = "Por favor seleccione una provincia";
-  if (!input.comuna && input.comuna !== "None")
-    errors.comuna = "Por favor seleccione una comuna";
+  if (!input.ciudad && input.ciudad !== "None")
+    errors.ciudad = "Por favor seleccione una ciudad";
   if (!input.phone)
     errors.phone = "Por favor ingrese un numero de telefono de contacto";
 
