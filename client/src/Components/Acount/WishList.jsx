@@ -106,17 +106,7 @@ const EnhancedTableHead = (props) => {
   return (
     <TableHead>
       <TableRow>
-        <StyledTableCell padding="checkbox">
-          {/* <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "Seleccione todos los Productos",
-            }}
-          /> */}
-        </StyledTableCell>
+        <StyledTableCell padding="checkbox"></StyledTableCell>
         {headCells.map((headCell) => (
           <StyledTableCell
             key={headCell.id}
@@ -177,12 +167,6 @@ const EnhancedTableToolbar = (props) => {
       >
         Mi Lista de Deseados
       </Typography>
-
-      {/* <Tooltip title="Filter list">
-        <IconButton>
-          <FilterListIcon />
-        </IconButton>
-      </Tooltip> */}
     </Toolbar>
   );
 };
@@ -293,7 +277,6 @@ export default function EnhancedTable(props) {
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows?.length}
             />
@@ -309,22 +292,13 @@ export default function EnhancedTable(props) {
                   return (
                     <TableRow
                       hover
-                      // onClick={(event) => handleClick(event, row.producto)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.producto}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                        {/* <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        /> */}
-                      </TableCell>
+                      <TableCell padding="checkbox"></TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
