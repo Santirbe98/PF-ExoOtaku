@@ -135,6 +135,15 @@ export default function CartBanner({ userId }) {
                             Seguir comprando
                           </Button>
                         </Link>
+                        <Box pt={2}>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={cleanCart}
+                          >
+                            Limpiar Carrito
+                          </Button>
+                        </Box>
                       </Box>
                     </TableCell>
                     <TableCell colSpan={2}>
@@ -163,13 +172,6 @@ export default function CartBanner({ userId }) {
                         </Button>
                       )}
                     </TableCell>
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={cleanCart}
-                    >
-                      Borrar historial
-                    </Button>
                   </TableRow>
                 </TableBody>
               </Table>
