@@ -23,6 +23,8 @@ import { useState } from "react";
 import CollapsibleTable from "./Orders";
 import EnhancedTable from "./Rated";
 
+import Swal from "sweetalert2";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -94,7 +96,19 @@ export const Acount = () => {
   //UPDATE CURTOMER DATA
   function handleMod(event) {
     event.preventDefault();
-    alert("Ahora puede modificcar sus datos!");
+    Swal.fire({
+      text: "Ahora puede modificar sus datos!",
+      width: "30%",
+      padding: "10px",
+      allowEnterKey: true,
+      imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+      imageHeight: 200,
+      imageWidth: 200,
+      icon: "info",
+      background: "black",
+      color: "white",
+      confirmButtonColor: "#00711a",
+    })
     let upt_customer = {
       id: UserValidate.id,
       name: UserValidate.name,
