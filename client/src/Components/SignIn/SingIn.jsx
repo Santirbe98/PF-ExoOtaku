@@ -17,6 +17,7 @@ import CardMedia from "@mui/material/CardMedia";
 import sendEmailUserRegisted from "./registerEmail";
 import { filterNeighborhoods } from "../../Redux/Actions";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 //MWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWWMWWMWMWMW
 // USER CREATION
@@ -25,8 +26,8 @@ import { useEffect } from "react";
 export default function SingIn(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-  let closedialog=  props.closedialog ? props.closedialog :null
-  let upt_customer=  props.dialog ? null :props.location.state
+  let closedialog = props.closedialog ? props.closedialog : null
+  let upt_customer = props.dialog ? null : props.location.state
   const [states, setStates] = useState([]);
   useEffect(() => {
     dispatch(filterNeighborhoods()).then((data) => setStates(data.payload));
@@ -34,10 +35,9 @@ export default function SingIn(props) {
 
   const { user } = useAuth0();
   const [errors, setErrors] = useState({});
-  let okMsg;
 
   let paquete;
-  let 
+  let
     id,
     name,
     email,
@@ -49,58 +49,56 @@ export default function SingIn(props) {
     isadmin,
     token,
     phone;
-    
-    if (upt_customer!==null) {
-      id=upt_customer.id;
-      name = upt_customer.name;
-      email = upt_customer.email;
-      country = upt_customer.country;
-      provincia = upt_customer.provincia;
-      ciudad= upt_customer.ciudad;
-      shipping_address = upt_customer.shipping_address;
-      billing_address = upt_customer.billing_address;
-      isadmin = false;
-      token = upt_customer.token;
-      phone = upt_customer.phone;
-      paquete = {
-        id:id,
-        name: name,
-        email: email,
-        country: country,
-        provincia: provincia,
-        ciudad: ciudad,
-        shipping_address: shipping_address,
-        billing_address: billing_address,
-        isadmin: isadmin,
-        token: token,
-        phone: phone,
-      }; 
-      okMsg = "Datos Actualizados con Exito"; 
-    }else{
-      name = user?.name;
-      email = user?.email;
-      country = "";
-      provincia = "";
-      ciudad = "";
-      shipping_address = "";
-      billing_address = "";
-      isadmin = false;
-      token = user?.sub;
-      phone = "";
-      paquete = {
-        name: name,
-        email: email,
-        country: country,
-        provincia: provincia,
-        ciudad: ciudad,
-        shipping_address: shipping_address,
-        billing_address: billing_address,
-        isadmin: isadmin,
-        token: token,
-        phone: phone,
-      };
-      okMsg = "Registro Culminado con Exito";
-    }
+
+  if (upt_customer !== null) {
+    id = upt_customer.id;
+    name = upt_customer.name;
+    email = upt_customer.email;
+    country = upt_customer.country;
+    provincia = upt_customer.provincia;
+    ciudad = upt_customer.ciudad;
+    shipping_address = upt_customer.shipping_address;
+    billing_address = upt_customer.billing_address;
+    isadmin = false;
+    token = upt_customer.token;
+    phone = upt_customer.phone;
+    paquete = {
+      id: id,
+      name: name,
+      email: email,
+      country: country,
+      provincia: provincia,
+      ciudad: ciudad,
+      shipping_address: shipping_address,
+      billing_address: billing_address,
+      isadmin: isadmin,
+      token: token,
+      phone: phone,
+    };
+  } else {
+    name = user?.name;
+    email = user?.email;
+    country = "";
+    provincia = "";
+    ciudad = "";
+    shipping_address = "";
+    billing_address = "";
+    isadmin = false;
+    token = user?.sub;
+    phone = "";
+    paquete = {
+      name: name,
+      email: email,
+      country: country,
+      provincia: provincia,
+      ciudad: ciudad,
+      shipping_address: shipping_address,
+      billing_address: billing_address,
+      isadmin: isadmin,
+      token: token,
+      phone: phone,
+    };
+  }
 
   let [input, setInput] = useState(paquete);
 
@@ -139,9 +137,9 @@ export default function SingIn(props) {
     let PAC;
     let createmode;
 
-    if (upt_customer!==null) {
+    if (upt_customer !== null) {
       PAC = {
-        id:input.id,
+        id: input.id,
         name: input.name,
         email: input.email,
         country: input.country,
@@ -153,8 +151,8 @@ export default function SingIn(props) {
         token: input.token,
         phone: input.phone,
       };
-      createmode=false
-    }else{
+      createmode = false
+    } else {
       PAC = {
         name: input.name,
         email: input.email,
@@ -167,9 +165,9 @@ export default function SingIn(props) {
         token: input.token,
         phone: input.phone,
       };
-      createmode=true
+      createmode = true
     }
-    dispatch(postCustomer(PAC,createmode)).then(() =>
+    dispatch(postCustomer(PAC, createmode)).then(() =>
       /* sendEmailUserRegisted({ email: PAC.email, name: PAC.name }) */
       console.log("")
     );
@@ -185,14 +183,40 @@ export default function SingIn(props) {
       token: "",
       phone: "",
     });
-
-    if (closedialog!==null) {
+    if (closedialog !== null) {
       closedialog();
-      history.go('/home')
-    }else{
-      history.go("-1")
+      Swal.fire({
+        text: "Usted se ha registrado con exito!",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+        imageHeight: 200,
+        imageWidth: 200,
+        icon: "success",
+        background: "black",
+        color: "white",
+        confirmButtonColor: "#00711a",
+      }).then(() => {
+        history.go("/home")
+      })
+    } else {
+      Swal.fire({
+        text: "Usted se ha registrado con exito!",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+        imageHeight: 200,
+        imageWidth: 200,
+        icon: "success",
+        background: "black",
+        color: "white",
+        confirmButtonColor: "#00711a",
+      }).then(() => {
+        history.go("/-1")
+      })
     }
-    alert(okMsg);
   };
 
   //ARRAY OF COMUNAS
@@ -206,16 +230,16 @@ export default function SingIn(props) {
 
   //FORMULARY
   return (
-    <Grid 
+    <Grid
       flex
       align="center"
       spacing={24}
       justify="center"
-      style={{ minHeight: '100vh', maxWidth: '100%' }}    
+      style={{ minHeight: '100vh', maxWidth: '100%' }}
     >
       <br></br>
       <Box>
-         <Paper
+        <Paper
           style={{
             display: "flex",
             flexDirection: "column",
@@ -230,7 +254,7 @@ export default function SingIn(props) {
             borderRadius: "20px",
           }}
         >
-        <Grid
+          <Grid
             container
             //spacing={2}
             style={{
@@ -240,8 +264,8 @@ export default function SingIn(props) {
               borderRadius: "20px",
             }}
           >
-            <Grid 
-              item xs={3} 
+            <Grid
+              item xs={3}
               height="80"
             >
               {user?.picture && (
@@ -280,9 +304,9 @@ export default function SingIn(props) {
             }}
             onSubmit={() => submitRegistration}
           >
-            <FormControl 
-              required 
-              fullWidth 
+            <FormControl
+              required
+              fullWidth
               margin="dense"
             >
               {input.country ? "" : <InputLabel shrink={true}>Pais</InputLabel>}
@@ -322,22 +346,22 @@ export default function SingIn(props) {
                 autoWidth={false}
                 alignItems="left"
               >
-                <MenuItem 
-                  sx={{ width: "100%" }} 
+                <MenuItem
+                  sx={{ width: "100%" }}
                   value={"Buenos Aires"}
                 >
                   Buenos Aires
                 </MenuItem>
 
-                <MenuItem 
-                  sx={{ width: "100%" }} 
+                <MenuItem
+                  sx={{ width: "100%" }}
                   value={"Entre Ríos"}
                 >
                   Entre Ríos
                 </MenuItem>
 
-                <MenuItem 
-                  sx={{ width: "100%" }} 
+                <MenuItem
+                  sx={{ width: "100%" }}
                   value={"Santa Fe"}
                 >
                   Santa Fe
@@ -345,8 +369,8 @@ export default function SingIn(props) {
 
               </Select>
               {errors.provincia ? (
-                <FormHelperText 
-                  id="provincia" 
+                <FormHelperText
+                  id="provincia"
                   style={{ color: "red" }}
                 >
                   {errors.provincia}
@@ -356,9 +380,9 @@ export default function SingIn(props) {
               )}
             </FormControl>
 
-            <FormControl 
-              required 
-              fullWidth 
+            <FormControl
+              required
+              fullWidth
               margin="dense"
             >
               {input.ciudad ? "" : <InputLabel shrink={true}>Ciudad</InputLabel>}
@@ -371,8 +395,8 @@ export default function SingIn(props) {
                 autoWidth={false}
               >
                 {listacomuna.map((ciudad, i) => (
-                  <MenuItem 
-                    sx={{ width: "50%" }} 
+                  <MenuItem
+                    sx={{ width: "50%" }}
                     value={ciudad}
                   >
                     {ciudad}
@@ -388,9 +412,9 @@ export default function SingIn(props) {
               )}
             </FormControl>
 
-            <FormControl 
-              required 
-              fullWidth 
+            <FormControl
+              required
+              fullWidth
               margin="dense"
             >
               <InputLabel htmlFor="shipping_address">
@@ -405,8 +429,8 @@ export default function SingIn(props) {
                 onChange={handleChange}
               />
               {errors.shipping_address ? (
-                <FormHelperText 
-                  id="email" 
+                <FormHelperText
+                  id="email"
                   style={{ color: "red" }}
                 >
                   {errors.shipping_address}
@@ -416,9 +440,9 @@ export default function SingIn(props) {
               )}
             </FormControl>
 
-            <FormControl 
-              required 
-              fullWidth 
+            <FormControl
+              required
+              fullWidth
               margin="dense"
             >
               <InputLabel htmlFor="billing_address">
@@ -458,7 +482,7 @@ export default function SingIn(props) {
               ) : (
                 false
               )}
-            <br></br>
+              <br></br>
             </FormControl>
             <Button
               disabled={isValid()}
@@ -466,16 +490,16 @@ export default function SingIn(props) {
               variant="contained"
               type="submit"
               style={
-                {backgroundColor: '#212121', color: '#FFFFFF'}
+                { backgroundColor: '#212121', color: '#FFFFFF' }
               }
-              sx={{':hover': { bgcolor: '#ffb300', color:'#FFFFFF',},}}
+              sx={{ ':hover': { bgcolor: '#ffb300', color: '#FFFFFF', }, }}
               onClick={submitRegistration}
             >
               Guardar
             </Button>
           </form>
-        </Paper> 
-      </Box> 
+        </Paper>
+      </Box>
     </Grid>
   );
 }
