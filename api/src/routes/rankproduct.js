@@ -23,7 +23,6 @@ router.get('/',async(req,res)=>{
 
 //SAVE RANK
 router.post('/',async(req,res)=>{
-    console.log(req.body)
     let {    
         customer_id,
         product_id,
@@ -45,7 +44,6 @@ router.post('/',async(req,res)=>{
 
 //MODIFY RANK
 router.put('/',async(req,res)=>{
-    console.log(req.body)
     let { 
         id,   
         rank,
