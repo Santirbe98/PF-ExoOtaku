@@ -1,5 +1,6 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./App.css";
 import { Form } from "./Components/Form/Form";
 import { Shop } from "./Components/Shop/Shop";
@@ -17,8 +18,20 @@ import { Footer } from "./Components/Footer/Footer";
 import Customer from "./Components/SignIn/SingIn";
 import { Acount } from "./Components/Acount/Acount";
 import Cart from "./Components/Cart/Cart";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Ban } from "./Components/Ban/Ban";
 
 export default function App() {
+  const customer = useSelector((state) => state.chk_customer);
+  const { user, isAuthenticated } = useAuth0();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isAuthenticated && customer !== null && customer.deleted === true) {
+      history.push("/ban");
+    }
+  });
+
   return (
     <div className="App">
       <CartProvider>
@@ -35,6 +48,7 @@ export default function App() {
           <Route exact path="/acount" component={Acount} />
           <Route exact path="/checkout-success" component={CheckOutSuccess} />
           <Route exact path="/customer" component={Customer} />
+          <Route exact path="/ban" component={Ban} />
           <Route
             exact
             path="/detail/:id"
