@@ -12,9 +12,7 @@ module.exports = {
         "token",
         "email",
         "country",
-        /* "provincia", */
         "phone",
-        /*  "comuna", */
         "shipping_address",
         "billing_address",
         "isadmin",

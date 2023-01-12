@@ -1,5 +1,4 @@
 const { Router } = require("express");
-// Importar todos los routers;
 const productsRouter = require("./products.js");
 const colorRouter = require("./color.js");
 const categoriesRouter = require("./category.js");
@@ -12,9 +11,8 @@ const customerRouter = require("./customer.js");
 const ordersRouter = require("./orders");
 const rankproductRouter = require("./rankproduct");
 const direcciones = require("./direcciones");
-// Ejemplo: const authRouter = require('./auth.js');
+
 const router = Router();
-// Configurar los routers
 router.use("/payment", Payment);
 router.use("/products", productsRouter);
 router.use("/color", colorRouter);
