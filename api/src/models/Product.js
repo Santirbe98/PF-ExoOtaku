@@ -6,33 +6,27 @@ module.exports = (sequelize) => {
     {
       name: {
         type: DataTypes.STRING,
-        /* allowNull: false, */
       },
 
       amount: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
-        /* allowNull: false, */
       },
 
       price: {
         type: DataTypes.INTEGER,
-        /* allowNull: false, */
       },
 
       descriptions: {
         type: DataTypes.STRING,
-        /* allowNull: false, */
       },
 
       imagesForm: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        /* allowNull: false, */
       },
 
       stock: {
         type: DataTypes.INTEGER,
-        /* allowNull: false, */
       },
 
       date_added: {
