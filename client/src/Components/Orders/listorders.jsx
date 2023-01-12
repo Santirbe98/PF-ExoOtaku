@@ -22,6 +22,7 @@ import { getAllOrders, modifyStatusORder } from "../../Redux/Actions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { InputLabel } from "@mui/material";
 import Swal from "sweetalert2";
+import sendEmailOrder from "./emailorder";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -121,11 +122,11 @@ function Row(props) {
                 onChange={(e) => {
                   handleChange2(e);
                   if (e.target.value === "Completada") {
-                    /* sendEmailOrder({
+                    sendEmailOrder({
                       email: rows.email,
                       name: rows.usuario,
                       paymentId: rows.orden,
-                    }) */
+                    });
                   }
                 }}
               >
