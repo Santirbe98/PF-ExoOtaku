@@ -22,9 +22,7 @@ export default function BasicRating(average) {
   const [value, setValue] = React.useState(initial);
 
   const totalVotes = average.props.rankeado[1];
-  console.log(average);
-  console.log(value);
-  console.log(starts);
+
   return (
     <Box
       sx={{

@@ -26,7 +26,6 @@ const Cart = () => {
     setProductsLength(
       cartItems.reduce((previous, current) => previous + current.amount, 0)
     );
-    /*     console.log(cartItems); */
   }, [cartItems]);
   const total = cartItems.reduce(
     (previous, current) => previous + current.amount * current.price,

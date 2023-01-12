@@ -20,14 +20,11 @@ import Profile2 from "../Authenticate/Profile2";
 import Grid from "@mui/material/Unstable_Grid2";
 import Swal from "sweetalert2";
 
-
 export default function CartBanner({ userId }) {
   const UserValidate = useSelector((state) => state.chk_customer);
-  console.log(UserValidate);
   const { loginWithRedirect, isAuthenticated } = useAuth0();
   const { cartItems, addItemToCart, deleteItemToCart, cleanCart } =
     useContext(CartContext);
-  console.log(cartItems);
 
   const TAX_RATE = 0.21;
 
@@ -50,7 +47,8 @@ export default function CartBanner({ userId }) {
       position: "top",
       allowEnterKey: true,
       allowEscapeKey: true,
-      imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+      imageUrl:
+        "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
       imageHeight: 200,
       imageWidth: 200,
       icon: "warning",
@@ -60,10 +58,10 @@ export default function CartBanner({ userId }) {
       confirmButtonText: "Si, limpialo!",
     }).then((response) => {
       if (response.isConfirmed) {
-        cleanCart()
+        cleanCart();
       }
     });
-  }
+  };
 
   const invoiceSubtotal = subtotal();
   const invoiceTaxes = TAX_RATE * invoiceSubtotal;
@@ -175,7 +173,7 @@ export default function CartBanner({ userId }) {
                     <TableCell colSpan={2}>
                       {isAuthenticated ? (
                         UserValidate !== null &&
-                          Object.keys(UserValidate).length > 0 ? (
+                        Object.keys(UserValidate).length > 0 ? (
                           <PayButton
                             cartItems={cartItems}
                             userId={UserValidate.id}
