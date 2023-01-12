@@ -1,11 +1,22 @@
 import React, { useState } from "react";
-import { filterAll, orderByPrice,orderByRank,orderByDate } from "../../Redux/Actions/index";
+import {
+  filterAll,
+  orderByPrice,
+  orderByRank,
+  orderByDate,
+} from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, FormControl, Grid, MenuItem, Select } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 export const Filter = (props) => {
   const products = useSelector((state) => state.products);
-  // const products = useSelector((state) => state.orderByDate);
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
@@ -84,75 +95,207 @@ export const Filter = (props) => {
       <Grid container padding="">
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)" }}>
-          <Box sx={{ paddingTop: "5px" }}>
+            <Box sx={{ paddingTop: "5px" }}>
               <Button
                 size="large"
                 variant="contained"
                 color="warning"
-                // onClick={(e) => (e)}
-                onClick={()=>{dispatch(orderByRank()); props.setOrder(2)}}
+                sx={{ marginRight: 2 }}
+                onClick={() => {
+                  dispatch(orderByRank());
+                  props.setOrder(2);
+                }}
               >
-               Mas Votados
+                Mas Votados
               </Button>
               <Button
                 size="large"
                 variant="contained"
                 color="warning"
-                onClick={() =>{dispatch(orderByDate()); props.setOrder(1)}}
+                onClick={() => {
+                  dispatch(orderByDate());
+                  props.setOrder(1);
+                }}
               >
                 Lo Nuevo
               </Button>
             </Box>
             <Box sx={{ padding: "5px" }}>
-              <FormControl variant="standard" sx={{ m: 1, width: 250, backgroundColor: "white", textTransform: "uppercase" }}>
+              <FormControl
+                variant="standard"
+                sx={{
+                  m: 1,
+                  width: 250,
+                  backgroundColor: "white",
+                  textTransform: "uppercase",
+                }}
+              >
                 <Select
                   defaultValue="Colores"
-                  sx={{ borderRadius: "5px", fontFamily: "inherit", letterSpacing: "1.5px" }}
+                  sx={{
+                    borderRadius: "5px",
+                    fontFamily: "inherit",
+                    letterSpacing: "1.5px",
+                  }}
                   id="colorSelect"
                   value={input.color}
                   label="Color"
                   onChange={handleFilterCol}
                 >
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"All"}>Colores</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Black"}>Negro</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"White"}>Blanco</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Blue"}>Azul</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Pink"}>Rosado</MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"All"}
+                  >
+                    Colores
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"Black"}
+                  >
+                    Negro
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"White"}
+                  >
+                    Blanco
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"Blue"}
+                  >
+                    Azul
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"Pink"}
+                  >
+                    Rosado
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Box>
 
             <Box sx={{ padding: "5px" }}>
-              <FormControl variant="standard" sx={{ m: 1, width: 250, textDecoration: "none", backgroundColor: "white" }}>
+              <FormControl
+                variant="standard"
+                sx={{
+                  m: 1,
+                  width: 250,
+                  textDecoration: "none",
+                  backgroundColor: "white",
+                }}
+              >
                 <Select
                   defaultValue="Tipo de prenda"
-                  sx={{ borderRadius: "5px", textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }}
+                  sx={{
+                    borderRadius: "5px",
+                    textTransform: "uppercase",
+                    fontFamily: "inherit",
+                    letterSpacing: "1.5px",
+                  }}
                   id="typeSelect"
                   value={input.type}
                   label="Type"
                   onChange={handleFilterType}
                 >
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"All"}>Tipo de prenda</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Tshirt"}>Remera</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Swetter"}>Buzo</MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"All"}
+                  >
+                    Tipo de prenda
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"Tshirt"}
+                  >
+                    Remera
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"Swetter"}
+                  >
+                    Buzo
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Box>
 
             <Box sx={{ padding: "5px" }}>
-              <FormControl variant="standard" sx={{ m: 1, width: 250, textDecoration: "none", backgroundColor: "white" }}>
+              <FormControl
+                variant="standard"
+                sx={{
+                  m: 1,
+                  width: 250,
+                  textDecoration: "none",
+                  backgroundColor: "white",
+                }}
+              >
                 <Select
                   defaultValue="Todos los animes"
-                  sx={{ borderRadius: "5px", fontFamily: "inherit", textTransform: "uppercase" }}
+                  sx={{
+                    borderRadius: "5px",
+                    fontFamily: "inherit",
+                    textTransform: "uppercase",
+                  }}
                   id="typeSelect"
                   value={input.category}
                   label="category"
                   onChange={handleFilterCat}
                 >
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"All"}>Todos los animes</MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"All"}
+                  >
+                    Todos los animes
+                  </MenuItem>
                   {categoriesWithoutRepeat.map((c) => {
                     return (
-                      <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={c} key={c}>
+                      <MenuItem
+                        sx={{
+                          textTransform: "uppercase",
+                          fontFamily: "inherit",
+                          letterSpacing: "1.5px",
+                        }}
+                        value={c}
+                        key={c}
+                      >
                         {c}
                       </MenuItem>
                     );
@@ -162,7 +305,15 @@ export const Filter = (props) => {
             </Box>
 
             <Box sx={{ padding: "5px" }}>
-              <FormControl variant="standard" sx={{ m: 1, width: 250, backgroundColor: "white", textTransform: "uppercase" }}>
+              <FormControl
+                variant="standard"
+                sx={{
+                  m: 1,
+                  width: 250,
+                  backgroundColor: "white",
+                  textTransform: "uppercase",
+                }}
+              >
                 <Select
                   defaultValue="Ordenar por Precios"
                   sx={{ borderRadius: "5px", fontFamily: "inherit" }}
@@ -171,9 +322,36 @@ export const Filter = (props) => {
                   label="Color"
                   onChange={handleOrderByPrice}
                 >
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"All"}>Ordenar por Precios</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Desc"}>Mayor Precio</MenuItem>
-                  <MenuItem sx={{ textTransform: "uppercase", fontFamily: "inherit", letterSpacing: "1.5px" }} value={"Asc"}>Menor Precio</MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"All"}
+                  >
+                    Ordenar por Precios
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"Desc"}
+                  >
+                    Mayor Precio
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      textTransform: "uppercase",
+                      fontFamily: "inherit",
+                      letterSpacing: "1.5px",
+                    }}
+                    value={"Asc"}
+                  >
+                    Menor Precio
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -192,6 +370,6 @@ export const Filter = (props) => {
           </Box>
         </Grid>
       </Grid>
-    </Box >
+    </Box>
   );
 };

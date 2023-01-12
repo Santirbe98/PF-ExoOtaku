@@ -23,7 +23,7 @@ import { Ban } from "./Components/Ban/Ban";
 
 export default function App() {
   const customer = useSelector((state) => state.chk_customer);
-  const { user, isAuthenticated, logout } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const history = useHistory();
   const [isBan, setIsBan] = useState(false);
 

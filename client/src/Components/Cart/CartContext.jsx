@@ -31,9 +31,8 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   const addItemToCart = (product) => {
-    {
-      width > 800
-        ? Swal.fire({
+    width > 800
+      ? Swal.fire({
           /*  title: "Estas seguro que desea agregar este item?", */
           text: "Estas seguro que deseas agregar este item?",
           width: "30%",
@@ -76,7 +75,7 @@ export const CartProvider = ({ children }) => {
             }
           }
         })
-        : Swal.fire({
+      : Swal.fire({
           /*  title: "Estas seguro que desea agregar este item?", */
           text: "Estas seguro que deseas agregar este item?",
           width: "80%",
@@ -118,14 +117,13 @@ export const CartProvider = ({ children }) => {
             }
           }
         });
-    }
   };
 
   const cleanCart = () => {
     localStorage.removeItem("CartProducts");
     setCartItems([]);
     /*     console.log(localStorage); */
-  }
+  };
 
   const deleteItemToCart = (product) => {
     Swal.fire({

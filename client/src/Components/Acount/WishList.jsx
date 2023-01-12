@@ -191,7 +191,6 @@ export default function EnhancedTable(props) {
   const userFavourites = useSelector((state) => state.chk_customer.wishList);
   const allProducts = useSelector((state) => state.products);
   const idCustomer = useSelector((state) => state.chk_customer.id);
-  const emailUser = useSelector((state) => state.chk_customer.email);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";

@@ -4,7 +4,6 @@ import { validate } from "./Validate";
 import { postProduct } from "../../Redux/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { makeStyles } from "@material-ui/core/styles";
-import style from "./Form.module.css";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import { FormHelperText, MenuItem, Select } from "@mui/material";
