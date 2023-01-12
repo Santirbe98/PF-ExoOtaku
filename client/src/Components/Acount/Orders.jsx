@@ -23,6 +23,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Rating from "@mui/material/Rating";
 import { createRank } from "../../Redux/Actions";
+import Swal from "sweetalert2";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -93,8 +94,23 @@ function Row(props) {
     };
     console.log(PAC);
     dispatch(createRank(PAC));
-    alert("Calificacion guardada con exito");
-    history.go("/acount");
+    // alert("Calificacion guardada con exito");
+    Swal.fire({
+      text: "Usted ha agregado un comentario con exito!",
+      width: "30%",
+      padding: "10px",
+      allowEnterKey: true,
+      imageUrl:
+        "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+      imageHeight: 200,
+      imageWidth: 200,
+      icon: "success",
+      background: "black",
+      color: "white",
+      confirmButtonColor: "#00711a",
+    }).then(() => {
+      history.go("/acount");
+    });
     //history.replaceState( {} , 'foo', '/foo' );
   }
 

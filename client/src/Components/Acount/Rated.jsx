@@ -27,6 +27,7 @@ import { styled } from '@mui/material/styles';
 import CardMedia from "@mui/material/CardMedia";
 import Rating from '@mui/material/Rating';
 import { deleteRank } from "../../Redux/Actions";
+import Swal from "sweetalert2";
 
 function createData(imagen, producto, calificacion, fecha, comentario) {
   return {
@@ -181,12 +182,35 @@ function EnhancedTableToolbar(props) {
 
   //HANDLER DELETE REVIEW
   function handleDelRank(){
-    for (let r = 0; r < itemSelected.length; r++) {
-      console.log(itemSelected[r])
-      dispatch(deleteRank(itemSelected[r]))
-    }
-    alert("Calificacion eliminada con exito")    
-    history.go('/acount')
+    //console.log(itemSelected[r])
+    Swal.fire({
+        /*  title: "Estas seguro que desea agregar este item?", */
+        text: "Estas seguro que deseas eliminar este comentario?",
+        width: "30%",
+      padding: "10px",
+      /* grow: "fullscreen", */
+      allowEnterKey: true,
+      allowEscapeKey: true,
+      icon: "warning",
+      position: "top",
+      background: "black",
+      imageUrl:
+      "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+      imageHeight: 200,
+      imageWidth: 200,
+      showCancelButton: true,
+      confirmButtonColor: "#00711a",
+      cancelButtonColor: "#b50707",
+      confirmButtonText: "Si, eliminalo!",
+    }).then((response)=>{
+      if(response.isConfirmed) {
+        for (let r = 0; r < itemSelected.length; r++) {
+        dispatch(deleteRank(itemSelected[r]))
+        history.go('/acount')
+      }
+      }
+    })
+    // alert("Calificacion eliminada con exito")    
   }
 
   return (
