@@ -9,8 +9,9 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { TopRanked } from "../TopRanked/TopRanked";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { TopDate } from "../TopDate/TopDate";
 export const LandingPage = () => {
   let dispatch = useDispatch();
@@ -23,12 +24,21 @@ export const LandingPage = () => {
 
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
-
+  const initialMessage = "";
+  const [message, setMessage] = useState(initialMessage);
   const handleResize = () => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
   };
 
+  const handeleMessage = (e) => {
+    setMessage(e.target.value);
+  };
+  const handleWipeMessage = () => {
+    setTimeout(() => {
+      setMessage(initialMessage);
+    }, 1000);
+  };
   useEffect(() => {
     window.addEventListener("resize", handleResize);
   }, []);
@@ -61,13 +71,7 @@ export const LandingPage = () => {
       {/* ------------------------------------------------------------- */}
       <Grid container>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12} mb={3} mt={3}>
-          <Typography variant="h5">
-            Queres saber de nuestras nuevas ofertas?
-          </Typography>
-          <Typography variant="subtitle2">
-            Dejanos tu email para robar todos tus datos y los de tus seres
-            queridos
-          </Typography>
+          <Typography variant="h5">Dejanos tu consulta</Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={6} xl={7}>
           <Box
@@ -81,8 +85,10 @@ export const LandingPage = () => {
             }
           >
             <TextField
-              placeholder="E-mail"
+              placeholder="Hola,queria saber..."
               color="success"
+              value={message}
+              onChange={handeleMessage}
               style={
                 width < 1200
                   ? {
@@ -114,9 +120,12 @@ export const LandingPage = () => {
             <Button
               variant="contained"
               color="success"
-              sx={{ padding: "15px", ml: "10px" }}
+              sx={{ padding: "10px", ml: "10px" }}
+              target="_blank"
+              href={`https://api.whatsapp.com/send/?phone=543426507112&text=${message}`}
+              onClick={handleWipeMessage}
             >
-              Subcribirme
+              <WhatsAppIcon htmlColor="white" fontSize="large" />
             </Button>
           </Box>
         </Grid>
