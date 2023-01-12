@@ -30,9 +30,9 @@ router.post("/create-checkout-session", async (req, res) => {
       userId: req.body.userId,
       name: req.body.name,
       email: req.body.email,
+      priceSent: req.body.priceSent,
     },
   });
-  console.log(customer.metadata.userId);
 
   await ShoppingCart.update(
     {
@@ -69,28 +69,29 @@ router.post("/create-checkout-session", async (req, res) => {
             id: item.id,
           },
         },
-        unit_amount: item.price * 100,
+        unit_amount: item.price * 100 + item.price * 0.21 * 100,
       },
       quantity: item.amount,
     };
   });
 
   const session = await stripe.checkout.sessions.create({
-    /* payment_method_types: ['card'], */
-    /* shipping_address_collection: {allowed_countries: ['AR']}, */
-    /* shipping_options: [
-            {
-            shipping_rate_data: {
-                type: 'fixed_amount',
-                fixed_amount: {amount: 0, currency: 'usd'},
-                display_name: 'Free shipping',
-                    delivery_estimate: {
-                    minimum: {unit: 'business_day', value: 5},
-                    maximum: {unit: 'business_day', value: 7},
-                    },
-                },
-            },
-        ], */
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: "fixed_amount",
+          fixed_amount: {
+            amount: customer.metadata.priceSent * 100,
+            currency: "ars",
+          },
+          display_name: "puede variar según la dirección proporcionada",
+          delivery_estimate: {
+            minimum: { unit: "business_day", value: 5 },
+            maximum: { unit: "business_day", value: 10 },
+          },
+        },
+      },
+    ],
 
     line_items: line_items,
     customer: customer.id,
@@ -116,8 +117,9 @@ router.get("/checkout-success", async (req, res) => {
   });
 
   let newOrder = await PurchaseOrder.create({
-    cart_ammount: session.amount_subtotal,
-    total_ammount: session.amount_total,
+    delivery_ammount: session.shipping_cost.amount_total / 100,
+    cart_ammount: session.amount_subtotal / 100,
+    total_ammount: session.amount_total / 100,
     status: session.payment_status,
   });
 

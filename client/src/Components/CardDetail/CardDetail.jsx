@@ -1,14 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getProductDetail } from "../../Redux/Actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addWishList,
+  deleteWishlist,
+  getProductDetail,
+} from "../../Redux/Actions";
 import s from "./CardDetail.module.css";
 import { CartContext } from "../Cart/CartContext";
-import Cart from "../Cart/Cart";
 import { Box, Grid, Typography, CardMedia, Button } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import Radio from "@mui/material/Radio";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { white, black, blue, pink, yellow } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Swal from "sweetalert2";
+import BasicRating from "./RatingList";
+import { useAuth0 } from "@auth0/auth0-react";
+import { deleteRank } from "../../Redux/Actions";
 
 export const CardDetail = ({ match }) => {
   const { addItemToCart, redirectHome } = useContext(CartContext);
@@ -21,21 +26,88 @@ export const CardDetail = ({ match }) => {
     setSize(e.target.value);
   };
   const handleColor1 = (e) => {
-    console.log(productColor);
     setProductColor(product.imagesDb[e]);
   };
   const [selectedValue, setSelectedValue] = React.useState(0);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    dispatch(deleteRank(e.target.value)).then(() => {
+      dispatch(getProductDetail(id)).then((data) => {
+        setProduct(data.payload);
+      });
+    });
+  };
   const handleChange1 = (e) => {
     var f = Number(e.target.value);
     setSelectedValue(f);
     setProductColor(product.imagesDb[f]);
-    console.log(selectedValue);
-    console.log(productColor);
   };
   const handleColor = (e) => {
     setSelectedValue(e);
     handleColor1(e);
   };
+
+  const customer = useSelector((state) => state.chk_customer);
+  const { user, isAuthenticated } = useAuth0();
+  const [isLogued, setIsLogued] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated && customer) {
+      setIsLogued(true);
+    }
+  });
+
+  const handleFavorite = (input) => {
+    if (document.getElementById(`${product.id}`).style.color === "white") {
+      Swal.fire({
+        text: "Estas seguro que deseas agregar este item a Favoritos?",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        allowEscapeKey: true,
+        icon: "question",
+        background: "black",
+        showCancelButton: true,
+        confirmButtonColor: "#00711a",
+        cancelButtonColor: "#b50707",
+        confirmButtonText: "Si, agregalo!",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          document.getElementById(`${product.id}`).style.color = "red";
+          dispatch(addWishList({ id: customer.id, wishList: Number(id) }));
+        }
+      });
+    } else {
+      Swal.fire({
+        text: "Estas seguro que deseas quitar este item de Favoritos?",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        allowEscapeKey: true,
+        icon: "warning",
+        background: "black",
+        showCancelButton: true,
+        confirmButtonColor: "#00711a",
+        cancelButtonColor: "#b50707",
+        confirmButtonText: "Si, quitalo!",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          document.getElementById(`${input}`).style.color = "white";
+          dispatch(deleteWishlist({ id: customer.id, productId: Number(id) }));
+        }
+      });
+    }
+  };
+
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
   useEffect(() => {
     dispatch(getProductDetail(id)).then((res) => {
       setProduct(res.payload);
@@ -43,130 +115,180 @@ export const CardDetail = ({ match }) => {
       setProductColor(res.payload.imagesDb[0]);
     });
   }, [dispatch, id]);
-  return (
-    <div>
-      <Cart />
 
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
+  return (
+    <Box minHeight="100vh">
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         {Object.entries(product).length ? (
-          <Box
-            sx={{
-              width: 1000,
-              height: 600,
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Grid container spacing={30}>
-              <Grid item xs={12} sm={12} md={6}>
-                <Carousel
-                  index={selectedValue}
-                  fullHeightHover={false}
-                  autoPlay={false}
-                  navButtonsAlwaysVisible={true}
-                  navButtonsWrapperProps={{ margin: "20" }}
-                  next={(prev, active) => handleColor(prev)}
-                  prev={(prev, active) => handleColor(prev)}
+          <Box>
+            <Grid container>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    lineHeight: 2,
+                    letterSpacing: 5,
+                  }}
                 >
-                  {product.imagesDb?.map((i, index) => (
-                    <CardMedia
-                      key={Math.random()}
-                      /* key={i.color} */
-                      component="img"
-                      sx={{
-                        maxWidth: 400,
-                        margin: 0,
-                        borderRadius: 3,
-                        backgroundColor: "rgb(33, 33, 33)",
-                      }}
-                      image={i.images}
-                      alt={i.color}
-                    />
-                  ))}
-                </Carousel>
+                  {product.name.toUpperCase()}
+                </Typography>
               </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
+            </Grid>
+            <Grid container sx={width > 1000 ? { minWidth: "1000px" } : {}}>
+              <Grid item xs={12} sm={5} md={5} lg={5} xl={5}>
                 <Box>
-                  <Typography
-                    variant="h3"
-                    sx={{ lineHeight: 2, letterSpacing: 6 }}
+                  <Carousel
+                    autoPlay={false}
+                    index={selectedValue}
+                    next={(prev, active) => handleColor(prev)}
+                    prev={(prev, active) => handleColor(prev)}
+                    indicators={true}
+                    navButtonsAlwaysInvisible={true}
                   >
-                    {product.name}
-                  </Typography>
-                  <Typography variant="h4" sx={{ lineHeight: 2 }}>
-                    Seleccionar color
-                  </Typography>
-                  <div>
                     {product.imagesDb?.map((i, index) => (
-                      <FormControlLabel
-                        key={index}
-                        value={index}
-                        label={i.color}
-                        control={
-                          <Radio
-                            checked={selectedValue == index}
-                            onChange={handleChange1}
-                            value={index}
-                            name="radio-buttons"
-                            inputProps={{ "aria-label": "A" }}
-                            sx={{
-                              "& .MuiSvgIcon-root": {
-                                fontSize: 58,
-                              },
-                              color: pink[800],
-                              "&.Mui-checked": {
-                                color: i.color.toLowerCase()[600],
-                              },
-                            }}
-                          />
+                      <Box
+                        sx={
+                          width > 1000
+                            ? {
+                                display: "flex",
+                                justifyContent: "flex-end",
+                              }
+                            : {
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }
                         }
-                      />
+                      >
+                        <Grid container>
+                          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <CardMedia
+                              key={Math.random()}
+                              /* key={i.color} */
+                              component="img"
+                              sx={{
+                                maxWidth: 500,
+                                margin: 0,
+                                borderRadius: 3,
+                                backgroundColor: "rgb(33, 33, 33)",
+                              }}
+                              image={i.images}
+                              alt={i.color}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Box>
                     ))}
-                  </div>
-                  {/* <select className={s.filterSelect}>
-                    {product.imagesDb.map((c, index) => (
-                      <option key={index}>{c.color}</option>
-                    ))}
-                  </select> */}
-                  <Typography variant="h4" sx={{ lineHeight: 2 }}>
-                    Seleccionar talle
-                  </Typography>
-                  <select
-                    className={s.filterSelect}
-                    onChange={(e) => handleSize(e)}
-                  >
-                    {!product.size?.length ? (
-                      <option key={id}>No hay tallas disponibles</option>
-                    ) : (
-                      product.size.map((c) => (
-                        <option value={c} key={c}>
-                          {c}
-                        </option>
-                      ))
-                    )}
-                  </select>
-                  <Typography variant="h6" sx={{ lineHeight: 2 }}>
-                    {product.description}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    color="success"
-                    size="large"
-                    onClick={() => {
-                      addItemToCart({
-                        ...product,
-                        size: size,
-                        images: [productColor.images],
-                        color: [productColor.color],
-                      });
-                      /*  redirectHome(); */
-                    }}
-                  >
-                    Agregar al carrito
-                  </Button>
+                  </Carousel>
                 </Box>
               </Grid>
+
+              <Grid item xs={12} sm={7} md={7} lg={7} xl={7}>
+                <Grid container>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Typography variant="h4" sx={{ lineHeight: 2 }}>
+                      Seleccionar color
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {product.imagesDb?.map((i, index) => (
+                        <CardMedia
+                          key={index}
+                          component="img"
+                          sx={{
+                            maxWidth: 110,
+                            margin: 2,
+                            borderRadius: 3,
+                            backgroundColor: "rgb(33, 33, 33)",
+                          }}
+                          onClick={() => {
+                            handleColor(index);
+                          }}
+                          image={i.images}
+                          alt={i.color}
+                        />
+                      ))}
+                    </Box>
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <Box mb={10}>
+                    <Typography variant="h4" sx={{ lineHeight: 2 }}>
+                      Seleccionar talle
+                    </Typography>
+                    <select
+                      className={s.filterSelect}
+                      onChange={(e) => handleSize(e)}
+                    >
+                      {!product.size?.length ? (
+                        <option key={id}>No hay tallas disponibles</option>
+                      ) : (
+                        product.size.map((c) => (
+                          <option value={c} key={c}>
+                            {c}
+                          </option>
+                        ))
+                      )}
+                    </select>
+                    <Typography variant="h6" sx={{ lineHeight: 2 }}>
+                      {product.description}
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="success"
+                      size="large"
+                      onClick={() => {
+                        addItemToCart({
+                          ...product,
+                          size: size,
+                          images: [productColor.images],
+                          color: [productColor.color],
+                        });
+                      }}
+                    >
+                      Agregar al carrito
+                    </Button>
+                    {isLogued && customer !== null ? (
+                      <Button
+                        style={{ marginLeft: 20 }}
+                        variant="contained"
+                        color="success"
+                        size="large"
+                        onClick={() => handleFavorite(product.id)}
+                      >
+                        <FavoriteIcon
+                          id={product.id}
+                          style={{
+                            color: customer.wishList?.includes(product.id)
+                              ? "red"
+                              : "white",
+                          }}
+                        ></FavoriteIcon>
+                      </Button>
+                    ) : (
+                      false
+                    )}
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Typography variant="h6" sx={{ lineHeight: 2 }}>
+                Opiniones:
+              </Typography>
+              <BasicRating props={product} handleDelete={handleDelete} />
             </Grid>
           </Box>
         ) : (
@@ -177,35 +299,6 @@ export const CardDetail = ({ match }) => {
           </Grid>
         )}
       </Box>
-      <Grid item xs={12} sm={12} md={6}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingBottom: "25px",
-          }}
-        >
-          {product.imagesDb?.map((i, index) => (
-            <CardMedia
-              key={index}
-              component="img"
-              sx={{
-                maxWidth: 150,
-                margin: 2,
-                borderRadius: 3,
-                backgroundColor: "rgb(33, 33, 33)",
-              }}
-              onClick={() => {
-                handleColor(index);
-                console.log(productColor);
-              }}
-              image={i.images}
-              alt={i.color}
-            />
-          ))}
-        </Box>
-      </Grid>
-    </div>
+    </Box>
   );
 };

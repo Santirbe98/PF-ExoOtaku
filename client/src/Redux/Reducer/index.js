@@ -8,6 +8,7 @@ import {
   ORDER_BY_DATE,
   GET_USER_CREDENTIALS,
   CUSTOMER_BY_EMAIL,
+  UPDATE_WISH_LIST,
 } from "../Actions/actionsTypes.js";
 
 const initialState = {
@@ -16,7 +17,7 @@ const initialState = {
   orderByRank: [],
   details: {},
   orderdetail: {},
-  orderByDate:[],
+  orderByDate: [],
   colorSelected: [],
   customer: {},
   chk_customer: {},
@@ -31,28 +32,37 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_PRODUCTS:
-      return {
-        ...state,
-        products: action.payload,
-        filterProducts: action.payload,
-      };
+      if (action.payload.length) {
+        const productos = action.payload.filter(
+          (productos) => productos.deleted === false
+        );
+        return {
+          ...state,
+          products: productos,
+          filterProducts: productos,
+        };
+      } else return { ...state };
 
     case ORDER_RANK:
       const productsRank = state.filterProducts;
-      const orderProductRank = productsRank.sort((a, b) => a.price - b.price);
+      const orderProductRank = productsRank.sort(function (a, b) {
+        return a.r - b.r;
+      });
       return {
         ...state,
         orderByRank: orderProductRank,
+        filterProducts: orderProductRank.reverse(),
       };
 
     case ORDER_BY_DATE:
       const productsDate = state.filterProducts;
-      const orderProductDate = productsDate.sort((a, b) => new Date(b.date_added).getTime() - new Date(a.date_added).getTime())
-      // const orderProductDate = productsDate.sort(
-      //   (a, b) => Number(a.date_added) - Number(b.date_added));
+      const orderProductDate = productsDate.sort(function (a, b) {
+        return a.id - b.id;
+      });
       return {
         ...state,
-        orderByDate: orderProductDate,
+        filterProducts: orderProductDate,
+        orderByDate: orderProductDate.reverse(),
       };
 
     case FILTER_ALL:
@@ -72,8 +82,7 @@ function rootReducer(state = initialState, action) {
       const filterProducts3 =
         color === "All"
           ? filterProducts2
-          : // : filterProducts2.filter((p) => p.color.find((c) => c === color));
-            filterProducts2.filter((p) =>
+          : filterProducts2.filter((p) =>
               p.imagesDb.find((c, index) => {
                 if (c.color === color) {
                   colorSelectedArr.push(index);
@@ -87,8 +96,8 @@ function rootReducer(state = initialState, action) {
           return { ...p, images: p.imagesDb[newImage].images };
         } else return p;
       });
-      console.log(filterProducts4);
-      console.log(colorSelectedArr);
+      // console.log(filterProducts4);
+      // console.log(colorSelectedArr);
       return {
         ...state,
         filterProducts: filterProducts4,
@@ -96,10 +105,15 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_PRODUCT_DETAIL:
+      const productos1 = [];
+      if (action.payload.deleted === false) {
+        productos1.push(action.payload);
+      }
       return {
         ...state,
-        details: action.payload,
+        details: productos1,
       };
+
     case ORDER_BY_PRICE:
       const products = state.filterProducts;
       const orderProduct =
@@ -110,6 +124,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         filterProducts: orderProduct,
       };
+    // case ORDER_BY_PRICE:
+    //   const products = state.filterProducts;
+    //   const orderProduct =
+    //     action.payload === "Asc"
+    //       ? products.sort((a, b) => a.price - b.price)
+    //       : products.sort((a, b) => b.price - a.price);
+    //   return {
+    //     ...state,
+    //     filterProducts: orderProduct,
+    //   };
 
     case GET_USER_CREDENTIALS:
       return {
@@ -123,6 +147,26 @@ function rootReducer(state = initialState, action) {
         chk_customer: action.payload,
       };
 
+    case UPDATE_WISH_LIST:
+      if (action.payload.add) {
+        let customerWish = state.chk_customer;
+
+        customerWish.wishList.push(action.payload.id);
+
+        return {
+          ...state,
+          chk_customer: customerWish,
+        };
+      } else {
+        const customerWish = state.chk_customer;
+
+        let algo = customerWish.wishList.filter((e) => e !== action.payload.id);
+        customerWish.wishList = algo;
+        return {
+          ...state,
+          chk_customer: customerWish,
+        };
+      }
     default:
       return {
         ...state,

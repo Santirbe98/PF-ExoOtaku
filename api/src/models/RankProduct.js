@@ -1,46 +1,42 @@
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define(
-    "PurchaseOrder",
+    "RankProduct", 
     {
-      order_id: {
+      id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false,
       },
 
-      cart_ammount: {
-        type: DataTypes.REAL,
-      },
-
-      delivery_ammount: {
+      product_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
       },
 
-      total_ammount: {
-        type: DataTypes.REAL,
+      customer_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
 
-      shipping_address: {
+      comment:{
         type: DataTypes.STRING,
+        allowNull: false,
       },
 
-      billing_address: {
-        type: DataTypes.STRING,
-      },
-
-      status: {
-        type: DataTypes.STRING,
+      rank: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
       },
 
       deleted: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
+        defaultValue: false
+      }
     },
     {
       timestamps: true,
-    }
+    }    
   );
 };

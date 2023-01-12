@@ -8,8 +8,69 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import LocalGroceryStoreRoundedIcon from "@mui/icons-material/LocalGroceryStoreRounded";
 import s from "./Card.module.css";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { addWishList, deleteWishlist } from "../../Redux/Actions";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
-export const MediaCard = ({ name, price, image, id, category }) => {
+export const MediaCard = ({ name, price, image, id }) => {
+  const dispatch = useDispatch();
+  const customer = useSelector((state) => state.chk_customer);
+
+  const { user, isAuthenticated } = useAuth0();
+  const [isLogued, setIsLogued] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated && customer) {
+      setIsLogued(true);
+    }
+  });
+
+  const handleAlert = (input) => {
+    if (document.getElementById(`${input}`).style.color === "white") {
+      Swal.fire({
+        text: "Estas seguro que deseas agregar este item a Favoritos?",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        allowEscapeKey: true,
+        icon: "question",
+        background: "black",
+        showCancelButton: true,
+        confirmButtonColor: "#00711a",
+        cancelButtonColor: "#b50707",
+        confirmButtonText: "Si, agregalo!",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          document.getElementById(`${input}`).style.color = "red";
+          dispatch(addWishList({ id: customer.id, wishList: id }));
+        }
+      });
+    } else {
+      Swal.fire({
+        text: "Estas seguro que deseas quitar este item de Favoritos?",
+        width: "30%",
+        padding: "10px",
+        allowEnterKey: true,
+        allowEscapeKey: true,
+        icon: "warning",
+        background: "black",
+        showCancelButton: true,
+        confirmButtonColor: "#00711a",
+        cancelButtonColor: "#b50707",
+        confirmButtonText: "Si, quitalo!",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          document.getElementById(`${input}`).style.color = "white";
+          dispatch(deleteWishlist({ id: customer.id, productId: id }));
+        }
+      });
+    }
+  };
+
   return (
     <Card
       className={s.container}
@@ -18,9 +79,26 @@ export const MediaCard = ({ name, price, image, id, category }) => {
         height: 450,
         margin: 2,
         backgroundColor: "rgb(33, 33, 33)",
+        padding: 1,
+        border: "1px solid black",
+        borderRadius: "5px",
       }}
     >
       <CardActionArea>
+        {isLogued && customer !== null ? (
+          <FavoriteIcon
+            id={id}
+            style={{
+              color: customer.wishList?.includes(id) ? "red" : "white",
+              position: "absolute",
+              right: 1,
+            }}
+            onClick={() => handleAlert(id)}
+          ></FavoriteIcon>
+        ) : (
+          false
+        )}
+
         <Link
           style={{
             textDecoration: "none",
@@ -29,6 +107,9 @@ export const MediaCard = ({ name, price, image, id, category }) => {
           to={`/detail/${id}`}
         >
           <CardMedia
+            style={{
+              borderRadius: "5px",
+            }}
             component="img"
             height="250"
             image={image.toString()}

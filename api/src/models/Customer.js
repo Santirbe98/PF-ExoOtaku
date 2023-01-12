@@ -1,8 +1,9 @@
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
-    sequelize.define("customer", {
-
-      id:{
+  sequelize.define(
+    "customer",
+    {
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -14,7 +15,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      token:{
+      token: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -29,20 +30,20 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      provincia: {
+      /* provincia: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
+      }, */
 
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
       },
 
-      comuna: {
+      /* comuna: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
+      }, */
 
       shipping_address: {
         type: DataTypes.TEXT,
@@ -56,17 +57,20 @@ module.exports = (sequelize) => {
 
       isadmin: {
         type: DataTypes.BOOLEAN,
-        defaultValue:false,
+        defaultValue: false,
         allowNull: false,
       },
 
       deleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
-      }
+        defaultValue: false,
+      },
+      wishList: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
+      },
     },
     {
       timestamps: true,
-    }    
+    }
   );
 };

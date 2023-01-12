@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { CardRanked } from "../CardRanked/CardRanked";
 import s from "./TopRanked.module.css";
@@ -16,10 +16,20 @@ export const TopRanked = () => {
     window.addEventListener("resize", handleResize);
   }, []);
   const stateProductsRanked = useSelector((state) => state.orderByRank);
-  const topFiveProducts = stateProductsRanked.slice(0, 5);
-
+  const topFiveProducts = stateProductsRanked.sort(function (a, b) {
+    return a.r - b.r;
+  });
+  const topFive = topFiveProducts.reverse().slice(0, 5);
   return (
     <Box>
+      {!topFive.length ? (
+        <Box width={500} padding={15}>
+          <CircularProgress color="warning" />
+        </Box>
+      ) : (
+        <></>
+      )}
+
       <Grid container pt={5}>
         <Grid
           xs={12}
@@ -37,25 +47,31 @@ export const TopRanked = () => {
               : null
           }`}
         >
-          {topFiveProducts.map((c) => {
-            return (
-              <Box
-                key={c.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <CardRanked
+          {topFive.length !== 0 &&
+            topFive.map((c) => {
+              return (
+                <Box
                   key={c.id}
-                  id={c.id}
-                  image={c.images}
-                  name={c.name}
-                />
-              </Box>
-            );
-          })}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CardRanked
+                    key={c.id}
+                    id={c.id}
+                    image={c.images}
+                    name={
+                      c.name.length >= 22
+                        ? `${c.name.substring(0, 18)}...`
+                        : c.name
+                    }
+                    r={c.r}
+                  />
+                </Box>
+              );
+            })}
         </Grid>
       </Grid>
     </Box>

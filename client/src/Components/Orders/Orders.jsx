@@ -6,7 +6,13 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { deleteOrder, deleteUser, getAllUsers } from "../../Redux/Actions";
+import {
+  deleteOrder,
+  deleteUser,
+  getAllUsers,
+  getProducts,
+  deleteProduct,
+} from "../../Redux/Actions";
 import { getAllOrders } from "../../Redux/Actions";
 import { CircularProgress } from "@material-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -14,10 +20,10 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import CustomizedTables from "./listusers";
-import Profile from "../Authenticate/Profile2";
 import { Error } from "../Error/Error";
-import Swal from "sweetalert2";
+import CollapsibleTableUsers from "./listUsers2";
+import CollapsibleTableProducts from "./listproducts";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -27,6 +33,7 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [status, setStatus] = useState("");
   const [users, setUsers] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const handleChange = (event) => {
     setStatus(event.target.value);
@@ -42,15 +49,26 @@ const Orders = () => {
     dispatch(getAllOrders()).then((data) => {
       setOrders(data.payload);
     });
+    dispatch(getProducts()).then((data) => {
+      setProducts(data.payload);
+    });
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 4000);
   }, [dispatch]);
 
   const handleDeleteUser = (id) => {
     dispatch(deleteUser(id)).then(() => {
       dispatch(getAllUsers()).then((data) => {
         setUsers(data.payload);
+      });
+    });
+  };
+
+  const handleDeleteProduct = (id) => {
+    dispatch(deleteProduct(id)).then(() => {
+      dispatch(getProducts()).then((data) => {
+        setProducts(data.payload);
       });
     });
   };
@@ -77,8 +95,8 @@ const Orders = () => {
           <Typography variant="h4"> Panel de administrador </Typography>
 
           <Typography variant="h5">
-            {" "}
-            Lista de órdenes: filtra tus órdenes por estado{" "}
+            Lista de órdenes: filtra tus órdenes por estado y modifica el estado
+            de cada orden
           </Typography>
 
           <Box
@@ -127,7 +145,12 @@ const Orders = () => {
             </Box>
 
             <Box sx={{ translate: "0vw 1.5vw" }}>
-              <Button onClick={handleClean} variant="outlined" size="large">
+              <Button
+                onClick={handleClean}
+                variant="contained"
+                color="primary"
+                size="large"
+              >
                 Limpiar filtro
               </Button>
             </Box>
@@ -151,19 +174,61 @@ const Orders = () => {
           </Box>
 
           <Typography variant="h5">
-            {" "}
-            Lista de usuarios: controla el estado y datos de cada usuario{" "}
+            Lista de usuarios: controla el estado y permisos de cada usuario
           </Typography>
           {loading === false ? (
             <Box sx={{ padding: "2%" }}>
-              <CustomizedTables
+              <CollapsibleTableUsers
                 users={users}
+                loading={loading}
                 handleDeleteUser={handleDeleteUser}
               />
             </Box>
           ) : (
             <>
               <Typography> Cargando usuarios </Typography>
+              <Box>
+                <CircularProgress color="secondary" />
+              </Box>
+            </>
+          )}
+          <Box
+            sx={{
+              display: "block",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h5">
+              Lista de Productos: controla cantidad y precio de cada ítem.
+              Puedes crear un nuevo producto en
+            </Typography>
+
+            <Box sx={{ paddingTop: "2%" }}>
+              <Link to="/form" style={{ textDecoration: "none" }}>
+                <Button
+                  onClick={handleClean}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                >
+                  Crear producto
+                </Button>
+              </Link>
+            </Box>
+          </Box>
+
+          {loading === false ? (
+            <Box sx={{ padding: "2%" }}>
+              <CollapsibleTableProducts
+                Products={products}
+                loading={loading}
+                handleDeleteProduct={handleDeleteProduct}
+              />
+            </Box>
+          ) : (
+            <>
+              <Typography> Cargando productos </Typography>
               <Box>
                 <CircularProgress color="secondary" />
               </Box>

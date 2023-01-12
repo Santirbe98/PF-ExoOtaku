@@ -5,10 +5,8 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./Store/index.js";
-import axios from "axios";
 import { Auth0Provider } from "@auth0/auth0-react";
 
-axios.defaults.baseURL = "https://pf-exootaku-production.up.railway.app/";
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 

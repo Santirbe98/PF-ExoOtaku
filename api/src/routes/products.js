@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const router = Router();
 
-// const data = require('../data')
 const {
   getAllProducts,
   createNewProduct,
@@ -33,22 +32,12 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const {
-    name,
-    price,
-    descriptions,
-    /*     imagesForm, */
-    stock,
-    color,
-    size,
-    type,
-    category,
-  } = req.body;
+  const { name, price, descriptions, stock, color, size, type, category } =
+    req.body;
   if (
     !name ||
     !price ||
     !descriptions ||
-    /*     !imagesForm || */
     !stock ||
     !color ||
     !size ||

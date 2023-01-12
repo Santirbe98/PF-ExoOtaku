@@ -32,13 +32,41 @@ function SimpleDialog(props) {
       >
         Registrarme
       </Button>
-      <Dialog open={open} onClose={handleClose} background-color="black">
-        <DialogTitle>Regisro de Usuario</DialogTitle>
-        <DialogContent>
-          <SignIn closedialog={handleClose} />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth={false}
+        maxWidth={"md"}
+        sx={{
+          backdropFilter: "blur(10px)",
+        }}
+      >
+        <DialogTitle
+          sx={{
+            background: "#000000",
+            color: "#FFFFFF",
+          }}
+        >
+          Regisro de Usuario
+        </DialogTitle>
+
+        <DialogContent sx={{ background: "#000000" }}>
+          <SignIn closedialog={handleClose} dialog={true} />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
+
+        <DialogActions
+          sx={{
+            background: "#e9b60d",
+            color: "#FFFFFF",
+          }}
+        >
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            style={{ backgroundColor: "#212121", color: "#FFFFFF" }}
+          >
+            Cancelar
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
+import { Button, Box } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
@@ -10,6 +10,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -17,14 +18,21 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import Rating from "@mui/material/Rating";
+import { createRank } from "../../Redux/Actions";
+import Swal from "sweetalert2";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#464543",
     color: "white",
     "&:hover": {
       backgroundColor: "#f29d12 !important",
-    },  
-  }
+    },
+  },
 }));
 
 function createData(orden, fecha, articulos, costo, delivery, total, products) {
@@ -41,7 +49,69 @@ function createData(orden, fecha, articulos, costo, delivery, total, products) {
 
 function Row(props) {
   const { row } = props;
+  const { ranklist } = props;
+  const { idcustomer } = props;
   const [open, setOpen] = React.useState(false);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  let product_id, customer_id, rank, comment;
+  product_id = 0;
+  customer_id = 0;
+  rank = 0;
+  comment = "";
+  let paquete;
+  paquete = {
+    product_id: product_id,
+    customer_id: customer_id,
+    rank: rank,
+    comment: comment,
+  };
+  let [review, setReview] = useState(paquete);
+
+  //HANDLER REVIEWS
+  let handlReview = (event) => {
+    event.preventDefault();
+    setReview((prev) => {
+      const ReviewCreated = {
+        ...prev,
+        [event.target.name]: event.target.value,
+      };
+      return ReviewCreated;
+    });
+  };
+
+  //HANDLER REVIEW BUTTON
+  function handleCalificate(event, ProductId, idcustomer) {
+    event.preventDefault();
+    let PAC;
+    PAC = {
+      product_id: ProductId,
+      customer_id: idcustomer,
+      rank: Number(review.rank),
+      comment: review.comment,
+    };
+    dispatch(createRank(PAC));
+    // alert("Calificacion guardada con exito");
+    Swal.fire({
+      text: "Usted ha agregado un comentario con exito!",
+      width: "30%",
+      padding: "10px",
+      allowEnterKey: true,
+      imageUrl:
+        "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+      imageHeight: 200,
+      imageWidth: 200,
+      icon: "success",
+      background: "black",
+      color: "white",
+      confirmButtonColor: "#00711a",
+    }).then(() => {
+      history.go("/acount");
+    });
+    //history.replaceState( {} , 'foo', '/foo' );
+  }
 
   return (
     <React.Fragment>
@@ -109,8 +179,56 @@ function Row(props) {
                         {productsRow.cantidad}
                       </TableCell>
                       <TableCell align="center">{productsRow.precio}</TableCell>
-                    </TableRow>
 
+                      {/* VALIDATION OF PREVIUS RATNG TO THE PRODUCT TO RENDER THE ELEMENTS */}
+                      {ranklist?.find(
+                        (rankprod) => rankprod.product_id === productsRow.id
+                      ) ? (
+                        <TableCell align="center">
+                          Producto Calificado
+                        </TableCell>
+                      ) : (
+                        <>
+                          <TableCell align="center">
+                            <Rating
+                              name="rank"
+                              precision={1}
+                              //value={review.rank}
+                              onChange={handlReview}
+                            />
+                          </TableCell>
+                          <TableCell align="center">
+                            <TextField
+                              name="comment"
+                              label="Comentarios"
+                              style={{ width: 200 }}
+                              fullWidth
+                              margin="normal"
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              //value={review.comment}
+                              onChange={handlReview}
+                            />
+                          </TableCell>
+                          <TableCell align="center">
+                            <Button
+                              variant="contained"
+                              href="#contained-buttons"
+                              onClick={(event, ProductId, id_customer) =>
+                                handleCalificate(
+                                  event,
+                                  productsRow.id,
+                                  idcustomer
+                                )
+                              }
+                            >
+                              Calificar
+                            </Button>
+                          </TableCell>
+                        </>
+                      )}
+                    </TableRow>
                   ))}
                 </TableBody>
               </Table>
@@ -146,8 +264,9 @@ Row.propTypes = {
   }).isRequired,
 };
 
-export default function CollapsibleTable({ Products }) {
+export default function CollapsibleTable({ Products, Ranklist, user }) {
   let rows = [];
+  let delivery = user.address.valorEntrega;
   for (let i = 0; i < Products.length; i++) {
     rows.push(
       createData(
@@ -155,7 +274,7 @@ export default function CollapsibleTable({ Products }) {
         Products[i].date,
         Products[i].articles,
         Products[i].cost,
-        20,
+        delivery,
         Products[i].total,
         Products[i].products
       )
@@ -168,12 +287,11 @@ export default function CollapsibleTable({ Products }) {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  //const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <TableContainer component={Paper}>
@@ -200,7 +318,14 @@ export default function CollapsibleTable({ Products }) {
         </TableHead>
         <TableBody>
           {rows
-            .map((row) => <Row key={row.name} row={row} />)
+            .map((row) => (
+              <Row
+                key={row.name}
+                row={row}
+                ranklist={Ranklist}
+                idcustomer={user.id}
+              />
+            ))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
         </TableBody>
       </Table>

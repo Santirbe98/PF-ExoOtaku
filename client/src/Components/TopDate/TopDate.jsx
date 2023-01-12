@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { CardRanked } from "../CardRanked/CardRanked";
 import s from "./TopDate.module.css";
@@ -16,10 +16,20 @@ export const TopDate = () => {
     window.addEventListener("resize", handleResize);
   }, []);
   const stateProductsDate = useSelector((state) => state.orderByDate);
-  const topFiveProducts = stateProductsDate.slice(0, 5);
+  const newFiveProducts = stateProductsDate.sort(function (a, b) {
+    return a.id - b.id;
+  });
+  const topFive = newFiveProducts.reverse().slice(0, 5);
 
   return (
     <Box>
+      {!topFive.length ? (
+        <Box width={700} padding={15}>
+          <CircularProgress color="warning" />
+        </Box>
+      ) : (
+        <></>
+      )}
       <Grid container pt={5}>
         <Grid
           xs={12}
@@ -37,7 +47,7 @@ export const TopDate = () => {
               : null
           }`}
         >
-          {topFiveProducts.map((c) => {
+          {topFive.map((c) => {
             return (
               <Box
                 key={c.id}
@@ -51,7 +61,12 @@ export const TopDate = () => {
                   key={c.id}
                   id={c.id}
                   image={c.images}
-                  name={c.name}
+                  name={
+                    c.name.length >= 22
+                      ? `${c.name.substring(0, 18)}...`
+                      : c.name
+                  }
+                  r={c.r}
                 />
               </Box>
             );

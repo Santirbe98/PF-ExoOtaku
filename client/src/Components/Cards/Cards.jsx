@@ -69,7 +69,6 @@ export const Cards = () => {
     setSearch(e.target.value);
     setPage(1);
   };
-
   const productSearch = !search
     ? productsList
     : products.filter((p) => {
@@ -80,9 +79,9 @@ export const Cards = () => {
   const productsList2 = productSearch.slice(firstPage, totalPage);
   //===========================================================
   return (
-    <Box>
+    <Box minHeight="100vh">
       <Grid container>
-        <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <Box
             sx={{
               display: "flex",
@@ -106,10 +105,12 @@ export const Cards = () => {
         </Grid>
       </Grid>
       <Grid container pt={5}>
-        <Grid xs={12} sm={12} md={12} lg={3} xl={3}>
+        <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
           <Filter setPage={setPage} setOrder={setOrder} />
         </Grid>
+
         <Grid
+          item
           xs={12}
           sm={12}
           md={12}
@@ -126,9 +127,9 @@ export const Cards = () => {
           }`}
         >
           {!productSearch.length ? (
-            <Grid xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Box width={800} textAling="center" paddingLeft={15}>
               <h2>"No hay productos para mostrar intenta otra busqueda"</h2>
-            </Grid>
+            </Box>
           ) : search.length > 2 ? (
             productsList2.map((c) => {
               return (
@@ -143,7 +144,11 @@ export const Cards = () => {
                     key={c.id}
                     id={c.id}
                     image={c.images}
-                    name={c.name.substring(0, 25)}
+                    name={
+                      c.name.length >= 22
+                        ? `${c.name.substring(0, 18)}...`
+                        : c.name
+                    }
                     category={c.category}
                     price={c.price}
                   />
@@ -173,6 +178,7 @@ export const Cards = () => {
           )}
         </Grid>
       </Grid>
+
       <Box>
         {search.length >= 3 ? (
           <PagedSearch

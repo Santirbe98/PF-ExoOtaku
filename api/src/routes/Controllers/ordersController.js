@@ -13,25 +13,16 @@ const {
   Image,
 } = require("../../db");
 
-const getAllOrders = async (status = null) => {
+const getAllOrders = async () => {
   try {
-    let ordersByUser;
-    if (status) {
-      ordersByUser = await PurchaseOrder.findAll({
-        where: {
-          deleted: false,
-          status: status,
-        },
-      });
-    }
-
-    ordersByUser = await PurchaseOrder.findAll({
+    let ordersByUser = await PurchaseOrder.findAll({
       where: {
         deleted: false,
       },
       include: [
         {
           model: Payment,
+          required: true,
         },
 
         {
@@ -66,8 +57,8 @@ const getAllOrders = async (status = null) => {
     let orders = ordersByUser.map((item) => {
       return {
         order_id: item.order_id,
-        user: item.customer.name,
-        email: item.customer.email,
+        user: item.customer.dataValues.name,
+        email: item.customer.dataValues.email,
         status: item.status,
         order: item.PaymentId,
         date: item.createdAt,
@@ -215,6 +206,7 @@ const getOrdersByUser = async (userId) => {
       include: [
         {
           model: Payment,
+          required: true,
         },
 
         {
@@ -275,7 +267,7 @@ const getOrdersByUser = async (userId) => {
 
     return customerOrders;
   } catch (error) {
-    console.log(error);
+    console.error(error.message);
   }
 };
 

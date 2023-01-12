@@ -8,7 +8,6 @@ import Profile from "../Authenticate/Profile2";
 import { useAuth0 } from "@auth0/auth0-react";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
-import AddIcon from "@mui/icons-material/Add";
 import Diversity1Icon from "@mui/icons-material/Diversity1";
 import Grid from "@mui/material/Unstable_Grid2";
 
@@ -17,7 +16,6 @@ export const NavBar = () => {
   return (
     <Grid container spacing={2} pt={5} mr={5} ml={5}>
       <Grid xs={12} sm={12} md={12} lg={2} xl={2}>
-        {/* <Box className={s.imgContainer}> */}
         <img
           src="http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0"
           width="200px"
@@ -219,7 +217,7 @@ export const NavBar = () => {
           {error && <p>Error de autenticacion</p>}
           {!error && isLoading && <p>Cargando...</p>}
           {!error && !isLoading && (
-            <Box sx={{ paddingRight: 10 }}>
+            <Box>
               <Profile />
               <LoginButton />
             </Box>
