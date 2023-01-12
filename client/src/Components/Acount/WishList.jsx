@@ -29,6 +29,7 @@ import {
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -232,29 +233,68 @@ export default function EnhancedTable(props) {
     setDense(event.target.checked);
   };
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   const handleDelete = (id, name) => {
-    Swal.fire({
-      text: `Estas seguro que deseas quitar el producto ${name}? `,
-      width: "30%",
-      padding: "10px",
-      background: "black",
-      allowEnterKey: true,
-      allowEscapeKey: true,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3a3c3b",
-      cancelButtonColor: "#b50707",
-      confirmButtonText: "Si, quitalo!",
-    }).then((response) => {
-      if (response.isConfirmed) {
-        dispatch(
-          deleteWishlist({
-            id: Number(idCustomer),
-            productId: Number(id),
-          })
-        );
-      }
-    });
+    // eslint-disable-next-line no-lone-blocks
+    {
+      width > 800
+        ? Swal.fire({
+          text: `Estas seguro que deseas quitar el producto ${name}? `,
+          width: "30%",
+          padding: "10px",
+          background: "black",
+          allowEnterKey: true,
+          allowEscapeKey: true,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3a3c3b",
+          cancelButtonColor: "#b50707",
+          confirmButtonText: "Si, quitalo!",
+        }).then((response) => {
+          if (response.isConfirmed) {
+            dispatch(
+              deleteWishlist({
+                id: Number(idCustomer),
+                productId: Number(id),
+              })
+            );
+          }
+        }) :
+        Swal.fire({
+          text: `Estas seguro que deseas quitar el producto ${name}? `,
+          width: "80%",
+          position: "center",
+          padding: "10px",
+          background: "black",
+          allowEnterKey: true,
+          allowEscapeKey: true,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3a3c3b",
+          cancelButtonColor: "#b50707",
+          confirmButtonText: "Si, quitalo!",
+        }).then((response) => {
+          if (response.isConfirmed) {
+            dispatch(
+              deleteWishlist({
+                id: Number(idCustomer),
+                productId: Number(id),
+              })
+            );
+          }
+        });
+    }
   };
 
   const isSelected = (producto) => selected.indexOf(producto) !== -1;

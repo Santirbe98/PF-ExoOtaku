@@ -27,6 +27,7 @@ import { styled } from '@mui/material/styles';
 import CardMedia from "@mui/material/CardMedia";
 import Rating from '@mui/material/Rating';
 import { deleteRank } from "../../Redux/Actions";
+import { useEffect, useState } from 'react';
 import Swal from "sweetalert2";
 
 function createData(imagen, producto, calificacion, fecha, comentario) {
@@ -45,7 +46,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: "white",
     "&:hover": {
       backgroundColor: "#f29d12 !important",
-    },  
+    },
   }
 }));
 
@@ -83,7 +84,7 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Producto',
-  },  
+  },
   {
     id: 'imagen',
     numeric: false,
@@ -101,7 +102,7 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Fecha',
-  },  
+  },
   {
     id: 'comentario',
     numeric: false,
@@ -111,13 +112,13 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { 
-    onSelectAllClick, 
-    order, 
-    orderBy, 
-    numSelected, 
-    rowCount, 
-    onRequestSort 
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -173,44 +174,81 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { 
+  const {
     numSelected,
-    itemSelected 
+    itemSelected
   } = props;
   const dispatch = useDispatch();
-  const history=useHistory()
+  const history = useHistory()
+
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   //HANDLER DELETE REVIEW
-  function handleDelRank(){
-    //console.log(itemSelected[r])
-    Swal.fire({
-        /*  title: "Estas seguro que desea agregar este item?", */
-        text: "Estas seguro que deseas eliminar este comentario?",
-        width: "30%",
-      padding: "10px",
-      /* grow: "fullscreen", */
-      allowEnterKey: true,
-      allowEscapeKey: true,
-      icon: "warning",
-      position: "top",
-      background: "black",
-      imageUrl:
-      "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
-      imageHeight: 200,
-      imageWidth: 200,
-      showCancelButton: true,
-      confirmButtonColor: "#00711a",
-      cancelButtonColor: "#b50707",
-      confirmButtonText: "Si, eliminalo!",
-    }).then((response)=>{
-      if(response.isConfirmed) {
-        for (let r = 0; r < itemSelected.length; r++) {
-        dispatch(deleteRank(itemSelected[r]))
-        history.go('/acount')
-      }
-      }
-    })
-    // alert("Calificacion eliminada con exito")    
+  function handleDelRank() {
+    // eslint-disable-next-line no-lone-blocks
+    {
+      width > 800
+        ? Swal.fire({
+          text: "Estas seguro que deseas eliminar este comentario?",
+          width: "30%",
+          padding: "10px",
+          allowEnterKey: true,
+          allowEscapeKey: true,
+          icon: "warning",
+          position: "top",
+          background: "black",
+          imageUrl:
+            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+          imageHeight: 200,
+          imageWidth: 200,
+          showCancelButton: true,
+          confirmButtonColor: "#00711a",
+          cancelButtonColor: "#b50707",
+          confirmButtonText: "Si, eliminalo!",
+        }).then((response) => {
+          if (response.isConfirmed) {
+            for (let r = 0; r < itemSelected.length; r++) {
+              dispatch(deleteRank(itemSelected[r]))
+              history.go('/acount')
+            }
+          }
+        }) :
+        Swal.fire({
+          text: "Estas seguro que deseas eliminar este comentario?",
+          width: "80%",
+          padding: "10px",
+          allowEnterKey: true,
+          allowEscapeKey: true,
+          icon: "warning",
+          position: "top",
+          background: "black",
+          imageUrl:
+            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+          imageHeight: 200,
+          imageWidth: 200,
+          showCancelButton: true,
+          confirmButtonColor: "#00711a",
+          cancelButtonColor: "#b50707",
+          confirmButtonText: "Si, eliminalo!",
+        }).then((response) => {
+          if (response.isConfirmed) {
+            for (let r = 0; r < itemSelected.length; r++) {
+              dispatch(deleteRank(itemSelected[r]))
+              history.go('/acount')
+            }
+          }
+        })
+    }
   }
 
   return (
@@ -248,7 +286,7 @@ function EnhancedTableToolbar(props) {
         <Tooltip title="Delete">
           {/* onClick={handleDelRank()} */}
           <IconButton onClick={handleDelRank}>
-            <DeleteIcon 
+            <DeleteIcon
             />
           </IconButton>
         </Tooltip>
@@ -263,8 +301,8 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable({Ratedproduct}) {
-  const rows=Ratedproduct;
+export default function EnhancedTable({ Ratedproduct }) {
+  const rows = Ratedproduct;
   console.log(rows)
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -329,7 +367,7 @@ export default function EnhancedTable({Ratedproduct}) {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} itemSelected={selected}/>
+        <EnhancedTableToolbar numSelected={selected.length} itemSelected={selected} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -350,7 +388,7 @@ export default function EnhancedTable({Ratedproduct}) {
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
-                  let rwid=row.id
+                  let rwid = row.id
                   return (
                     <TableRow
                       hover
@@ -369,32 +407,32 @@ export default function EnhancedTable({Ratedproduct}) {
                             'aria-labelledby': labelId,
                           }}
                         />
-                      </TableCell>   
+                      </TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
-                        padding="none"                       
+                        padding="none"
                         align="left"
                       >
                         {row.producto}
-                      </TableCell> 
+                      </TableCell>
 
                       <TableCell>
-                        <CardMedia 
-                          component="img" 
-                          height="50" 
-                          image={row.imagen} 
-                          alt={row.producto} 
+                        <CardMedia
+                          component="img"
+                          height="50"
+                          image={row.imagen}
+                          alt={row.producto}
                           value={row.id}
                         />
-                      </TableCell> 
-                      
+                      </TableCell>
+
                       <TableCell align="center">
-                        <Rating 
-                          name="read-only" 
-                          value={row.calificacion} 
-                          readOnly 
+                        <Rating
+                          name="read-only"
+                          value={row.calificacion}
+                          readOnly
                           precision={0.5}
                         />
                       </TableCell>
@@ -415,15 +453,15 @@ export default function EnhancedTable({Ratedproduct}) {
             </TableBody>
           </Table>
         </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}

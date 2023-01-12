@@ -19,7 +19,7 @@ import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Rating from "@mui/material/Rating";
 import { createRank } from "../../Redux/Actions";
@@ -70,6 +70,18 @@ function Row(props) {
   };
   let [review, setReview] = useState(paquete);
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   //HANDLER REVIEWS
   let handlReview = (event) => {
     event.preventDefault();
@@ -94,24 +106,46 @@ function Row(props) {
     };
     console.log(PAC);
     dispatch(createRank(PAC));
-    // alert("Calificacion guardada con exito");
-    Swal.fire({
-      text: "Usted ha agregado un comentario con exito!",
-      width: "30%",
-      padding: "10px",
-      allowEnterKey: true,
-      imageUrl:
-        "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
-      imageHeight: 200,
-      imageWidth: 200,
-      icon: "success",
-      background: "black",
-      color: "white",
-      confirmButtonColor: "#00711a",
-    }).then(() => {
-      history.go("/acount");
-    });
-    //history.replaceState( {} , 'foo', '/foo' );
+    // eslint-disable-next-line no-lone-blocks
+    {
+      width > 800
+        ? Swal.fire({
+          text: "Usted ha agregado un comentario con exito!",
+          width: "30%",
+          padding: "10px",
+          position: "top",
+          allowEnterKey: true,
+          imageUrl:
+            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+          imageHeight: 200,
+          imageWidth: 200,
+          icon: "success",
+          background: "black",
+          color: "white",
+          confirmButtonColor: "#00711a",
+        }).then(() => {
+          history.go("/acount");
+        })
+        //history.replaceState( {} , 'foo', '/foo' );
+        :
+        Swal.fire({
+          text: "Usted ha agregado un comentario con exito!",
+          width: "80%",
+          padding: "10px",
+          position: "top",
+          allowEnterKey: true,
+          imageUrl:
+            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+          imageHeight: 200,
+          imageWidth: 200,
+          icon: "success",
+          background: "black",
+          color: "white",
+          confirmButtonColor: "#00711a",
+        }).then(() => {
+          history.go("/acount");
+        })
+    }
   }
 
   return (

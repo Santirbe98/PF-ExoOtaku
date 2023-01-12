@@ -33,6 +33,19 @@ export default function SingIn(props) {
     dispatch(filterNeighborhoods()).then((data) => setStates(data.payload));
   }, [dispatch]);
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
+
   const { user } = useAuth0();
   const [errors, setErrors] = useState({});
 
@@ -185,38 +198,79 @@ export default function SingIn(props) {
     });
     if (closedialog !== null) {
       closedialog();
-      Swal.fire({
-        text: "Usted se ha registrado con exito!",
-        width: "30%",
-        padding: "10px",
-        position: "top",
-        allowEnterKey: true,
-        imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
-        imageHeight: 200,
-        imageWidth: 200,
-        icon: "success",
-        background: "black",
-        color: "white",
-        confirmButtonColor: "#00711a",
-      }).then(() => {
-        history.go("/home")
-      })
+      // eslint-disable-next-line no-lone-blocks
+      {
+        width > 800
+          ? Swal.fire({
+            text: "Usted se ha registrado con exito!",
+            width: "30%",
+            padding: "10px",
+            position: "top",
+            allowEnterKey: true,
+            imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+            imageHeight: 200,
+            imageWidth: 200,
+            icon: "success",
+            background: "black",
+            color: "white",
+            confirmButtonColor: "#00711a",
+          }).then(() => {
+            history.go("/home")
+          }) :
+          Swal.fire({
+            text: "Usted se ha registrado con exito!",
+            width: "80%",
+            padding: "10px",
+            position: "top",
+            allowEnterKey: true,
+            imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+            imageHeight: 200,
+            imageWidth: 200,
+            icon: "success",
+            background: "black",
+            color: "white",
+            confirmButtonColor: "#00711a",
+          }).then(() => {
+            history.go("/home")
+          })
+      }
     } else {
-      Swal.fire({
-        text: "Usted se ha registrado con exito!",
-        width: "30%",
-        padding: "10px",
-        allowEnterKey: true,
-        imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
-        imageHeight: 200,
-        imageWidth: 200,
-        icon: "success",
-        background: "black",
-        color: "white",
-        confirmButtonColor: "#00711a",
-      }).then(() => {
-        history.go("/-1")
-      })
+      // eslint-disable-next-line no-lone-blocks
+      {
+        width > 800
+          ? Swal.fire({
+            text: "Usted se ha registrado con exito!",
+            width: "30%",
+            padding: "10px",
+            position: "top",
+            allowEnterKey: true,
+            imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+            imageHeight: 200,
+            imageWidth: 200,
+            icon: "success",
+            background: "black",
+            color: "white",
+            confirmButtonColor: "#00711a",
+          }).then(() => {
+            history.go("/-1")
+          }) :
+          Swal.fire({
+            text: "Usted se ha registrado con exito!",
+            width: "80%",
+            padding: "10px",
+            position: "top",
+            allowEnterKey: true,
+            imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+            imageHeight: 200,
+            imageWidth: 200,
+            icon: "success",
+            background: "black",
+            color: "white",
+            confirmButtonColor: "#00711a",
+          }).then(() => {
+            history.go("/-1")
+          })
+      }
     }
   };
 
