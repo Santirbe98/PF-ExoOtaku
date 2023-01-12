@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { getProducts, orderByRank, orderByDate } from "../../Redux/Actions";
 import {
   Box,
@@ -15,6 +15,7 @@ import { Link, useHistory } from "react-router-dom";
 import { TopDate } from "../TopDate/TopDate";
 export const LandingPage = () => {
   let dispatch = useDispatch();
+  let products = useSelector((state) => state.filterProducts);
 
   useEffect(() => {
     dispatch(getProducts())

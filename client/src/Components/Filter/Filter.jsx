@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { filterAll, orderByPrice } from "../../Redux/Actions/index";
+import { filterAll, orderByPrice,orderByRank,orderByDate } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, FormControl, Grid, MenuItem, Select } from "@mui/material";
 
 export const Filter = (props) => {
   const products = useSelector((state) => state.products);
+  // const products = useSelector((state) => state.orderByDate);
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
@@ -83,6 +84,25 @@ export const Filter = (props) => {
       <Grid container padding="">
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)" }}>
+          <Box sx={{ paddingTop: "5px" }}>
+              <Button
+                size="large"
+                variant="contained"
+                color="warning"
+                // onClick={(e) => (e)}
+                onClick={()=>{dispatch(orderByRank()); props.setOrder(2)}}
+              >
+               Mas Votados
+              </Button>
+              <Button
+                size="large"
+                variant="contained"
+                color="warning"
+                onClick={() =>{dispatch(orderByDate()); props.setOrder(1)}}
+              >
+                Lo Nuevo
+              </Button>
+            </Box>
             <Box sx={{ padding: "5px" }}>
               <FormControl variant="standard" sx={{ m: 1, width: 250, backgroundColor: "white", textTransform: "uppercase" }}>
                 <Select

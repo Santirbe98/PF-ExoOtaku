@@ -70,7 +70,7 @@ export const Cards = () => {
     setSearch(e.target.value);
     setPage(1);
   };
-
+console.log(order)
   const productSearch = !search
     ? productsList
     : products.filter((p) => {
@@ -129,8 +129,8 @@ export const Cards = () => {
           }`}
         >
           {!productSearch.length ? (
-            <Box width={500} padding={15} display="inline-block">
-              <CircularProgress color="warning" />
+            <Box width={800} textAling="center" paddingLeft={15}>
+              <h2>"No hay productos para mostrar intenta otra busqueda"</h2>
             </Box>
           ) : search.length > 2 ? (
             productsList2.map((c) => {

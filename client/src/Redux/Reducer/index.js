@@ -44,20 +44,24 @@ function rootReducer(state = initialState, action) {
       } else return { ...state };
 
     case ORDER_RANK:
-      const productsRank = state.products;
-      const orderProductRank = productsRank.sort((a, b) => a.r - b.r);
-      console.log(orderProductRank);
+      const productsRank = state.filterProducts;
+      const orderProductRank = productsRank.sort(function (a, b) {
+        return a.r - b.r;
+      });
       return {
         ...state,
-        orderByRank: orderProductRank.reverse(),
+        orderByRank: orderProductRank,
+        filterProducts: orderProductRank.reverse(),
       };
 
     case ORDER_BY_DATE:
       const productsDate = state.filterProducts;
-      const orderProductDate = productsDate.sort((a, b) => a.id - b.id);
-
+      const orderProductDate = productsDate.sort(function (a, b) {
+        return a.id - b.id;
+      });
       return {
         ...state,
+        filterProducts: orderProductDate,
         orderByDate: orderProductDate.reverse(),
       };
 
@@ -120,6 +124,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         filterProducts: orderProduct,
       };
+    // case ORDER_BY_PRICE:
+    //   const products = state.filterProducts;
+    //   const orderProduct =
+    //     action.payload === "Asc"
+    //       ? products.sort((a, b) => a.price - b.price)
+    //       : products.sort((a, b) => b.price - a.price);
+    //   return {
+    //     ...state,
+    //     filterProducts: orderProduct,
+    //   };
 
     case GET_USER_CREDENTIALS:
       return {
