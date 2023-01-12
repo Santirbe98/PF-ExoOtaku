@@ -2,8 +2,14 @@ import React from "react";
 import { Box, Button, Card, CardMedia } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import imagen from "../../Resources/CuentaSuspendida.png";
+
 export const Ban = () => {
   const { logout } = useAuth0();
+
+  setTimeout(() => {
+    logout();
+  }, 3000);
+
   return (
     <Box pt={5} sx={{ minHeight: "100vh" }}>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -18,7 +24,7 @@ export const Ban = () => {
       </Box>
       <Box pt={5}>
         <Button variant="contained" color="warning" onClick={logout}>
-          CERRAR CESION
+          CERRAR SESION
         </Button>
       </Box>
     </Box>
