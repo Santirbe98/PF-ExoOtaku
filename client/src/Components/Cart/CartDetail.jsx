@@ -18,6 +18,8 @@ import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import { useSelector } from "react-redux";
 import Profile2 from "../Authenticate/Profile2";
 import Grid from "@mui/material/Unstable_Grid2";
+import Swal from "sweetalert2";
+
 
 export default function CartBanner({ userId }) {
   const UserValidate = useSelector((state) => state.chk_customer);
@@ -37,6 +39,30 @@ export default function CartBanner({ userId }) {
       (previous, current) => previous + current.amount * current.price,
       0
     );
+  }
+
+  const handleClean = () => {
+    Swal.fire({
+      text: "Estas seguro que deseas limpiar el carrito?",
+      width: "30%",
+      padding: "10px",
+      background: "black",
+      position: "top",
+      allowEnterKey: true,
+      allowEscapeKey: true,
+      imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+      imageHeight: 200,
+      imageWidth: 200,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#b50707",
+      cancelButtonColor: "#3a3c3b",
+      confirmButtonText: "Si, limpialo!",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        cleanCart()
+      }
+    });
   }
 
   const invoiceSubtotal = subtotal();
@@ -139,7 +165,7 @@ export default function CartBanner({ userId }) {
                           <Button
                             variant="contained"
                             color="error"
-                            onClick={cleanCart}
+                            onClick={() => handleClean()}
                           >
                             Limpiar Carrito
                           </Button>
@@ -149,7 +175,7 @@ export default function CartBanner({ userId }) {
                     <TableCell colSpan={2}>
                       {isAuthenticated ? (
                         UserValidate !== null &&
-                        Object.keys(UserValidate).length > 0 ? (
+                          Object.keys(UserValidate).length > 0 ? (
                           <PayButton
                             cartItems={cartItems}
                             userId={UserValidate.id}
