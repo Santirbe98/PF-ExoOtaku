@@ -27,6 +27,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Rating from "@mui/material/Rating";
 import { deleteRank } from "../../Redux/Actions";
 import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 
 function createData(imagen, producto, calificacion, fecha, comentario) {
   return {
@@ -176,34 +177,74 @@ function EnhancedTableToolbar(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   //HANDLER DELETE REVIEW
   function handleDelRank() {
-    Swal.fire({
-      text: "Estas seguro que deseas eliminar este comentario?",
-      width: "30%",
-      padding: "10px",
-      allowEnterKey: true,
-      allowEscapeKey: true,
-      icon: "warning",
-      position: "top",
-      background: "black",
-      imageUrl:
-        "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
-      imageHeight: 200,
-      imageWidth: 200,
-      showCancelButton: true,
-      confirmButtonColor: "#00711a",
-      cancelButtonColor: "#b50707",
-      confirmButtonText: "Si, eliminalo!",
-    }).then((response) => {
-      if (response.isConfirmed) {
-        for (let r = 0; r < itemSelected.length; r++) {
-          dispatch(deleteRank(itemSelected[r]));
-          history.go("/acount");
-        }
-      }
-    });
-    // alert("Calificacion eliminada con exito")
+    // eslint-disable-next-line no-lone-blocks
+    {
+      width > 800
+        ? Swal.fire({
+          text: "Estas seguro que deseas eliminar este comentario?",
+          width: "30%",
+          padding: "10px",
+          allowEnterKey: true,
+          allowEscapeKey: true,
+          icon: "warning",
+          position: "top",
+          background: "black",
+          imageUrl:
+            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+          imageHeight: 200,
+          imageWidth: 200,
+          showCancelButton: true,
+          confirmButtonColor: "#00711a",
+          cancelButtonColor: "#b50707",
+          confirmButtonText: "Si, eliminalo!",
+        }).then((response) => {
+          if (response.isConfirmed) {
+            for (let r = 0; r < itemSelected.length; r++) {
+              dispatch(deleteRank(itemSelected[r]));
+              history.go("/acount");
+            }
+          }
+        }) :
+        Swal.fire({
+          text: "Estas seguro que deseas eliminar este comentario?",
+          width: "80%",
+          padding: "10px",
+          allowEnterKey: true,
+          allowEscapeKey: true,
+          icon: "warning",
+          position: "top",
+          background: "black",
+          imageUrl:
+            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+          imageHeight: 200,
+          imageWidth: 200,
+          showCancelButton: true,
+          confirmButtonColor: "#00711a",
+          cancelButtonColor: "#b50707",
+          confirmButtonText: "Si, eliminalo!",
+        }).then((response) => {
+          if (response.isConfirmed) {
+            for (let r = 0; r < itemSelected.length; r++) {
+              dispatch(deleteRank(itemSelected[r]));
+              history.go("/acount");
+            }
+          }
+        })
+    }
   }
 
   return (
