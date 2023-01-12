@@ -9,7 +9,6 @@ import PagedSearch from "../PagedSearch/PagedSearch";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import { CircularProgress } from "@mui/material";
 //--------------------------------------------------------------//
 
 export const Cards = () => {
@@ -70,7 +69,7 @@ export const Cards = () => {
     setSearch(e.target.value);
     setPage(1);
   };
-console.log(order)
+  console.log(order);
   const productSearch = !search
     ? productsList
     : products.filter((p) => {
@@ -146,7 +145,11 @@ console.log(order)
                     key={c.id}
                     id={c.id}
                     image={c.images}
-                    name={c.name.length >=22 ?`${c.name.substring(0, 18)}...`:c.name}
+                    name={
+                      c.name.length >= 22
+                        ? `${c.name.substring(0, 18)}...`
+                        : c.name
+                    }
                     category={c.category}
                     price={c.price}
                   />

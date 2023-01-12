@@ -11,12 +11,12 @@ import s from "./Card.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { addWishList, chkcustomer, deleteWishlist } from "../../Redux/Actions";
+import { addWishList, deleteWishlist } from "../../Redux/Actions";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export const MediaCard = ({ name, price, image, id, category }) => {
+export const MediaCard = ({ name, price, image, id }) => {
   const dispatch = useDispatch();
   const customer = useSelector((state) => state.chk_customer);
 

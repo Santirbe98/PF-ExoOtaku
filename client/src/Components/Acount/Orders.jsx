@@ -92,7 +92,6 @@ function Row(props) {
       rank: Number(review.rank),
       comment: review.comment,
     };
-    console.log(PAC);
     dispatch(createRank(PAC));
     // alert("Calificacion guardada con exito");
     Swal.fire({

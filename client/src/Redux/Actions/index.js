@@ -123,15 +123,15 @@ export function getCheckout(session_id) {
   };
 }
 
-export function postCustomer(payload,createmode) {
+export function postCustomer(payload, createmode) {
   return async function (dispatch) {
     var response;
     try {
-      if (createmode===true) {
+      if (createmode === true) {
         response = await axios.post("/customer/", payload);
-      }else{
+      } else {
         response = await axios.put("/customer/", payload);
-      }  
+      }
       return response;
     } catch (error) {
       console.log(error);
@@ -317,16 +317,16 @@ export function customerRank(id) {
   };
 }
 
-export function createRank(payload){
-  return async function(dispatch) {
-    var response
+export function createRank(payload) {
+  return async function (dispatch) {
+    var response;
     try {
-      response = await axios.post('/rank/', payload); 
+      response = await axios.post("/rank/", payload);
       return response;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }        
+  };
 }
 
 export function deleteRank(id) {

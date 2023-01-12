@@ -26,8 +26,8 @@ import Swal from "sweetalert2";
 export default function SingIn(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-  let closedialog = props.closedialog ? props.closedialog : null
-  let upt_customer = props.dialog ? null : props.location.state
+  let closedialog = props.closedialog ? props.closedialog : null;
+  let upt_customer = props.dialog ? null : props.location.state;
   const [states, setStates] = useState([]);
   useEffect(() => {
     dispatch(filterNeighborhoods()).then((data) => setStates(data.payload));
@@ -37,8 +37,7 @@ export default function SingIn(props) {
   const [errors, setErrors] = useState({});
 
   let paquete;
-  let
-    id,
+  let id,
     name,
     email,
     country,
@@ -151,7 +150,7 @@ export default function SingIn(props) {
         token: input.token,
         phone: input.phone,
       };
-      createmode = false
+      createmode = false;
     } else {
       PAC = {
         name: input.name,
@@ -165,11 +164,10 @@ export default function SingIn(props) {
         token: input.token,
         phone: input.phone,
       };
-      createmode = true
+      createmode = true;
     }
     dispatch(postCustomer(PAC, createmode)).then(() =>
-      /* sendEmailUserRegisted({ email: PAC.email, name: PAC.name }) */
-      console.log("")
+      sendEmailUserRegisted({ email: PAC.email, name: PAC.name })
     );
     setInput({
       name: "",
@@ -191,7 +189,8 @@ export default function SingIn(props) {
         padding: "10px",
         position: "top",
         allowEnterKey: true,
-        imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+        imageUrl:
+          "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
         imageHeight: 200,
         imageWidth: 200,
         icon: "success",
@@ -199,15 +198,16 @@ export default function SingIn(props) {
         color: "white",
         confirmButtonColor: "#00711a",
       }).then(() => {
-        history.go("/home")
-      })
+        history.go("/home");
+      });
     } else {
       Swal.fire({
         text: "Usted se ha registrado con exito!",
         width: "30%",
         padding: "10px",
         allowEnterKey: true,
-        imageUrl: "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+        imageUrl:
+          "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
         imageHeight: 200,
         imageWidth: 200,
         icon: "success",
@@ -215,8 +215,8 @@ export default function SingIn(props) {
         color: "white",
         confirmButtonColor: "#00711a",
       }).then(() => {
-        history.go("/-1")
-      })
+        history.go("/-1");
+      });
     }
   };
 
@@ -236,7 +236,7 @@ export default function SingIn(props) {
       align="center"
       spacing={24}
       justify="center"
-      style={{ minHeight: '100vh', maxWidth: '100%' }}
+      style={{ minHeight: "100vh", maxWidth: "100%" }}
     >
       <br></br>
       <Box>
@@ -265,10 +265,7 @@ export default function SingIn(props) {
               borderRadius: "20px",
             }}
           >
-            <Grid
-              item xs={3}
-              height="80"
-            >
+            <Grid item xs={3} height="80">
               {user?.picture && (
                 <CardMedia
                   component="img"
@@ -305,11 +302,7 @@ export default function SingIn(props) {
             }}
             onSubmit={() => submitRegistration}
           >
-            <FormControl
-              required
-              fullWidth
-              margin="dense"
-            >
+            <FormControl required fullWidth margin="dense">
               {input.country ? "" : <InputLabel shrink={true}>Pais</InputLabel>}
               <Select
                 name="country"
@@ -347,33 +340,20 @@ export default function SingIn(props) {
                 autoWidth={false}
                 alignItems="left"
               >
-                <MenuItem
-                  sx={{ width: "100%" }}
-                  value={"Buenos Aires"}
-                >
+                <MenuItem sx={{ width: "100%" }} value={"Buenos Aires"}>
                   Buenos Aires
                 </MenuItem>
 
-                <MenuItem
-                  sx={{ width: "100%" }}
-                  value={"Entre Ríos"}
-                >
+                <MenuItem sx={{ width: "100%" }} value={"Entre Ríos"}>
                   Entre Ríos
                 </MenuItem>
 
-                <MenuItem
-                  sx={{ width: "100%" }}
-                  value={"Santa Fe"}
-                >
+                <MenuItem sx={{ width: "100%" }} value={"Santa Fe"}>
                   Santa Fe
                 </MenuItem>
-
               </Select>
               {errors.provincia ? (
-                <FormHelperText
-                  id="provincia"
-                  style={{ color: "red" }}
-                >
+                <FormHelperText id="provincia" style={{ color: "red" }}>
                   {errors.provincia}
                 </FormHelperText>
               ) : (
@@ -381,12 +361,12 @@ export default function SingIn(props) {
               )}
             </FormControl>
 
-            <FormControl
-              required
-              fullWidth
-              margin="dense"
-            >
-              {input.ciudad ? "" : <InputLabel shrink={true}>Ciudad</InputLabel>}
+            <FormControl required fullWidth margin="dense">
+              {input.ciudad ? (
+                ""
+              ) : (
+                <InputLabel shrink={true}>Ciudad</InputLabel>
+              )}
               <Select
                 name="ciudad"
                 id="ciudad"
@@ -396,10 +376,7 @@ export default function SingIn(props) {
                 autoWidth={false}
               >
                 {listacomuna.map((ciudad, i) => (
-                  <MenuItem
-                    sx={{ width: "50%" }}
-                    value={ciudad}
-                  >
+                  <MenuItem sx={{ width: "50%" }} value={ciudad}>
                     {ciudad}
                   </MenuItem>
                 ))}
@@ -413,11 +390,7 @@ export default function SingIn(props) {
               )}
             </FormControl>
 
-            <FormControl
-              required
-              fullWidth
-              margin="dense"
-            >
+            <FormControl required fullWidth margin="dense">
               <InputLabel htmlFor="shipping_address">
                 Direccion de Envio
               </InputLabel>
@@ -430,10 +403,7 @@ export default function SingIn(props) {
                 onChange={handleChange}
               />
               {errors.shipping_address ? (
-                <FormHelperText
-                  id="email"
-                  style={{ color: "red" }}
-                >
+                <FormHelperText id="email" style={{ color: "red" }}>
                   {errors.shipping_address}
                 </FormHelperText>
               ) : (
@@ -441,11 +411,7 @@ export default function SingIn(props) {
               )}
             </FormControl>
 
-            <FormControl
-              required
-              fullWidth
-              margin="dense"
-            >
+            <FormControl required fullWidth margin="dense">
               <InputLabel htmlFor="billing_address">
                 Direccion de Cobro
               </InputLabel>
@@ -490,10 +456,8 @@ export default function SingIn(props) {
               fullWidth
               variant="contained"
               type="submit"
-              style={
-                { backgroundColor: '#212121', color: '#FFFFFF' }
-              }
-              sx={{ ':hover': { bgcolor: '#ffb300', color: '#FFFFFF', }, }}
+              style={{ backgroundColor: "#212121", color: "#FFFFFF" }}
+              sx={{ ":hover": { bgcolor: "#ffb300", color: "#FFFFFF" } }}
               onClick={submitRegistration}
             >
               Guardar

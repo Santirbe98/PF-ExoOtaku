@@ -1,5 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -15,17 +14,15 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { styled } from "@mui/material/styles";
-import CardMedia from "@mui/material/CardMedia";
-import { Link } from "react-router-dom";
-import { Button, FormControl, MenuItem, Select } from "@mui/material";
+import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
-import sendEmailOrder from "./emailorder";
+import sendEmailUserDedleted from "./emailuser";
 import Swal from "sweetalert2";
 import { updateAdmin, getAllUsers } from "../../Redux/Actions";
 import { Checkbox } from "@mui/material";
-import { useAuth0, User } from "@auth0/auth0-react";
-import { useSelector } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -69,7 +66,6 @@ function Row(props) {
   const [isChecked, setIsChecked] = React.useState(checks);
   const handleDeleteUser = props.handleDeleteUser;
   const [open, setOpen] = React.useState(false);
-
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -146,10 +142,10 @@ function Row(props) {
                 if (result.isConfirmed) {
                   handleDeleteUser(rows.id);
                   Swal.fire("¡Usuario eliminado!", "", "success");
-                  /*                     sendEmailUserDedleted({
-                      email: row.email,
-                      name: row.nombre,
-                    }); */
+                  sendEmailUserDedleted({
+                    email: rows.email,
+                    name: rows.nombre,
+                  });
                 } else if (result.isDenied) {
                   return;
                 }

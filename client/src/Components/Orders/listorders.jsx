@@ -1,5 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -22,8 +21,8 @@ import { useDispatch } from "react-redux";
 import { getAllOrders, modifyStatusORder } from "../../Redux/Actions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { InputLabel } from "@mui/material";
-import sendEmailOrder from "./emailorder";
 import Swal from "sweetalert2";
+import sendEmailOrder from "./emailorder";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -93,9 +92,6 @@ function Row(props) {
     }
   };
 
-  const consoleStatus = (e) => {
-    console.log(e.target.value);
-  };
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -126,11 +122,11 @@ function Row(props) {
                 onChange={(e) => {
                   handleChange2(e);
                   if (e.target.value === "Completada") {
-                    /* sendEmailOrder({
+                    sendEmailOrder({
                       email: rows.email,
                       name: rows.usuario,
                       paymentId: rows.orden,
-                    }) */
+                    });
                   }
                 }}
               >

@@ -10,19 +10,16 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
-import { useDispatch } from "react-redux";
 
 import Swal from "sweetalert2";
 
 export default function BasicRating(average) {
-  const dispatch = useDispatch();
   const UserValidate = useSelector((state) => state.chk_customer);
   const initial = average.props.rankeado[0];
   const handleDelete = average.handleDelete;
   const starts = average.props.rank.map((r) => r.rank);
 
   const [value, setValue] = React.useState(initial);
-  const [valueStar, setValueStar] = React.useState(starts);
 
   const totalVotes = average.props.rankeado[1];
   console.log(average);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { getCheckout } from "../../Redux/Actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -9,7 +9,6 @@ import { Typography } from "@mui/material";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import BasicTable from "./table";
-import emailjs from "@emailjs/browser";
 import sendEmailSuccess from "./emailsuccess";
 import { CartContext } from "../Cart/CartContext";
 import { useContext } from "react";
@@ -23,9 +22,8 @@ export const CheckOutSuccess = () => {
   const [loading, setLoading] = useState(true);
   const [info, setInfo] = useState({});
   let session_id = search.substring(12, search.length);
-  const { cartItems, addItemToCart, deleteItemToCart, cleanCart } =
-    useContext(CartContext);
-
+  const { cleanCart } = useContext(CartContext);
+  const history = useHistory();
   useEffect(() => {
     dispatch(getCheckout(session_id)).then((data) => {
       console.log(data.payload);
@@ -44,10 +42,13 @@ export const CheckOutSuccess = () => {
       }, 3000);
     }, cleanCart());
   }, [dispatch]);
-  console.log(Order);
+
+  setTimeout(() => {
+    history.push("/");
+  }, 7500);
 
   return (
-    <div>
+    <Box minHeight="100vh">
       <Box>
         <Typography sx={{ padding: "1%" }} variant="h2">
           ¡Gracias por tu compra!
@@ -79,7 +80,7 @@ export const CheckOutSuccess = () => {
             </Typography>
             <Box sx={{ padding: "0% 5%" }}>
               <BasicTable Products={products} />
-              {/* sendEmailSuccess({
+              {sendEmailSuccess({
                 Order: Order,
                 email: user.email,
                 name: user.name,
@@ -87,7 +88,7 @@ export const CheckOutSuccess = () => {
                 total_prod: info.total_prod,
                 total_env: info.total_env,
                 estado: info.estado,
-              }) */}
+              })}
             </Box>
           </>
         )}
@@ -105,6 +106,6 @@ export const CheckOutSuccess = () => {
           </Button>
         </Link>
       </Box>
-    </div>
+    </Box>
   );
 };

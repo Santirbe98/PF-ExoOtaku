@@ -3,7 +3,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { ItemCart } from "./CartItem";
 import { CartContext } from "./CartContext";
 import styles from "./Cart.module.css";
-import { PayButton } from "../Payment/PayButton.jsx";
 import { Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -113,7 +112,12 @@ const Cart = () => {
                         textDecoration: "none",
                       }}
                     >
-                      <Button variant="contained" color="primary" size="small"  onClick={() => setCartOpen(!cartOpen)}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        onClick={() => setCartOpen(!cartOpen)}
+                      >
                         Comprar de Carrito
                       </Button>
                     </Link>

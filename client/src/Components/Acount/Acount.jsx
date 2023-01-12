@@ -1,6 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import { Button, Box, LinearProgress } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -75,8 +75,6 @@ export const Acount = () => {
   let orderl = [];
   orderl = orders;
 
-console.log( rankl)
-
   let RankedP = [];
   for (let z = 0; z < rankl.length; z++) {
     for (let w = 0; w < orderl.length; w++) {
@@ -97,7 +95,6 @@ console.log( rankl)
   const RankedProductList = [
     ...new Map(RankedP.map((item) => [item.product_id, item])).values(),
   ];
-
 
   //UPDATE CURTOMER DATA
   function handleMod(event) {
@@ -175,8 +172,8 @@ console.log( rankl)
                   width={
                     width < 1000
                       ? {
-                        width: width - 50,
-                      }
+                          width: width - 50,
+                        }
                       : {}
                   }
                 >
