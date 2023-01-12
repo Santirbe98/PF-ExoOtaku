@@ -22,8 +22,8 @@ import {
   DELETE_RANK,
 } from "./actionsTypes";
 
-axios.defaults.baseURL = "http://localhost:3001";
-// axios.defaults.baseURL = 'https://exo-otaku.up.railway.app/'
+// axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://exo-otaku.up.railway.app/";
 
 export function getProducts() {
   return async function (dispatch) {
