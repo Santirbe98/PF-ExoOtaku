@@ -16,11 +16,14 @@ export const TopDate = () => {
     window.addEventListener("resize", handleResize);
   }, []);
   const stateProductsDate = useSelector((state) => state.orderByDate);
-  const topFiveProducts = stateProductsDate.slice(0, 5);
+  const newFiveProducts = stateProductsDate.sort(function (a, b) {
+    return a.id - b.id;
+  });
+  const topFive = newFiveProducts.reverse().slice(0, 5);
 
   return (
     <Box>
-      {!topFiveProducts.length ? (
+      {!topFive.length ? (
         <Box width={700} padding={15}>
           <CircularProgress color="warning" />
         </Box>
@@ -44,7 +47,7 @@ export const TopDate = () => {
               : null
           }`}
         >
-          {topFiveProducts.map((c) => {
+          {topFive.map((c) => {
             return (
               <Box
                 key={c.id}
@@ -58,8 +61,13 @@ export const TopDate = () => {
                   key={c.id}
                   id={c.id}
                   image={c.images}
-                  name={c.name.length >=22 ?`${c.name.substring(0, 18)}...`:c.name}
-               />
+                  name={
+                    c.name.length >= 22
+                      ? `${c.name.substring(0, 18)}...`
+                      : c.name
+                  }
+                  r={c.r}
+                />
               </Box>
             );
           })}

@@ -16,11 +16,13 @@ export const TopRanked = () => {
     window.addEventListener("resize", handleResize);
   }, []);
   const stateProductsRanked = useSelector((state) => state.orderByRank);
-  const topFiveProducts = stateProductsRanked.slice(0, 5);
-
+  const topFiveProducts = stateProductsRanked.sort(function (a, b) {
+    return a.r - b.r;
+  });
+  const topFive = topFiveProducts.reverse().slice(0, 5);
   return (
     <Box>
-      {!topFiveProducts.length ? (
+      {!topFive.length ? (
         <Box width={500} padding={15}>
           <CircularProgress color="warning" />
         </Box>
@@ -45,8 +47,8 @@ export const TopRanked = () => {
               : null
           }`}
         >
-          {topFiveProducts.length !== 0 &&
-            topFiveProducts.map((c) => {
+          {topFive.length !== 0 &&
+            topFive.map((c) => {
               return (
                 <Box
                   key={c.id}
@@ -60,7 +62,11 @@ export const TopRanked = () => {
                     key={c.id}
                     id={c.id}
                     image={c.images}
-                    name={c.name.length >=22 ?`${c.name.substring(0, 18)}...`:c.name}
+                    name={
+                      c.name.length >= 22
+                        ? `${c.name.substring(0, 18)}...`
+                        : c.name
+                    }
                     r={c.r}
                   />
                 </Box>
