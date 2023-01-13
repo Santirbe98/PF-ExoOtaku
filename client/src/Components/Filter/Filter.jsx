@@ -150,7 +150,7 @@ export const Filter = (props) => {
                     }}
                     value={"All"}
                   >
-                    Colores
+                    Todos los Colores
                   </MenuItem>
                   <MenuItem
                     sx={{

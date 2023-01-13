@@ -1,19 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { ItemCart } from "./CartItem";
 import { CartContext } from "./CartContext";
 import styles from "./Cart.module.css";
 import { Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Profile2 from "../Authenticate/Profile2";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Grid from "@mui/material/Unstable_Grid2";
 
 const Cart = () => {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
-  const UserValidate = useSelector((state) => state.chk_customer);
-
   /* Creamos 2 estados, uno para ver si el carrito esta abierto o no 
     y otro para obtener la cantidad de productos que tenemos en el carrito */
   const [cartOpen, setCartOpen] = useState(false);
@@ -91,19 +85,6 @@ const Cart = () => {
                 )}
                 <h2 className={styles.total}>Total: ${total}</h2>
                 <Box pb={3}>
-                  {!isAuthenticated ? (
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={() => loginWithRedirect()}
-                    >
-                      Iniciar sesion
-                    </Button>
-                  ) : (
-                    UserValidate === null && <Profile2 />
-                  )}
-                </Box>
-                <Box pb={3}>
                   {cartItems.length > 0 ? (
                     <Link
                       to="/cartDetail"
@@ -117,7 +98,7 @@ const Cart = () => {
                         size="small"
                         onClick={() => setCartOpen(!cartOpen)}
                       >
-                        Comprar de Carrito
+                        Comprar Carrito
                       </Button>
                     </Link>
                   ) : (
@@ -193,19 +174,6 @@ const Cart = () => {
                   </Box>
                 )}
                 <h2 className={styles.total}>Total: ${total}</h2>
-                <Box pb={3}>
-                  {!isAuthenticated ? (
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={() => loginWithRedirect()}
-                    >
-                      Iniciar sesion
-                    </Button>
-                  ) : (
-                    UserValidate === null && <Profile2 />
-                  )}
-                </Box>
                 <Box pb={3}>
                   {cartItems.length > 0 ? (
                     <Link
