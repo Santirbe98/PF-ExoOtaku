@@ -6,6 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
+import "./Form.module.css";
 import { FormHelperText, MenuItem, Select } from "@mui/material";
 import {
   Box,
@@ -50,7 +51,7 @@ export const Form = () => {
     imagesDb: [],
   };
 
-  const { user, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const UserValidate = useSelector((state) => state.chk_customer);
 
   const dispatch = useDispatch();

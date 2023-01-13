@@ -87,10 +87,10 @@ export default function BasicRating(average) {
                 UserValidate.isadmin === true && (
                   <Box sx={{ padding: "1vw" }}>
                     <Button
-                      value={index + 1}
+                      value={c.id}
                       onClick={(e) =>
                         Swal.fire({
-                          title: "¿Seguro que quieres modificar el estado?",
+                          title: "¿Seguro que quieres eliminar el comentario?",
                           showDenyButton: true,
                           showCancelButton: false,
                           confirmButtonText: "Si",
@@ -98,7 +98,7 @@ export default function BasicRating(average) {
                         }).then((result) => {
                           if (result.isConfirmed) {
                             handleDelete(e);
-                            Swal.fire("Orden Borrada!", "", "success");
+                            Swal.fire("Comentario Borrado!", "", "success");
                           } else if (result.isDenied) {
                             return;
                           }
