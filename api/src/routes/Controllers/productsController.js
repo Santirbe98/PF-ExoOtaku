@@ -67,7 +67,14 @@ const getAllProducts = async function () {
         },
         {
           model: RankProduct,
-          attributes: ["productId", "rank", "comment","createdAt", "deleted"],
+          attributes: [
+            "id",
+            "productId",
+            "rank",
+            "comment",
+            "createdAt",
+            "deleted",
+          ],
         },
       ],
     });
