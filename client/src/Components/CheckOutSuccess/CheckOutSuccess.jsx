@@ -26,7 +26,6 @@ export const CheckOutSuccess = () => {
   const history = useHistory();
   useEffect(() => {
     dispatch(getCheckout(session_id)).then((data) => {
-      console.log(data.payload);
       setOrder(data.payload.orderUser.order_id);
       setproducts(data.payload.userCart.ShoppingLists);
       setUser(data.payload.userData);

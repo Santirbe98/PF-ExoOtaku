@@ -84,6 +84,7 @@ export const Acount = () => {
             id: rankl[z].id,
             imagen: orderl[w].products[x].imagen,
             product_id: orderl[w].products[x].id,
+            producto: orderl[w].products[x].producto,
             calificacion: rankl[z].rank,
             fecha: rankl[z].createdAt,
             comentario: rankl[z].comment,
@@ -103,35 +104,35 @@ export const Acount = () => {
     {
       width > 800
         ? Swal.fire({
-          text: "Ahora puede modificar sus datos!",
-          width: "30%",
-          padding: "10px",
-          position: "top",
-          allowEnterKey: true,
-          imageUrl:
-            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
-          imageHeight: 200,
-          imageWidth: 200,
-          icon: "info",
-          background: "black",
-          color: "white",
-          confirmButtonColor: "#00711a",
-        }) :
-        Swal.fire({
-          text: "Ahora puede modificar sus datos!",
-          width: "80%",
-          padding: "10px",
-          position: "top",
-          allowEnterKey: true,
-          imageUrl:
-            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
-          imageHeight: 200,
-          imageWidth: 200,
-          icon: "info",
-          background: "black",
-          color: "white",
-          confirmButtonColor: "#00711a",
-        })
+            text: "Ahora puede modificar sus datos!",
+            width: "30%",
+            padding: "10px",
+            position: "top",
+            allowEnterKey: true,
+            imageUrl:
+              "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+            imageHeight: 200,
+            imageWidth: 200,
+            icon: "info",
+            background: "black",
+            color: "white",
+            confirmButtonColor: "#00711a",
+          })
+        : Swal.fire({
+            text: "Ahora puede modificar sus datos!",
+            width: "80%",
+            padding: "10px",
+            position: "top",
+            allowEnterKey: true,
+            imageUrl:
+              "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+            imageHeight: 200,
+            imageWidth: 200,
+            icon: "info",
+            background: "black",
+            color: "white",
+            confirmButtonColor: "#00711a",
+          });
     }
     let upt_customer = {
       id: UserValidate.id,
@@ -192,13 +193,13 @@ export const Acount = () => {
                   width={
                     width < 1000
                       ? {
-                        width: width,
-                        sx: {
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
+                          width: width,
+                          sx: {
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          },
                         }
-                      }
                       : {}
                   }
                 >

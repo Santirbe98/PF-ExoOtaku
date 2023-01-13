@@ -109,40 +109,40 @@ function Row(props) {
     {
       width > 800
         ? Swal.fire({
-          text: "Usted ha agregado un comentario con exito!",
-          width: "30%",
-          padding: "10px",
-          position: "top",
-          allowEnterKey: true,
-          imageUrl:
-            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
-          imageHeight: 200,
-          imageWidth: 200,
-          icon: "success",
-          background: "black",
-          color: "white",
-          confirmButtonColor: "#00711a",
-        }).then(() => {
-          history.go("/acount");
-        }) :
-        Swal.fire({
-          text: "Usted ha agregado un comentario con exito!",
-          width: "80%",
-          padding: "10px",
-          position: "top",
-          allowEnterKey: true,
-          imageUrl:
-            "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
-          imageHeight: 200,
-          imageWidth: 200,
-          icon: "success",
-          background: "black",
-          color: "white",
-          confirmButtonColor: "#00711a",
-        }).then(() => {
-          history.go("/acount");
-          //history.replaceState( {} , 'foo', '/foo' );
-        })
+            text: "Usted ha agregado un comentario con exito!",
+            width: "30%",
+            padding: "10px",
+            position: "top",
+            allowEnterKey: true,
+            imageUrl:
+              "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+            imageHeight: 200,
+            imageWidth: 200,
+            icon: "success",
+            background: "black",
+            color: "white",
+            confirmButtonColor: "#00711a",
+          }).then(() => {
+            history.go("/acount");
+          })
+        : Swal.fire({
+            text: "Usted ha agregado un comentario con exito!",
+            width: "80%",
+            padding: "10px",
+            position: "top",
+            allowEnterKey: true,
+            imageUrl:
+              "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/760/094/themes/common/logo-204180220-1664550124-6d7184aec833212b57e39d5f3bd0e32d1664550125.png?0",
+            imageHeight: 200,
+            imageWidth: 200,
+            icon: "success",
+            background: "black",
+            color: "white",
+            confirmButtonColor: "#00711a",
+          }).then(() => {
+            history.go("/acount");
+            //history.replaceState( {} , 'foo', '/foo' );
+          });
     }
   }
 
@@ -351,9 +351,9 @@ export default function CollapsibleTable({ Products, Ranklist, user }) {
         </TableHead>
         <TableBody>
           {rows
-            .map((row) => (
+            .map((row, index) => (
               <Row
-                key={row.name}
+                key={index}
                 row={row}
                 ranklist={Ranklist}
                 idcustomer={user.id}
